@@ -1,0 +1,99 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true },
+  "organizeImports": { "enabled": true },
+  "javascript": { "formatter": { "arrowParentheses": "asNeeded" } },
+  "formatter": { "enabled": true, "indentStyle": "space", "lineWidth": 100 },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": {
+        "useKeyWithClickEvents": "off"
+      },
+      "complexity": {
+        "noForEach": "off",
+        "noUselessStringConcat": "warn",
+        "noUselessUndefinedInitialization": "warn",
+        "useDateNow": { "fix": "safe", "level": "warn" }
+      },
+      "correctness": {
+        "noUndeclaredDependencies": "warn",
+        "noUndeclaredVariables": "error",
+        "noUnknownFunction": "off",
+        "noUnusedFunctionParameters": "warn",
+        "noUnusedImports": "warn",
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "off",
+        "useHookAtTopLevel": "error"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "level": "warn",
+          "fix": "safe",
+          "options": {
+            "attributes": [
+              "className",
+              "classNames",
+              "skeleton",
+              "iconClassName",
+              "triggerClassName",
+              "cardContainerClassName"
+            ],
+            "functions": ["clsx", "cva", "cn", "twMerge", "extendVariants"]
+          }
+        }
+      },
+      "performance": {
+        "noReExportAll": "warn"
+      },
+      "style": {
+        "noNegationElse": "warn",
+        "noParameterAssign": "off",
+        "noYodaExpression": "warn",
+        "useCollapsedElseIf": "error",
+        "useConsistentArrayType": "error",
+        "useConsistentBuiltinInstantiation": "error",
+        "useExplicitLengthCheck": "error",
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": { "filenameCases": ["camelCase"], "strictCase": false }
+        },
+        "useForOf": "error",
+        "useFragmentSyntax": "error",
+        "useShorthandAssign": "error",
+        "useThrowNewError": "error",
+        "useThrowOnlyError": "error"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off",
+        "noConsole": {
+          "level": "warn",
+          "options": { "allow": ["error", "warn", "info", "debug", "time", "timeEnd"] }
+        },
+        "noEmptyBlockStatements": "error",
+        "noExplicitAny": "off",
+        "noImplicitAnyLet": "off",
+        "noMisplacedAssertion": "error",
+        "useAwait": "error",
+        "useErrorMessage": "error",
+        "useNumberToFixedDigitsArgument": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "include": ["components/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": { "filenameCases": ["camelCase", "PascalCase"], "strictCase": false }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
