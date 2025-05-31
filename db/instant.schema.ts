@@ -1,6 +1,5 @@
 import { type DataAttrDef, i } from "@instantdb/react";
 import { cart, entry, meal, shopping_links } from "./shopping";
-import { _base } from "./__base";
 
 const _schema = i.schema({
   entities: {
@@ -8,8 +7,10 @@ const _schema = i.schema({
       email: i.any().unique().indexed(),
     }),
     tags: i.entity({
-      ..._base,
+      id: i.string().unique().indexed(),
+      title: i.string().indexed(),
       color: i.string(),
+      isDeleted: i.boolean(),
     }),
     carts: i.entity({ ...cart }),
     entries: i.entity({ ...entry }),

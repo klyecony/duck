@@ -5,4 +5,6 @@ export type CartType = InstaQLEntity<typeof schema, "carts">;
 export type EntryType = InstaQLEntity<typeof schema, "entries">;
 export type MealType = InstaQLEntity<typeof schema, "meals">;
 
+export type TagType = InstaQLEntity<typeof schema, "tags">;
+
 export type Scd<T> = T & { origin: T };
