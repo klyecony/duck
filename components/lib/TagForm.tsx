@@ -7,7 +7,7 @@ import { useEditor } from "../lib/editor";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import type { TagType } from "@/types/db";
-import { COLORS } from "@/lib/interface/color";
+import { ColorInput } from "../ui/ColorInput";
 
 type FormValues = {
   title: string;
@@ -24,7 +24,7 @@ const TagForm = ({ tag }: TagProps) => {
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       title: tag?.title || "",
-      color: tag?.color || COLORS[0].color,
+      color: tag?.color || "#ffffff",
     },
     mode: "onChange",
   });
@@ -70,6 +70,7 @@ const TagForm = ({ tag }: TagProps) => {
   return (
     <Form onSubmit={submit}>
       <Input size="lg" autoFocus={!tag} control={control} name="title" onClear={handleDelete} />
+      <ColorInput control={control} name="color" />
     </Form>
   );
 };
