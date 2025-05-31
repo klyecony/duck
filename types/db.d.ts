@@ -1,4 +1,8 @@
 import type schema from "@/db/instant.schema";
 import type { InstaQLEntity } from "@instantdb/react";
 
-export type Cart = InstaQLEntity<typeof schema, "carts">;
+export type CartType = InstaQLEntity<typeof schema, "carts">;
+export type EntryType = InstaQLEntity<typeof schema, "entries">;
+export type MealType = InstaQLEntity<typeof schema, "meals">;
+
+export type Scd<T> = T & { origin: T };

@@ -3,7 +3,7 @@
 import type * as React from "react";
 import { IconContext } from "@phosphor-icons/react";
 import { HeroUIProvider, ToastProvider } from "@heroui/react";
-import { NavProvider } from "@/components/contexts/nav";
+import { EditorProvider } from "@/components/lib/editor";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -23,7 +23,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
             hideIcon: true,
           }}
         />
-        <NavProvider>{children}</NavProvider>
+        <EditorProvider>{children}</EditorProvider>
       </IconContext.Provider>
     </HeroUIProvider>
   );
