@@ -1,15 +1,13 @@
 "use client";
-import type { EntryType, Scd } from "@/types/db";
+import type { EntryType, Scd, TagType } from "@/types/db";
 import { Card, CardHeader } from "@heroui/react";
 import { useEditor } from "../lib/editor";
 import { EntryForm } from "./EntryForm";
 
 interface EntryProps {
-  entry?: Scd<
-    EntryType & {
-      entries?: Scd<EntryType>[];
-    }
-  >;
+  entry?: Scd<EntryType> & {
+    tags: TagType[];
+  };
 }
 
 const Entry = ({ entry }: EntryProps) => {

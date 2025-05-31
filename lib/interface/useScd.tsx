@@ -1,15 +1,15 @@
 import type { Scd } from "@/types/db";
 import { useMemo } from "react";
 
-interface HasIdAndTimeStamp {
+interface HasIdAndcreatedAt {
   id: string;
-  timeStamp: string | number;
+  createdAt: string | number;
   isDeleted: boolean;
 }
 
-type UseScdProps<T extends HasIdAndTimeStamp> = Scd<T>[];
+type UseScdProps<T extends HasIdAndcreatedAt> = Scd<T>[];
 
-const useScd = <T extends HasIdAndTimeStamp>(list: UseScdProps<T>) => {
+const useScd = <T extends HasIdAndcreatedAt>(list: UseScdProps<T>) => {
   return useMemo(() => {
     if (!list || !Array.isArray(list)) return [];
     return Array.from(
@@ -19,7 +19,7 @@ const useScd = <T extends HasIdAndTimeStamp>(list: UseScdProps<T>) => {
           const existing = map.get(originId);
           const isNewer =
             !existing ||
-            new Date(entry.timeStamp).getTime() > new Date(existing.timeStamp).getTime();
+            new Date(entry.createdAt).getTime() > new Date(existing.createdAt).getTime();
           if (isNewer) map.set(originId, entry);
           return map;
         }, new Map<string, (typeof list)[number]>())

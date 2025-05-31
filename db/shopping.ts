@@ -1,26 +1,19 @@
 import { i } from "@instantdb/react";
-import { _base } from "./__base";
-
-export const cart = {
-  ..._base,
-  previewImage: i.string().optional(),
-};
+import { _base, _scd0, _scd2 } from "./__base";
 
 export const entry = {
   ..._base,
+  ..._scd2,
 };
 
 export const meal = {
   ..._base,
+  ..._scd0,
   planned: i.date().optional(),
 };
 
 export const shopping_links = {
-  // Creator
-  cartCreator: {
-    forward: { on: "carts", has: "one", label: "createdBy" },
-    reverse: { on: "$users", has: "many", label: "carts" },
-  },
+  // CreatedBy
   entryCreator: {
     forward: { on: "entries", has: "one", label: "createdBy" },
     reverse: { on: "$users", has: "many", label: "entries" },
@@ -30,25 +23,13 @@ export const shopping_links = {
     reverse: { on: "$users", has: "many", label: "meals" },
   },
   // SCD
-  mealSCD: {
-    forward: { on: "meals", has: "many", label: "scd" },
-    reverse: { on: "meals", has: "one", label: "origin" },
-  },
-  cartSCD: {
-    forward: { on: "carts", has: "many", label: "scd" },
-    reverse: { on: "carts", has: "one", label: "origin" },
-  },
   entrySCD: {
     forward: { on: "entries", has: "many", label: "scd" },
     reverse: { on: "entries", has: "one", label: "origin" },
   },
   // Logic
-  cartEntries: {
-    forward: { on: "carts", has: "many", label: "entries" },
-    reverse: { on: "entries", has: "many", label: "cart" },
-  },
   mealentries: {
     forward: { on: "meals", has: "many", label: "entries" },
-    reverse: { on: "entries", has: "many", label: "meal" },
+    reverse: { on: "entries", has: "many", label: "meals" },
   },
 } as any;

@@ -3,19 +3,18 @@
 import { db } from "@/db";
 import { id } from "@instantdb/react";
 import type { EntryType, MealType, Scd } from "@/types/db";
-import { Form } from "@heroui/react";
+import { Button, Form } from "@heroui/react";
 import { useEditor } from "../lib/editor";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Select } from "../ui/select";
 import useScd from "@/lib/interface/useScd";
+import { Trash } from "@phosphor-icons/react";
 
 interface MealFormProps {
-  meal?: Scd<
-    MealType & {
-      entries?: Scd<EntryType>[];
-    }
-  >;
+  meal?: MealType & {
+    entries?: Scd<EntryType>[];
+  };
 }
 
 type FieldValues = {
@@ -54,57 +53,48 @@ const MealForm = ({ meal }: MealFormProps) => {
         .update({
           title: values.title,
           description: "",
-          timeStamp: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
           isDeleted: false,
         })
-        .link({ createdBy: user?.id, origin: newId, entries: values.entries }),
+        .link({ createdBy: user?.id, entries: values.entries }),
     );
     closeEditor();
   };
 
-  const handleUpdate = (values: FieldValues) =>
+  const handleUpdate = (values: FieldValues) => {
+    if (!meal) return;
     db.transact(
-      db.tx.meals[id()]
+      db.tx.meals[meal.id]
         .update({
           title: values.title,
-          description: meal?.description,
-          isDeleted: false,
-          timeStamp: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+        })
+        .unlink({
+          entries: meal?.entries?.map(entry => entry.origin.id) || [],
         })
         .link({
-          createdBy: user?.id,
-          origin: meal?.origin.id,
           entries: values.entries,
         }),
     );
+  };
 
-  const handleDelete = (values: FieldValues) => {
+  const handleDelete = () => {
+    if (!meal) return;
     db.transact(
-      db.tx.meals[id()]
-        .update({
-          title: values.title || meal?.title,
-          description: meal?.description,
-          isDeleted: true,
-          timeStamp: Date.now(),
-        })
-        .link({
-          createdBy: user?.id,
-          origin: meal?.origin.id,
-          entries: values.entries,
-        }),
+      db.tx.meals[meal.id].update({
+        isDeleted: true,
+        updatedAt: Date.now(),
+      }),
     );
   };
 
   const submit = handleSubmit(values => {
     if (isDirty) {
       if (meal) {
-        if (values.title === "") {
-          handleDelete(values);
-          return closeEditor();
-        }
         handleUpdate(values);
       } else {
-        if (values.title === "") return closeEditor();
         handleCreate(values);
       }
     }
@@ -134,6 +124,16 @@ const MealForm = ({ meal }: MealFormProps) => {
           children: entry.title,
         }))}
       />
+      <div className="flex w-full">
+        {meal && (
+          <Button isIconOnly color="danger" onPress={handleDelete}>
+            <Trash />
+          </Button>
+        )}
+        <Button fullWidth type="submit" color="primary" isDisabled={!isDirty} className="ml-2">
+          {meal ? "Aktualisieren" : "Erstellen"}
+        </Button>
+      </div>
     </Form>
   );
 };
