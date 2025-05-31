@@ -10,19 +10,23 @@ interface HasIdAndTimeStamp {
 type UseScdProps<T extends HasIdAndTimeStamp> = Scd<T>[];
 
 const useScd = <T extends HasIdAndTimeStamp>(list: UseScdProps<T>) => {
-  const latest = useMemo(() => {
+  return useMemo(() => {
     if (!list || !Array.isArray(list)) return [];
-    return list.reduce((map, entry) => {
-      const originId = entry.origin.id;
-      const existing = map.get(originId);
-      const isNewer =
-        !existing || new Date(entry.timeStamp).getTime() > new Date(existing.timeStamp).getTime();
-      if (isNewer) map.set(originId, entry);
-      return map;
-    }, new Map<string, (typeof list)[number]>());
+    return Array.from(
+      list
+        .reduce((map, entry) => {
+          const originId = entry.origin.id;
+          const existing = map.get(originId);
+          const isNewer =
+            !existing ||
+            new Date(entry.timeStamp).getTime() > new Date(existing.timeStamp).getTime();
+          if (isNewer) map.set(originId, entry);
+          return map;
+        }, new Map<string, (typeof list)[number]>())
+        .values()
+        .filter(i => !i.isDeleted),
+    );
   }, [list]);
-
-  return Array.from(latest.values()).filter(i => !i.isDeleted);
 };
 
 export default useScd;

@@ -1,6 +1,6 @@
 "use client";
 import Entry from "@/components/shopping/Entry";
-import Meal from "@/components/shopping/Meal";
+import { Meal } from "@/components/shopping/Meal";
 import { db } from "@/db";
 import type { AppSchema } from "@/db/instant.schema";
 import useScd from "@/lib/interface/useScd";
@@ -34,6 +34,9 @@ const Page = ({
     },
     meals: {
       origin: {},
+      entries: {
+        origin: {},
+      },
     },
   } satisfies InstaQLParams<AppSchema>);
 

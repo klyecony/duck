@@ -1,12 +1,8 @@
-import {
-  Select as BaseSelect,
-  type SelectItemProps,
-  extendVariants,
-  ListboxItem as SelectItem,
-} from "@heroui/react";
+import { Select as BaseSelect, type SelectItemProps, extendVariants } from "@heroui/react";
 import type React from "react";
 import { forwardRef } from "react";
 import { Controller } from "react-hook-form";
+import { ListboxItem as SelectItem } from "@heroui/react";
 
 const ExtendedSelect = extendVariants(BaseSelect, {
   defaultVariants: {
@@ -26,10 +22,18 @@ const Select = forwardRef<
     items?: Iterable<SelectItemProps>;
   }
 >(({ control, ...props }, ref) => {
-  if (!control || !props.name) return <ExtendedSelect {...props} ref={ref as any} />;
+  // @ts-ignore
+  props.children = props?.children
+    ? props?.children
+    : (item: { key: string; label: string }) => (
+        <SelectItem {...item} key={item.key} color={props.color || "primary"} />
+      );
+
+  if (!control) return <ExtendedSelect {...props} ref={ref as any} />;
   return (
     <Controller
       control={control}
+      // @ts-ignore
       name={props.name}
       render={({
         field: { name, value, onChange, onBlur, ref: fieldRef },
@@ -40,12 +44,20 @@ const Select = forwardRef<
           ref={fieldRef}
           errorMessage={error?.message}
           validationBehavior="aria"
-          defaultSelectedKeys={value ? [value] : []}
           isInvalid={invalid}
           name={name}
           value={value}
+          selectedKeys={value ? [...String(value).split(",")] : []}
           onBlur={onBlur}
-          onChange={onChange}
+          onChange={e => {
+            onChange({
+              ...e,
+              target: {
+                ...e.target,
+                value: [...String(e.target.value).split(",")].filter(v => v !== ""),
+              },
+            });
+          }}
         />
       )}
     />
