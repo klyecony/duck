@@ -35,6 +35,8 @@ const TagForm = ({ tag }: TagProps) => {
         title: values.title,
         color: values.color,
         isDeleted: false,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       }),
     );
   };
@@ -46,6 +48,7 @@ const TagForm = ({ tag }: TagProps) => {
         title: values.title,
         color: values.color,
         isDeleted: false,
+        updatedAt: Date.now(),
       }),
     );
 

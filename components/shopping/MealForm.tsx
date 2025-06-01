@@ -2,24 +2,37 @@
 
 import { db } from "@/db";
 import { id } from "@instantdb/react";
-import type { MealType } from "@/types/db";
+import type { MealType, TagType } from "@/types/db";
 import { Button, Form } from "@heroui/react";
 import { useEditor } from "../lib/editor";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Trash } from "@phosphor-icons/react";
+import { useScd0 } from "@/lib/interface/instant";
+import { Select } from "../ui/select";
 
 interface MealFormProps {
-  meal?: MealType;
+  meal?: MealType & {
+    tags: TagType[];
+  };
 }
 
 type FieldValues = {
   title: string;
+  tags?: string[];
 };
 
 const MealForm = ({ meal }: MealFormProps) => {
   const { user } = db.useAuth();
   const { closeEditor } = useEditor();
+
+  const { data } = db.useQuery({
+    tags: {},
+  });
+
+  const availableTags = useScd0(data?.tags);
+  const mealTags = useScd0(meal?.tags);
+
   const {
     control,
     handleSubmit,
@@ -27,6 +40,7 @@ const MealForm = ({ meal }: MealFormProps) => {
   } = useForm<FieldValues>({
     defaultValues: {
       title: meal?.title || "",
+      tags: mealTags?.map(tag => tag?.id) || [],
     },
     mode: "onChange",
   });
@@ -42,7 +56,7 @@ const MealForm = ({ meal }: MealFormProps) => {
           updatedAt: Date.now(),
           isDeleted: false,
         })
-        .link({ createdBy: user?.id }),
+        .link({ createdBy: user?.id, tags: values.tags }),
     );
     closeEditor();
   };
@@ -50,11 +64,12 @@ const MealForm = ({ meal }: MealFormProps) => {
   const handleUpdate = (values: FieldValues) => {
     if (!meal) return;
     db.transact(
-      db.tx.meals[meal.id].update({
-        title: values.title,
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      }),
+      db.tx.meals[meal.id]
+        .update({
+          title: values.title,
+          updatedAt: Date.now(),
+        })
+        .link({ tags: values.tags }),
     );
   };
 
@@ -87,6 +102,18 @@ const MealForm = ({ meal }: MealFormProps) => {
         name="title"
         aria-label="Gericht Titel"
         control={control}
+      />
+      <Select
+        size="lg"
+        name="tags"
+        control={control}
+        aria-label="Gericht Tags"
+        selectionMode="multiple"
+        placeholder="Hinzufügen"
+        items={availableTags.map(tag => ({
+          key: tag?.id,
+          children: tag?.title,
+        }))}
       />
       <div className="flex w-full">
         {meal && (

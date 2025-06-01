@@ -30,15 +30,15 @@ const EntryForm = ({ entry }: EntryProps) => {
   const { closeEditor } = useEditor();
 
   const { data } = db.useQuery({
-    meals: {
-      entries: {
-        origin: {},
-      },
-    },
+    meals: {},
+    tags: {},
   });
 
   const availableMeals = useScd0(data?.meals);
   const entryMeals = useScd0(entry?.meals);
+
+  const availableTags = useScd0(data?.tags);
+  const entryTags = useScd0(entry?.tags);
 
   const {
     control,
@@ -48,7 +48,7 @@ const EntryForm = ({ entry }: EntryProps) => {
     defaultValues: {
       title: entry?.title || "",
       meals: entryMeals.map(meal => meal?.id) || [],
-      tags: entry?.tags?.map(tag => tag?.id) || [],
+      tags: entryTags?.map(tag => tag?.id) || [],
     },
     mode: "onChange",
   });
@@ -63,7 +63,12 @@ const EntryForm = ({ entry }: EntryProps) => {
           createdAt: Date.now(),
           isDeleted: false,
         })
-        .link({ createdBy: user?.id, origin: newId, meals: values.meals }),
+        .link({
+          createdBy: user?.id,
+          origin: newId,
+          meals: values.meals,
+          tags: values.tags,
+        }),
     );
   };
 
@@ -80,6 +85,7 @@ const EntryForm = ({ entry }: EntryProps) => {
           createdBy: user?.id,
           origin: entry?.origin.id,
           meals: values.meals,
+          tags: values.tags,
         }),
     );
 
@@ -124,6 +130,18 @@ const EntryForm = ({ entry }: EntryProps) => {
         items={availableMeals.map(meal => ({
           key: meal?.id,
           children: meal?.title,
+        }))}
+      />
+      <Select
+        size="lg"
+        name="tags"
+        control={control}
+        aria-label="Gericht Tags"
+        selectionMode="multiple"
+        placeholder="Hinzufügen"
+        items={availableTags.map(tag => ({
+          key: tag?.id,
+          children: tag?.title,
         }))}
       />
       <div className="flex w-full">

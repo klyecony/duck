@@ -12,7 +12,9 @@ const Page = () => {
       tags: {},
       meals: {},
     },
-    meals: {},
+    meals: {
+      tags: {},
+    },
   });
 
   const entries = useScd2(data?.entries);

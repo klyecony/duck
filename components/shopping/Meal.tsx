@@ -1,11 +1,13 @@
 "use client";
-import type { MealType } from "@/types/db";
+import type { MealType, TagType } from "@/types/db";
 import { Card, CardHeader } from "@heroui/react";
 import { useEditor } from "../lib/editor";
 import MealForm from "./MealForm";
 
 interface MealProps {
-  meal?: MealType;
+  meal?: MealType & {
+    tags: TagType[];
+  };
 }
 const Meal = ({ meal }: MealProps) => {
   const { openEditor } = useEditor();
