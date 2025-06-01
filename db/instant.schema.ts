@@ -1,5 +1,5 @@
 import { type DataAttrDef, i } from "@instantdb/react";
-import { entry, meal, shopping_links } from "./shopping";
+import { entry, meal } from "./shopping";
 
 const _schema = i.schema({
   entities: {
@@ -16,7 +16,29 @@ const _schema = i.schema({
     meals: i.entity({ ...meal }),
   },
   links: {
-    ...shopping_links,
+    // CreatedBy
+    entryCreator: {
+      forward: { on: "entries", has: "one", label: "createdBy" },
+      reverse: { on: "$users", has: "many", label: "entries" },
+    },
+    mealCreator: {
+      forward: { on: "meals", has: "one", label: "createdBy" },
+      reverse: { on: "$users", has: "many", label: "meals" },
+    },
+    // SCD
+    entrySCD: {
+      forward: { on: "entries", has: "many", label: "scd" },
+      reverse: { on: "entries", has: "one", label: "origin" },
+    },
+    // Logic
+    mealentries: {
+      forward: { on: "meals", has: "many", label: "entries" },
+      reverse: { on: "entries", has: "many", label: "meals" },
+    },
+    entrytags: {
+      forward: { on: "entries", has: "many", label: "tags" },
+      reverse: { on: "tags", has: "many", label: "entries" },
+    },
   },
 });
 

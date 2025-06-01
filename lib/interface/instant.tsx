@@ -1,15 +1,7 @@
-import type { Scd } from "@/types/db";
+import type { IsScd0, IsScd2, Scd0, Scd2 } from "@/types/db";
 import { useMemo } from "react";
 
-interface HasIdAndcreatedAt {
-  id: string;
-  createdAt: string | number;
-  isDeleted: boolean;
-}
-
-type UseScdProps<T extends HasIdAndcreatedAt> = Scd<T>[];
-
-const useScd = <T extends HasIdAndcreatedAt>(list: UseScdProps<T>) => {
+const useScd2 = <T extends IsScd2>(list: Scd2<T>[] | undefined) => {
   return useMemo(() => {
     if (!list || !Array.isArray(list)) return [];
     return Array.from(
@@ -29,4 +21,11 @@ const useScd = <T extends HasIdAndcreatedAt>(list: UseScdProps<T>) => {
   }, [list]);
 };
 
-export default useScd;
+const useScd0 = <T extends IsScd0>(list: Scd0<T>[] | undefined) => {
+  return useMemo(() => {
+    if (!list || !Array.isArray(list)) return [];
+    return list.filter(i => i && !i.isDeleted);
+  }, [list]);
+};
+
+export { useScd2, useScd0 };

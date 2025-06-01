@@ -7,7 +7,7 @@ export const _base = {
 };
 
 export const _scd0 = {
-  updatedAt: i.date().optional(),
+  updatedAt: i.date(),
   createdAt: i.date(),
   isDeleted: i.boolean(),
 };

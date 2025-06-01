@@ -1,11 +1,12 @@
 "use client";
-import type { EntryType, Scd, TagType } from "@/types/db";
+import type { EntryType, MealType, Scd2, TagType } from "@/types/db";
 import { Card, CardHeader } from "@heroui/react";
 import { useEditor } from "../lib/editor";
 import { EntryForm } from "./EntryForm";
 
 interface EntryProps {
-  entry?: Scd<EntryType> & {
+  entry?: Scd2<EntryType> & {
+    meals: MealType[];
     tags: TagType[];
   };
 }
@@ -19,7 +20,7 @@ const Entry = ({ entry }: EntryProps) => {
       isHoverable
       onPress={() =>
         openEditor({
-          title: entry ? "Gericht bearbeiten" : "Gericht erstellen",
+          title: entry ? "Eintrag bearbeiten" : "Eintrag erstellen",
           children: <EntryForm entry={entry} />,
         })
       }

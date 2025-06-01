@@ -2,21 +2,25 @@
 
 import { db } from "@/db";
 import { id } from "@instantdb/react";
-import type { EntryType, Scd, TagType } from "@/types/db";
+import type { EntryType, MealType, Scd2, TagType } from "@/types/db";
 import { Button, Form } from "@heroui/react";
 import { useEditor } from "../lib/editor";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Trash } from "@phosphor-icons/react";
+import { Select } from "../ui/select";
+import { useScd0 } from "@/lib/interface/instant";
 
 interface EntryProps {
-  entry?: Scd<EntryType> & {
+  entry?: Scd2<EntryType> & {
+    meals: MealType[];
     tags: TagType[];
   };
 }
 
 type FieldValues = {
   title: string;
+  meals: string[];
   tags: string[];
 };
 
@@ -26,17 +30,15 @@ const EntryForm = ({ entry }: EntryProps) => {
   const { closeEditor } = useEditor();
 
   const { data } = db.useQuery({
-    entries: {
-      meals:{},
-      $: {
-        where: {
-          id: entry?.origin.id || "",
-        },
+    meals: {
+      entries: {
+        origin: {},
       },
     },
   });
 
-  console.log(data)
+  const availableMeals = useScd0(data?.meals);
+  const entryMeals = useScd0(entry?.meals);
 
   const {
     control,
@@ -45,12 +47,13 @@ const EntryForm = ({ entry }: EntryProps) => {
   } = useForm<FieldValues>({
     defaultValues: {
       title: entry?.title || "",
-      tags: entry?.tags?.map(tag => tag.id) || [],
+      meals: entryMeals.map(meal => meal?.id) || [],
+      tags: entry?.tags?.map(tag => tag?.id) || [],
     },
     mode: "onChange",
   });
 
-  const handleCreate = (values: { title: string }) => {
+  const handleCreate = (values: FieldValues) => {
     const newId = id();
     db.transact(
       db.tx.entries[newId]
@@ -60,11 +63,11 @@ const EntryForm = ({ entry }: EntryProps) => {
           createdAt: Date.now(),
           isDeleted: false,
         })
-        .link({ createdBy: user?.id, origin: newId }),
+        .link({ createdBy: user?.id, origin: newId, meals: values.meals }),
     );
   };
 
-  const handleUpdate = (values: { title: string }) =>
+  const handleUpdate = (values: FieldValues) =>
     db.transact(
       db.tx.entries[id()]
         .update({
@@ -76,6 +79,7 @@ const EntryForm = ({ entry }: EntryProps) => {
         .link({
           createdBy: user?.id,
           origin: entry?.origin.id,
+          meals: values.meals,
         }),
     );
 
@@ -110,6 +114,18 @@ const EntryForm = ({ entry }: EntryProps) => {
   return (
     <Form onSubmit={submit}>
       <Input size="lg" autoFocus={!entry} control={control} name="title" />
+      <Select
+        size="lg"
+        name="meals"
+        control={control}
+        aria-label="Gericht Zutaten"
+        selectionMode="multiple"
+        placeholder="Hinzufügen"
+        items={availableMeals.map(meal => ({
+          key: meal?.id,
+          children: meal?.title,
+        }))}
+      />
       <div className="flex w-full">
         {entry && (
           <Button isIconOnly color="danger" onPress={handleDelete}>

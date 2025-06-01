@@ -2,31 +2,23 @@
 import { Entry } from "@/components/shopping/Entry";
 import { Meal } from "@/components/shopping/Meal";
 import { db } from "@/db";
-import type { AppSchema } from "@/db/instant.schema";
-import useScd from "@/lib/interface/useScd";
-import type { EntryType, Scd, TagType } from "@/types/db";
+import { useScd0, useScd2 } from "@/lib/interface/instant";
 import { Divider } from "@heroui/react";
-import type { InstaQLParams } from "@instantdb/react";
 
 const Page = () => {
   const { isLoading, data } = db.useQuery({
     entries: {
       origin: {},
       tags: {},
+      meals: {},
     },
-    meals: {
-      origin: {},
-    },
-  } satisfies InstaQLParams<AppSchema>);
+    meals: {},
+  });
 
-  const entries = useScd(
-    (data?.entries as Scd<
-      EntryType & {
-        tags: TagType[];
-      }
-    >[]) || [],
-  );
-  const meals = useScd(data?.meals as Scd<EntryType>[]);
+  const entries = useScd2(data?.entries);
+  const meals = useScd0(data?.meals);
+
+  if (!data) return <div>No data available</div>;
 
   if (isLoading) return <div>Loading...</div>;
 

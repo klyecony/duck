@@ -1,17 +1,12 @@
 "use client";
-import type { EntryType, MealType, Scd } from "@/types/db";
+import type { MealType } from "@/types/db";
 import { Card, CardHeader } from "@heroui/react";
 import { useEditor } from "../lib/editor";
 import MealForm from "./MealForm";
 
 interface MealProps {
-  meal?: Scd<
-    MealType & {
-      entries?: Scd<EntryType>[];
-    }
-  >;
+  meal?: MealType;
 }
-
 const Meal = ({ meal }: MealProps) => {
   const { openEditor } = useEditor();
 
