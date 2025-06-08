@@ -7,7 +7,7 @@ import { ModalStackProvider } from "@/components/ui/StackedModal";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <HeroUIProvider>
+    <HeroUIProvider locale="de-DE">
       <IconContext.Provider
         value={{
           size: 18,

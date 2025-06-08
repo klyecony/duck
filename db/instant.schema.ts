@@ -33,10 +33,10 @@ const _schema = i.schema({
       reverse: { on: "$users", has: "many", label: "meals" },
     },
     // SCD
-    entryScd: {
-      forward: { on: "entries", has: "many", label: "scd" },
-      reverse: { on: "entries", has: "one", label: "origin" },
-    },
+    // entryScd: {
+    //   forward: { on: "entries", has: "many", label: "scd" },
+    //   reverse: { on: "entries", has: "one", label: "origin" },
+    // },
     // Logic
     mealEntries: {
       forward: { on: "meals", has: "many", label: "entries" },

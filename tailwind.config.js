@@ -22,7 +22,7 @@ module.exports = {
             },
             secondary: {
               DEFAULT: "#ff4d00",
-              foreground: "#000000",
+              foreground: "#ffffff",
             },
             focus: "#0014ff",
           },

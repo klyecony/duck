@@ -5,7 +5,7 @@ export const _base = {
   title: i.string().indexed(),
   description: i.string().optional(),
 
-  isDeleted: i.boolean(),
+  deletedAt: i.date().optional(),
 };
 
 export const _scd0 = {

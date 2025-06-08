@@ -22,8 +22,8 @@ const Page = () => {
         <Tag
           key={tag.id}
           tag={tag}
-          isDisabled={tag.isDeleted}
-          onClose={() => db.transact(db.tx.tags[tag.id].update({ isDeleted: true }))}
+          isDisabled={!!tag.deletedAt}
+          onClose={() => db.transact(db.tx.tags[tag.id].update({ deletedAt: new Date().toISOString() }))}
           onClick={() => add(<TagForm tag={tag} />)}
         />
       ))}

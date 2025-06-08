@@ -16,7 +16,7 @@ const useScd2 = <T extends IsScd2>(list: Scd2<T>[] | undefined) => {
           return map;
         }, new Map<string, (typeof list)[number]>())
         .values()
-        .filter(i => !i.isDeleted),
+        .filter(i => !i.deletedAt),
     );
   }, [list]);
 };
@@ -24,7 +24,7 @@ const useScd2 = <T extends IsScd2>(list: Scd2<T>[] | undefined) => {
 const useScd0 = <T extends IsScd0>(list: Scd0<T>[] | undefined) => {
   return useMemo(() => {
     if (!list || !Array.isArray(list)) return [];
-    return list.filter(i => i && !i.isDeleted);
+    return list.filter(i => i && !i.deletedAt);
   }, [list]);
 };
 

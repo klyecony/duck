@@ -61,55 +61,47 @@ const EntryForm = ({ entry }: EntryProps) => {
   });
 
   const handleCreate = (values: FieldValues) => {
-    const newId = id();
     db.transact(
-      db.tx.entries[newId]
+      db.tx.entries[id()]
         .update({
           title: values.title,
           description: "",
           createdAt: Date.now(),
-          isDeleted: false,
         })
         .link({
           createdBy: user?.id,
-          origin: newId,
           meals: values.meals,
           tags: values.tags,
         }),
     );
   };
 
-  const handleUpdate = (values: FieldValues) =>
+  const handleUpdate = (values: FieldValues) => {
+    if (!entry) return;
     db.transact(
-      db.tx.entries[id()]
+      db.tx.entries[entry.id]
         .update({
           title: values.title,
-          description: entry?.description,
-          isDeleted: false,
-          createdAt: Date.now(),
+          updatedAt: Date.now(),
         })
-        .link({
-          createdBy: user?.id,
-          origin: entry?.origin.id,
-          meals: values.meals,
-          tags: values.tags,
+        .unlink({
+          tags: entry.tags.map(tag => tag?.id).filter((id): id is string => typeof id === "string"),
         }),
     );
+    db.transact(
+      db.tx.entries[entry.id].link({
+        tags: values.tags,
+      }),
+    );
+  };
 
   const handleDelete = () => {
     if (!entry) return;
     db.transact(
-      db.tx.entries[id()]
-        .update({
-          title: entry.title,
-          description: entry?.description,
-          isDeleted: true,
-          createdAt: Date.now(),
-        })
-        .link({
-          createdBy: user?.id,
-          origin: entry?.origin.id,
-        }),
+      db.tx.meals[entry.id].update({
+        deletedAt: new Date().toISOString(),
+        updatedAt: Date.now(),
+      }),
     );
     close();
   };

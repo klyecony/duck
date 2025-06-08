@@ -1,13 +1,14 @@
 import { i } from "@instantdb/react";
-import { _scd0, _scd2 } from "./__base";
+import { _scd0 } from "./__base";
 
 export const entry = {
-  ..._scd2,
-  isDone: i.boolean(),
+  ..._scd0,
+  doneAt: i.date().optional(),
+  paidAt: i.date().optional(),
 };
 
 export const meal = {
   ..._scd0,
-  planned: i.date().optional(),
-  isDone: i.boolean(),
+  plannedAt: i.date().optional(),
+  doneAt: i.date().optional(),
 };

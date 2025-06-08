@@ -13,6 +13,7 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(({ tag, ...props }, ref) => {
       ref={ref}
       {...props}
       variant="light"
+      radius="sm"
       style={{
         backgroundColor: tag?.color ? tag.color : "#ffffff",
         color: tag?.color ? getContrastColor(tag.color) : "#000000",

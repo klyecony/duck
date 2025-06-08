@@ -26,7 +26,7 @@ const Select = forwardRef<
   props.children = props?.children
     ? props?.children
     : (item: { key: string; label: string }) => (
-        <SelectItem {...item} key={item.key} color={props.color || "primary"} />
+        <SelectItem {...item} key={item.key} color={props.color || "secondary"} />
       );
 
   if (!control) return <ExtendedSelect {...props} ref={ref as any} />;

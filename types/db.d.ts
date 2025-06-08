@@ -5,7 +5,7 @@ export type IsScd0 =
   | ({
       id: string;
       updatedAt: string | number;
-      isDeleted: boolean;
+      deletedAt?: string | number;
     } & Record<string, unknown>)
   | undefined;
 
@@ -13,7 +13,7 @@ export type IsScd2 =
   | ({
       id: string;
       createdAt: string | number;
-      isDeleted: boolean;
+      deletedAt?: string | number;
     } & Record<string, unknown>)
   | undefined;
 

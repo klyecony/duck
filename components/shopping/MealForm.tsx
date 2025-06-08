@@ -11,6 +11,8 @@ import { useScd0 } from "@/lib/interface/instant";
 import { Select } from "../ui/Select";
 import { useModalStack } from "../ui/StackedModal";
 import { Text } from "../ui/Text";
+import { DateInput } from "../ui/DateInput";
+import { type CalendarDate, getLocalTimeZone, parseDate } from "@internationalized/date";
 
 interface MealFormProps {
   meal?: MealType & {
@@ -20,7 +22,8 @@ interface MealFormProps {
 
 type FieldValues = {
   title: string;
-  tags?: string[];
+  tags: string[];
+  plannedAt: CalendarDate;
 };
 
 const MealForm = ({ meal }: MealFormProps) => {
@@ -49,6 +52,9 @@ const MealForm = ({ meal }: MealFormProps) => {
     defaultValues: {
       title: meal?.title || "",
       tags: mealTags?.map(tag => tag?.id) || [],
+      plannedAt: meal?.plannedAt
+        ? parseDate(new Date(meal?.plannedAt).toLocaleDateString("en-CA"))
+        : undefined,
     },
     mode: "onChange",
   });
@@ -62,8 +68,7 @@ const MealForm = ({ meal }: MealFormProps) => {
           description: "",
           createdAt: Date.now(),
           updatedAt: Date.now(),
-          isDeleted: false,
-          isDone: false,
+          plannedAt: values.plannedAt.toDate(getLocalTimeZone()).toISOString(),
         })
         .link({ createdBy: user?.id, tags: values.tags }),
     );
@@ -76,11 +81,16 @@ const MealForm = ({ meal }: MealFormProps) => {
         .update({
           title: values.title,
           updatedAt: Date.now(),
+          plannedAt: values.plannedAt.toDate(getLocalTimeZone()).toISOString(),
         })
         .unlink({
           tags: meal.tags.map(tag => tag?.id).filter((id): id is string => typeof id === "string"),
-        })
-        .link({ tags: values.tags }),
+        }),
+    );
+    db.transact(
+      db.tx.meals[meal.id].link({
+        tags: values.tags,
+      }),
     );
   };
 
@@ -88,9 +98,7 @@ const MealForm = ({ meal }: MealFormProps) => {
     if (!meal) return;
     db.transact(
       db.tx.meals[meal.id].update({
-        isDeleted: true,
-        isDone: true,
-        updatedAt: Date.now(),
+        deletedAt: new Date().toISOString(),
       }),
     );
     close();
@@ -136,6 +144,7 @@ const MealForm = ({ meal }: MealFormProps) => {
               children: tag?.title,
             }))}
           />
+          <DateInput size="lg" name="plannedAt" control={control} aria-label="Geplantes Datum" />
           <div className="flex w-full">
             {meal && (
               <Button isIconOnly color="danger" onPress={handleDelete}>
