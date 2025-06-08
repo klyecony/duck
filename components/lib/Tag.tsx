@@ -4,7 +4,7 @@ import { Chip, type ChipProps } from "@heroui/react";
 import { forwardRef } from "react";
 
 interface TagProps extends ChipProps {
-  tag?: TagType;
+  tag: TagType;
 }
 
 const Tag = forwardRef<HTMLDivElement, TagProps>(({ tag, ...props }, ref) => {

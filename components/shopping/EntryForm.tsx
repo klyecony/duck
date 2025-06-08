@@ -4,11 +4,11 @@ import { db } from "@/db";
 import { id } from "@instantdb/react";
 import type { EntryType, MealType, Scd2, TagType } from "@/types/db";
 import { Button, Form } from "@heroui/react";
-import { useEditor } from "../lib/editor";
+import { useEditor } from "../lib/Editor";
 import { useForm } from "react-hook-form";
-import { Input } from "../ui/input";
+import { Input } from "../ui/Input";
 import { Trash } from "@phosphor-icons/react";
-import { Select } from "../ui/select";
+import { Select } from "../ui/Select";
 import { useScd0 } from "@/lib/interface/instant";
 
 interface EntryProps {

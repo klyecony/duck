@@ -7,6 +7,12 @@ const _schema = i.schema({
     $users: i.entity({
       email: i.any().unique().indexed(),
     }),
+    profiles: i.entity({
+      id: i.string().unique().indexed(),
+      name: i.string(),
+      icon: i.string(),
+      updatedAt: i.date(),
+    }),
     tags: i.entity({
       ..._scd0,
       color: i.string(),
@@ -15,6 +21,7 @@ const _schema = i.schema({
     meals: i.entity({ ...meal }),
   },
   links: {
+    // User
     // CreatedBy
     entryCreator: {
       forward: { on: "entries", has: "one", label: "createdBy" },

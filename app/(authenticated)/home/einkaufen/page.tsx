@@ -1,4 +1,5 @@
 "use client";
+import { Creator } from "@/components/lib/Creator";
 import { Entry } from "@/components/shopping/Entry";
 import { Meal } from "@/components/shopping/Meal";
 import { db } from "@/db";
@@ -26,17 +27,18 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex w-full">
+      <Creator />
+      <div className="flex w-full grow flex-col items-start justify-start pt-2 pl-2">
         {meals.map(meal => (
           <Meal key={meal.id} meal={meal} />
         ))}
-        <Meal />
       </div>
       <Divider />
-      {entries.map(entry => (
-        <Entry key={entry.id} entry={entry} />
-      ))}
-      <Entry />
+      <div className="flex w-full grow flex-col items-start justify-start pt-2 pl-2">
+        {entries.map(entry => (
+          <Entry key={entry.id} entry={entry} />
+        ))}
+      </div>
     </>
   );
 };

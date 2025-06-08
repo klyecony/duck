@@ -1,5 +1,5 @@
 "use client";
-import { Card, CardBody, CardHeader } from "@heroui/react";
+import { Card } from "@heroui/react";
 import { ShoppingBag } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 
@@ -7,15 +7,11 @@ const Page = () => {
   const router = useRouter();
 
   return (
-    <Card className="py-4" isPressable isHoverable onPress={() => router.push("/einkaufen")}>
-      <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
-        <p className="font-bold text-tiny uppercase"> Erledigt ?</p>
-        <h4 className="font-bold text-large">Einkaufslisten</h4>
-      </CardHeader>
-      <CardBody className="flex w-[180px] items-center justify-center overflow-visible py-2">
+    <div className="flex h-full w-full items-center justify-center">
+      <Card className="p-6" isPressable isHoverable onPress={() => router.push("/home/einkaufen")}>
         <ShoppingBag size={64} weight="thin" />
-      </CardBody>
-    </Card>
+      </Card>
+    </div>
   );
 };
 

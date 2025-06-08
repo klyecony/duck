@@ -1,9 +1,11 @@
 "use client";
 
-import { useEditor } from "@/components/lib/editor";
+import { useEditor } from "@/components/lib/Editor";
 import Tag from "@/components/lib/Tag";
 import { TagForm } from "@/components/lib/TagForm";
 import { db } from "@/db";
+import { Button } from "@heroui/react";
+import { Plus } from "@phosphor-icons/react";
 
 const Page = () => {
   const { openEditor } = useEditor();
@@ -30,14 +32,18 @@ const Page = () => {
           }
         />
       ))}
-      <Tag
-        onClick={() =>
+      <Button
+        isIconOnly
+        variant="ghost"
+        onPress={() =>
           openEditor({
             title: "Tag erstellen",
             children: <TagForm />,
           })
         }
-      />
+      >
+        <Plus />
+      </Button>
     </>
   );
 };

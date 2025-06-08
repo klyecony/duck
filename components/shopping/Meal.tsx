@@ -1,11 +1,16 @@
 "use client";
 import type { MealType, TagType } from "@/types/db";
-import { Card, CardHeader } from "@heroui/react";
-import { useEditor } from "../lib/editor";
+import { Button, Switch } from "@heroui/react";
+import { useEditor } from "../lib/Editor";
 import MealForm from "./MealForm";
+import Tag from "../lib/Tag";
+import { Text } from "../ui/Text";
+import { tx } from "@instantdb/react";
+import { db } from "@/db";
+import { Pen } from "@phosphor-icons/react";
 
 interface MealProps {
-  meal?: MealType & {
+  meal: MealType & {
     tags: TagType[];
   };
 }
@@ -13,20 +18,35 @@ const Meal = ({ meal }: MealProps) => {
   const { openEditor } = useEditor();
 
   return (
-    <Card
-      isPressable
-      isHoverable
-      onPress={() =>
-        openEditor({
-          title: meal ? "Gericht bearbeiten" : "Gericht erstellen",
-          children: <MealForm meal={meal} />,
-        })
-      }
-    >
-      <CardHeader className="flex-col items-start px-4 pt-2 pb-0">
-        <h4 className="font-bold text-large">{meal?.title || "Erstellen"}</h4>
-      </CardHeader>
-    </Card>
+    <div className="flex w-full items-center justify-between gap-1">
+      <Text variant="large" weight="bold" behave="hug">
+        {meal.title}
+      </Text>
+      <div className="flex grow gap-1">
+        {meal?.tags.map(tag => (
+          <Tag size="sm" key={tag?.id} tag={tag} />
+        ))}
+      </div>
+      <Switch
+        color="success"
+        size="sm"
+        isSelected={meal.isDone}
+        onChange={() => db.transact(tx.meals[meal.id].update({ isDone: !meal.isDone }))}
+      />
+      <Button
+        isIconOnly
+        size="sm"
+        variant="light"
+        onPress={() =>
+          openEditor({
+            title: "Gericht bearbeiten",
+            children: <MealForm meal={meal} />,
+          })
+        }
+      >
+        <Pen />
+      </Button>
+    </div>
   );
 };
 

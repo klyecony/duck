@@ -3,9 +3,9 @@
 import { db } from "@/db";
 import { id } from "@instantdb/react";
 import { Form } from "@heroui/react";
-import { useEditor } from "../lib/editor";
+import { useEditor } from "./Editor";
 import { useForm } from "react-hook-form";
-import { Input } from "../ui/input";
+import { Input } from "../ui/Input";
 import type { TagType } from "@/types/db";
 import { ColorInput } from "../ui/ColorInput";
 

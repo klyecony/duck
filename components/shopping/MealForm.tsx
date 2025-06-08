@@ -4,12 +4,12 @@ import { db } from "@/db";
 import { id } from "@instantdb/react";
 import type { MealType, TagType } from "@/types/db";
 import { Button, Form } from "@heroui/react";
-import { useEditor } from "../lib/editor";
+import { useEditor } from "../lib/Editor";
 import { useForm } from "react-hook-form";
-import { Input } from "../ui/input";
+import { Input } from "../ui/Input";
 import { Trash } from "@phosphor-icons/react";
 import { useScd0 } from "@/lib/interface/instant";
-import { Select } from "../ui/select";
+import { Select } from "../ui/Select";
 
 interface MealFormProps {
   meal?: MealType & {
@@ -55,6 +55,7 @@ const MealForm = ({ meal }: MealFormProps) => {
           createdAt: Date.now(),
           updatedAt: Date.now(),
           isDeleted: false,
+          isDone: false,
         })
         .link({ createdBy: user?.id, tags: values.tags }),
     );
@@ -69,6 +70,9 @@ const MealForm = ({ meal }: MealFormProps) => {
           title: values.title,
           updatedAt: Date.now(),
         })
+        .unlink({
+          tags: meal.tags.map(tag => tag?.id).filter((id): id is string => typeof id === "string"),
+        })
         .link({ tags: values.tags }),
     );
   };
@@ -78,6 +82,7 @@ const MealForm = ({ meal }: MealFormProps) => {
     db.transact(
       db.tx.meals[meal.id].update({
         isDeleted: true,
+        isDone: true,
         updatedAt: Date.now(),
       }),
     );

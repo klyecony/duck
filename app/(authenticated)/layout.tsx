@@ -16,8 +16,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
   if (isLoading || !user) return null;
 
   return (
-    <div className="flex h-dvh w-dvw flex-col items-center justify-center gap-2">
-      {children}
-    </div>
+    <div className="relative h-dvh max-h-full w-dvw max-w-full overflow-x-hidden">{children}</div>
   );
 }

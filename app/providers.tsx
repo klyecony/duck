@@ -3,7 +3,7 @@
 import type * as React from "react";
 import { IconContext } from "@phosphor-icons/react";
 import { HeroUIProvider, ToastProvider } from "@heroui/react";
-import { EditorProvider } from "@/components/lib/editor";
+import { EditorProvider } from "@/components/lib/Editor";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (

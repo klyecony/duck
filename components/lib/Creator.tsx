@@ -1,0 +1,133 @@
+"use client";
+
+import type React from "react";
+import { useRef } from "react";
+import { BowlFood, ListChecks, Notches, Plus } from "@phosphor-icons/react";
+import { Button, Card, CardBody, CardHeader } from "@heroui/react";
+import { useEditor } from "./Editor";
+import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
+import MealForm from "../shopping/MealForm";
+import { EntryForm } from "../shopping/EntryForm";
+
+const Creator = () => {
+  const { openEditor } = useEditor();
+  const ref = useRef<HTMLDivElement>(null);
+  const size = useWindowSize();
+  const [position, setPosition] = useLocalStorage("creatorPosition", { x: 0, y: 0 });
+
+  const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
+
+  const startDrag = (
+    clientX: number,
+    clientY: number,
+    stopEvent: "mouseup" | "touchend",
+    moveEvent: "mousemove" | "touchmove",
+  ) => {
+    const startX = clientX;
+    const startY = clientY;
+    const initialX = position.x;
+    const initialY = position.y;
+
+    const handleMove = (e: MouseEvent | TouchEvent) => {
+      const currentX = "touches" in e ? e.touches[0].clientX : e.clientX;
+      const currentY = "touches" in e ? e.touches[0].clientY : e.clientY;
+      const dx = currentX - startX;
+      const dy = currentY - startY;
+
+      if (ref.current && size.width && size.height) {
+        const node = ref.current;
+        const extraRightMargin = 30;
+        const extraBottomMargin = 16;
+
+        const newX = clamp(initialX + dx, 0, size.width - node.offsetWidth - extraRightMargin);
+        const newY = clamp(initialY + dy, 0, size.height - node.offsetHeight - extraBottomMargin);
+
+        setPosition({ x: newX, y: newY });
+      }
+    };
+
+    const stop = () => {
+      window.removeEventListener(moveEvent, handleMove);
+      window.removeEventListener(stopEvent, stop);
+    };
+
+    window.addEventListener(moveEvent, handleMove, { passive: false });
+    window.addEventListener(stopEvent, stop);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    startDrag(e.clientX, e.clientY, "mouseup", "mousemove");
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      startDrag(e.touches[0].clientX, e.touches[0].clientY, "touchend", "touchmove");
+    }
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="absolute z-50 touch-none"
+      style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+    >
+      <Notches
+        size={16}
+        className="-right-4 -top-4 absolute rotate-90 cursor-move text-default-500"
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+      />
+
+      <Button
+        color="primary"
+        variant="shadow"
+        isIconOnly
+        onPress={() =>
+          openEditor({
+            children: (
+              <div className="flex gap-2">
+                <Card
+                  className="aspect-square grow p-2"
+                  isPressable
+                  isHoverable
+                  onPress={() =>
+                    openEditor({
+                      title: "Gericht erstellen",
+                      children: <MealForm />,
+                    })
+                  }
+                >
+                  <CardHeader>Gericht</CardHeader>
+                  <CardBody>
+                    <BowlFood size="full" className="grow" weight="thin" />
+                  </CardBody>
+                </Card>
+                <Card
+                  className="aspect-square grow p-2"
+                  isPressable
+                  isHoverable
+                  onPress={() =>
+                    openEditor({
+                      title: "Eintrag erstellen",
+                      children: <EntryForm />,
+                    })
+                  }
+                >
+                  <CardHeader>Eintrag</CardHeader>
+                  <CardBody>
+                    <ListChecks size="full" className="grow" weight="thin" />
+                  </CardBody>
+                </Card>
+              </div>
+            ),
+          })
+        }
+      >
+        <Plus size={24} />
+      </Button>
+    </div>
+  );
+};
+
+export { Creator };
