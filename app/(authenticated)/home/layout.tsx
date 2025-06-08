@@ -1,7 +1,7 @@
 "use client";
-import { useEditor } from "@/components/lib/Editor";
 import { ProfileForm } from "@/components/lib/ProfileForm";
 import { type USER_ICON_MAP, userIcon } from "@/components/ui/config/icon";
+import { useModalStack } from "@/components/ui/StackedModal";
 import { db } from "@/db";
 import { Button } from "@heroui/react";
 import { Planet } from "@phosphor-icons/react";
@@ -24,7 +24,7 @@ export default function Layout({
     },
   });
 
-  const { openEditor } = useEditor();
+  const { add } = useModalStack();
   return (
     <div className="flex h-full w-full flex-col p-2">
       <div className="flex w-full items-start justify-between">
@@ -34,12 +34,7 @@ export default function Layout({
         <Button
           isIconOnly
           variant="light"
-          onPress={() =>
-            openEditor({
-              title: "Profil bearbeiten",
-              children: <ProfileForm profile={data?.profiles[0]} />,
-            })
-          }
+          onPress={() => add(<ProfileForm profile={data?.profiles[0]} />)}
         >
           {userIcon(data?.profiles[0]?.icon as keyof typeof USER_ICON_MAP)}
         </Button>

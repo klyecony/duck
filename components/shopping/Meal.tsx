@@ -1,13 +1,13 @@
 "use client";
 import type { MealType, TagType } from "@/types/db";
 import { Button, Switch } from "@heroui/react";
-import { useEditor } from "../lib/Editor";
 import MealForm from "./MealForm";
 import Tag from "../lib/Tag";
 import { Text } from "../ui/Text";
 import { tx } from "@instantdb/react";
 import { db } from "@/db";
 import { Pen } from "@phosphor-icons/react";
+import { useModalStack } from "../ui/StackedModal";
 
 interface MealProps {
   meal: MealType & {
@@ -15,7 +15,7 @@ interface MealProps {
   };
 }
 const Meal = ({ meal }: MealProps) => {
-  const { openEditor } = useEditor();
+  const { add } = useModalStack();
 
   return (
     <div className="flex w-full items-center justify-between gap-1">
@@ -33,17 +33,7 @@ const Meal = ({ meal }: MealProps) => {
         isSelected={meal.isDone}
         onChange={() => db.transact(tx.meals[meal.id].update({ isDone: !meal.isDone }))}
       />
-      <Button
-        isIconOnly
-        size="sm"
-        variant="light"
-        onPress={() =>
-          openEditor({
-            title: "Gericht bearbeiten",
-            children: <MealForm meal={meal} />,
-          })
-        }
-      >
+      <Button isIconOnly size="sm" variant="light" onPress={() => add(<MealForm meal={meal} />)}>
         <Pen />
       </Button>
     </div>

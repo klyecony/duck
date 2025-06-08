@@ -3,14 +3,23 @@
 import type React from "react";
 import { useRef } from "react";
 import { BowlFood, ListChecks, Notches, Plus } from "@phosphor-icons/react";
-import { Button, Card, CardBody, CardHeader } from "@heroui/react";
-import { useEditor } from "./Editor";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+} from "@heroui/react";
 import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
 import MealForm from "../shopping/MealForm";
 import { EntryForm } from "../shopping/EntryForm";
+import { useModalStack } from "../ui/StackedModal";
+import { Text } from "../ui/Text";
 
 const Creator = () => {
-  const { openEditor } = useEditor();
+  const { add } = useModalStack();
   const ref = useRef<HTMLDivElement>(null);
   const size = useWindowSize();
   const [position, setPosition] = useLocalStorage("creatorPosition", { x: 0, y: 0 });
@@ -84,44 +93,29 @@ const Creator = () => {
         variant="shadow"
         isIconOnly
         onPress={() =>
-          openEditor({
-            children: (
-              <div className="flex gap-2">
-                <Card
-                  className="aspect-square grow p-2"
-                  isPressable
-                  isHoverable
-                  onPress={() =>
-                    openEditor({
-                      title: "Gericht erstellen",
-                      children: <MealForm />,
-                    })
-                  }
-                >
-                  <CardHeader>Gericht</CardHeader>
-                  <CardBody>
-                    <BowlFood size="full" className="grow" weight="thin" />
+          add(
+            <ModalContent>
+              <ModalHeader>
+                <Text variant="large" weight="bold">
+                  Erstellen
+                </Text>
+              </ModalHeader>
+              <ModalBody className="grid grid-cols-2 gap-2">
+                <Card className="p-2" isPressable isHoverable onPress={() => add(<MealForm />)}>
+                  <CardHeader className="pb-0">Gericht</CardHeader>
+                  <CardBody className="flex flex-col items-start justify-start">
+                    <BowlFood size={52} weight="thin" />
                   </CardBody>
                 </Card>
-                <Card
-                  className="aspect-square grow p-2"
-                  isPressable
-                  isHoverable
-                  onPress={() =>
-                    openEditor({
-                      title: "Eintrag erstellen",
-                      children: <EntryForm />,
-                    })
-                  }
-                >
-                  <CardHeader>Eintrag</CardHeader>
-                  <CardBody>
-                    <ListChecks size="full" className="grow" weight="thin" />
+                <Card className="p-2" isPressable isHoverable onPress={() => add(<EntryForm />)}>
+                  <CardHeader className="pb-0">Eintrag</CardHeader>
+                  <CardBody className="flex flex-col items-start justify-start">
+                    <ListChecks size={52} weight="thin" />
                   </CardBody>
                 </Card>
-              </div>
-            ),
-          })
+              </ModalBody>
+            </ModalContent>,
+          )
         }
       >
         <Plus size={24} />

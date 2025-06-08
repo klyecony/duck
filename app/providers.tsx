@@ -3,7 +3,7 @@
 import type * as React from "react";
 import { IconContext } from "@phosphor-icons/react";
 import { HeroUIProvider, ToastProvider } from "@heroui/react";
-import { EditorProvider } from "@/components/lib/Editor";
+import { ModalStackProvider } from "@/components/ui/StackedModal";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -23,7 +23,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
             hideIcon: true,
           }}
         />
-        <EditorProvider>{children}</EditorProvider>
+        <ModalStackProvider>{children}</ModalStackProvider>
       </IconContext.Provider>
     </HeroUIProvider>
   );

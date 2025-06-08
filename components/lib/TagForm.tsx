@@ -2,12 +2,13 @@
 
 import { db } from "@/db";
 import { id } from "@instantdb/react";
-import { Form } from "@heroui/react";
-import { useEditor } from "./Editor";
+import { Form, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/Input";
 import type { TagType } from "@/types/db";
 import { ColorInput } from "../ui/ColorInput";
+import { useModalStack } from "../ui/StackedModal";
+import { Text } from "../ui/Text";
 
 type FormValues = {
   title: string;
@@ -19,7 +20,7 @@ interface TagProps {
 }
 
 const TagForm = ({ tag }: TagProps) => {
-  const { closeEditor } = useEditor();
+  const { close } = useModalStack();
 
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
@@ -59,22 +60,31 @@ const TagForm = ({ tag }: TagProps) => {
       if (tag) {
         if (values.title === "") {
           handleDelete();
-          return closeEditor();
+          return close();
         }
         handleUpdate(values);
       } else {
-        if (values.title === "") return closeEditor();
+        if (values.title === "") return close();
         handleCreate(values);
       }
     }
-    closeEditor();
+    close();
   });
 
   return (
-    <Form onSubmit={submit}>
-      <Input size="lg" autoFocus={!tag} control={control} name="title" onClear={handleDelete} />
-      <ColorInput control={control} name="color" />
-    </Form>
+    <ModalContent>
+      <ModalHeader>
+        <Text variant="large" weight="bold">
+          {tag ? "Tag bearbeiten" : "Tag erstellen"}
+        </Text>
+      </ModalHeader>
+      <ModalBody>
+        <Form onSubmit={submit}>
+          <Input size="lg" autoFocus={!tag} control={control} name="title" onClear={handleDelete} />
+          <ColorInput control={control} name="color" />
+        </Form>
+      </ModalBody>
+    </ModalContent>
   );
 };
 

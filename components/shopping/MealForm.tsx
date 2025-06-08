@@ -3,13 +3,14 @@
 import { db } from "@/db";
 import { id } from "@instantdb/react";
 import type { MealType, TagType } from "@/types/db";
-import { Button, Form } from "@heroui/react";
-import { useEditor } from "../lib/Editor";
+import { Button, Form, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/Input";
 import { Trash } from "@phosphor-icons/react";
 import { useScd0 } from "@/lib/interface/instant";
 import { Select } from "../ui/Select";
+import { useModalStack } from "../ui/StackedModal";
+import { Text } from "../ui/Text";
 
 interface MealFormProps {
   meal?: MealType & {
@@ -24,7 +25,7 @@ type FieldValues = {
 
 const MealForm = ({ meal }: MealFormProps) => {
   const { user } = db.useAuth();
-  const { closeEditor } = useEditor();
+  const { close } = useModalStack();
 
   const { data } = db.useQuery({
     tags: {},
@@ -59,7 +60,7 @@ const MealForm = ({ meal }: MealFormProps) => {
         })
         .link({ createdBy: user?.id, tags: values.tags }),
     );
-    closeEditor();
+    close();
   };
 
   const handleUpdate = (values: FieldValues) => {
@@ -96,41 +97,50 @@ const MealForm = ({ meal }: MealFormProps) => {
         handleCreate(values);
       }
     }
-    closeEditor();
+    close();
   });
 
   return (
-    <Form onSubmit={submit}>
-      <Input
-        size="lg"
-        autoFocus={!meal}
-        name="title"
-        aria-label="Gericht Titel"
-        control={control}
-      />
-      <Select
-        size="lg"
-        name="tags"
-        control={control}
-        aria-label="Gericht Tags"
-        selectionMode="multiple"
-        placeholder="Hinzufügen"
-        items={availableTags.map(tag => ({
-          key: tag?.id,
-          children: tag?.title,
-        }))}
-      />
-      <div className="flex w-full">
-        {meal && (
-          <Button isIconOnly color="danger" onPress={handleDelete}>
-            <Trash />
-          </Button>
-        )}
-        <Button fullWidth type="submit" color="primary" isDisabled={!isDirty} className="ml-2">
-          {meal ? "Aktualisieren" : "Erstellen"}
-        </Button>
-      </div>
-    </Form>
+    <ModalContent>
+      <ModalHeader>
+        <Text variant="large" weight="bold">
+          {meal ? "Gericht bearbeiten" : "Neues Gericht erstellen"}
+        </Text>
+      </ModalHeader>
+      <ModalBody className="overflow-scroll">
+        <Form onSubmit={submit}>
+          <Input
+            size="lg"
+            autoFocus={!meal}
+            name="title"
+            aria-label="Gericht Titel"
+            control={control}
+          />
+          <Select
+            size="lg"
+            name="tags"
+            control={control}
+            aria-label="Gericht Tags"
+            selectionMode="multiple"
+            placeholder="Hinzufügen"
+            items={availableTags.map(tag => ({
+              key: tag?.id,
+              children: tag?.title,
+            }))}
+          />
+          <div className="flex w-full">
+            {meal && (
+              <Button isIconOnly color="danger" onPress={handleDelete}>
+                <Trash />
+              </Button>
+            )}
+            <Button fullWidth type="submit" color="primary" isDisabled={!isDirty} className="ml-2">
+              {meal ? "Aktualisieren" : "Erstellen"}
+            </Button>
+          </div>
+        </Form>
+      </ModalBody>
+    </ModalContent>
   );
 };
 
