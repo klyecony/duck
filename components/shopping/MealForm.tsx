@@ -29,6 +29,13 @@ const MealForm = ({ meal }: MealFormProps) => {
 
   const { data } = db.useQuery({
     tags: {},
+    profiles: {
+      $: {
+        where: {
+          id: user?.id || "",
+        },
+      },
+    },
   });
 
   const availableTags = useScd0(data?.tags);
@@ -60,7 +67,6 @@ const MealForm = ({ meal }: MealFormProps) => {
         })
         .link({ createdBy: user?.id, tags: values.tags }),
     );
-    close();
   };
 
   const handleUpdate = (values: FieldValues) => {
@@ -87,17 +93,19 @@ const MealForm = ({ meal }: MealFormProps) => {
         updatedAt: Date.now(),
       }),
     );
+    close();
   };
 
   const submit = handleSubmit(values => {
     if (isDirty) {
       if (meal) {
         handleUpdate(values);
+        close();
       } else {
         handleCreate(values);
+        !data?.profiles?.[0]?.isMultiple && close();
       }
     }
-    close();
   });
 
   return (

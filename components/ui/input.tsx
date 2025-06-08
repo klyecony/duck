@@ -6,7 +6,7 @@ import { Controller } from "react-hook-form";
 const ExtendedInput = extendVariants(BaseInput, {
   defaultVariants: {
     variant: "faded",
-    color: "default",
+    color: "secondary",
     size: "md",
     labelPlacement: "outside",
     placeholder: "Auswählen",
@@ -17,7 +17,7 @@ const ExtendedInput = extendVariants(BaseInput, {
 const ExtendedTextarea = extendVariants(BaseTextarea, {
   defaultVariants: {
     variant: "faded",
-    color: "default",
+    color: "secondary",
     size: "md",
     labelPlacement: "outside",
     placeholder: "Auswählen",

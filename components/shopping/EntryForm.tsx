@@ -27,12 +27,18 @@ type FieldValues = {
 
 const EntryForm = ({ entry }: EntryProps) => {
   const { user } = db.useAuth();
-
   const { close } = useModalStack();
 
   const { data } = db.useQuery({
     meals: {},
     tags: {},
+    profiles: {
+      $: {
+        where: {
+          id: user?.id || "",
+        },
+      },
+    },
   });
 
   const availableMeals = useScd0(data?.meals);
@@ -105,17 +111,19 @@ const EntryForm = ({ entry }: EntryProps) => {
           origin: entry?.origin.id,
         }),
     );
+    close();
   };
 
   const submit = handleSubmit(values => {
     if (isDirty) {
       if (entry) {
         handleUpdate(values);
+        close();
       } else {
         handleCreate(values);
+        !data?.profiles?.[0]?.isMultiple && close();
       }
     }
-    close();
   });
 
   return (
@@ -125,7 +133,7 @@ const EntryForm = ({ entry }: EntryProps) => {
           {entry ? "Eintrag bearbeiten" : "Neuen Eintrag erstellen"}
         </Text>
       </ModalHeader>
-      <ModalBody>
+      <ModalBody className="overflow-scroll">
         <Form onSubmit={submit}>
           <Input size="lg" autoFocus={!entry} control={control} name="title" />
           <Select

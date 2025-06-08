@@ -1,4 +1,4 @@
-import { Bird, Butterfly, Cat, Cow, Dog, Fish, Horse, Rabbit, User } from "@phosphor-icons/react";
+import { Bird, Butterfly, Cat, Cow, Dog, Fish, Rabbit, User } from "@phosphor-icons/react";
 
 const USER_ICON_MAP = {
   bird: <Bird />,
@@ -7,13 +7,12 @@ const USER_ICON_MAP = {
   cow: <Cow />,
   fish: <Fish />,
   rabbit: <Rabbit />,
-  horse: <Horse />,
   butterfly: <Butterfly />,
 };
 
 const availableUserIcons = Object.keys(USER_ICON_MAP) as (keyof typeof USER_ICON_MAP)[];
 
-const userIcon = (type: (keyof typeof USER_ICON_MAP) | undefined) => {
+const userIcon = (type: keyof typeof USER_ICON_MAP | undefined) => {
   if (!type) return <User />; // Default icon if type is undefined
   return USER_ICON_MAP[type] || <Cat />;
 };

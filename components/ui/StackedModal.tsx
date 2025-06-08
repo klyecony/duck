@@ -92,8 +92,8 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
             backdrop={visibleIndex === modals.length - 1 ? "blur" : "transparent"}
             shadow="none"
             classNames={{
-              base: "h-48",
-              body: "p-4 pt-0",
+              base: "h-64",
+              body: "p-4 pt-2",
             }}
           >
             {modal.children}

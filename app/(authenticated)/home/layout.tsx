@@ -28,14 +28,10 @@ export default function Layout({
   return (
     <div className="flex h-full w-full flex-col p-2">
       <div className="flex w-full items-start justify-between">
-        <Button isIconOnly variant="light" onPress={() => router.push("/home")}>
+        <Button isIconOnly variant="light" color="secondary" onPress={() => router.push("/home")}>
           <Planet />
         </Button>
-        <Button
-          isIconOnly
-          variant="light"
-          onPress={() => add(<ProfileForm profile={data?.profiles[0]} />)}
-        >
+        <Button isIconOnly variant="light" color="secondary" onPress={() => add(<ProfileForm />)}>
           {userIcon(data?.profiles[0]?.icon as keyof typeof USER_ICON_MAP)}
         </Button>
       </div>

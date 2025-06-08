@@ -3,15 +3,7 @@
 import type React from "react";
 import { useRef } from "react";
 import { BowlFood, ListChecks, Notches, Plus } from "@phosphor-icons/react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-} from "@heroui/react";
+import { Button, Card, CardBody, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
 import MealForm from "../shopping/MealForm";
 import { EntryForm } from "../shopping/EntryForm";
@@ -90,6 +82,7 @@ const Creator = () => {
 
       <Button
         color="primary"
+        size="lg"
         variant="shadow"
         isIconOnly
         onPress={() =>
@@ -102,15 +95,13 @@ const Creator = () => {
               </ModalHeader>
               <ModalBody className="grid grid-cols-2 gap-2">
                 <Card className="p-2" isPressable isHoverable onPress={() => add(<MealForm />)}>
-                  <CardHeader className="pb-0">Gericht</CardHeader>
-                  <CardBody className="flex flex-col items-start justify-start">
-                    <BowlFood size={52} weight="thin" />
+                  <CardBody className="flex items-center justify-center">
+                    <BowlFood size={64} weight="thin" />
                   </CardBody>
                 </Card>
                 <Card className="p-2" isPressable isHoverable onPress={() => add(<EntryForm />)}>
-                  <CardHeader className="pb-0">Eintrag</CardHeader>
-                  <CardBody className="flex flex-col items-start justify-start">
-                    <ListChecks size={52} weight="thin" />
+                  <CardBody className="flex items-center justify-center">
+                    <ListChecks size={64} weight="thin" />
                   </CardBody>
                 </Card>
               </ModalBody>

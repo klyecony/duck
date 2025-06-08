@@ -78,7 +78,7 @@ const TagForm = ({ tag }: TagProps) => {
           {tag ? "Tag bearbeiten" : "Tag erstellen"}
         </Text>
       </ModalHeader>
-      <ModalBody>
+      <ModalBody className="overflow-scroll">
         <Form onSubmit={submit}>
           <Input size="lg" autoFocus={!tag} control={control} name="title" onClear={handleDelete} />
           <ColorInput control={control} name="color" />

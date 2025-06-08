@@ -24,7 +24,7 @@ const Meal = ({ meal }: MealProps) => {
       </Text>
       <div className="flex grow gap-1">
         {meal?.tags.map(tag => (
-          <Tag size="sm" key={tag?.id} tag={tag} />
+          <Tag size="sm" variant="light" key={tag?.id} tag={tag} />
         ))}
       </div>
       <Switch

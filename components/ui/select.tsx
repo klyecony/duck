@@ -7,7 +7,7 @@ import { ListboxItem as SelectItem } from "@heroui/react";
 const ExtendedSelect = extendVariants(BaseSelect, {
   defaultVariants: {
     variant: "faded",
-    color: "default",
+    color: "secondary",
     size: "md",
     labelPlacement: "outside",
     placeholder: "Auswählen",

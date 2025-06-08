@@ -12,6 +12,7 @@ const _schema = i.schema({
       name: i.string(),
       icon: i.string(),
       updatedAt: i.date(),
+      isMultiple: i.boolean(),
     }),
     tags: i.entity({
       ..._scd0,

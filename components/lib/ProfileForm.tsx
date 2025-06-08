@@ -1,49 +1,25 @@
 "use client";
 
 import { db } from "@/db";
-import { Button, Form, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
-import { useForm } from "react-hook-form";
+import { Button, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { Input } from "../ui/Input";
 import { availableUserIcons, userIcon } from "../ui/config/icon";
-import type { ProfileType } from "@/types/db";
-import { useModalStack } from "../ui/StackedModal";
 import { Text } from "../ui/Text";
+import { Switch } from "../ui/Switch";
 
-type FormValues = {
-  name: string;
-  icon: string;
-};
-interface ProfileFormProps {
-  profile: ProfileType;
-}
-
-const ProfileForm = ({ profile }: ProfileFormProps) => {
-  const { close } = useModalStack();
+const ProfileForm = () => {
   const { user } = db.useAuth();
-
-  const { control, handleSubmit, setValue, watch } = useForm<FormValues>({
-    defaultValues: {
-      name: profile?.name,
-      icon: profile?.icon,
+  const { data } = db.useQuery({
+    profiles: {
+      $: {
+        where: {
+          id: user?.id || "",
+        },
+      },
     },
-    mode: "onChange",
   });
 
-  const handleUpdate = (values: FormValues) =>
-    user &&
-    db.transact(
-      db.tx.profiles[user?.id].update({
-        id: user.id,
-        name: values.name,
-        icon: values.icon,
-        updatedAt: Date.now(),
-      }),
-    );
-
-  const submit = handleSubmit(values => {
-    handleUpdate(values);
-    close();
-  });
+  const profile = data?.profiles?.[0];
 
   return (
     <ModalContent>
@@ -52,23 +28,36 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
           Profil Bearbeiten
         </Text>
       </ModalHeader>
-      <ModalBody>
-        <Form onSubmit={submit}>
-          <Input size="lg" control={control} name="name" />
+      {profile && (
+        <ModalBody className="overflow-scroll">
+          <Input
+            size="lg"
+            name="name"
+            value={profile.name}
+            onValueChange={v => db.transact(db.tx.profiles[profile.id].update({ name: v }))}
+          />
           <div className="flex flex-wrap items-start justify-start gap-2 pt-2">
             {availableUserIcons.map(icon => (
               <Button
                 key={icon}
-                variant={icon === watch("icon") ? "solid" : "light"}
+                variant="light"
+                color={profile.icon === icon ? "secondary" : "default"}
                 isIconOnly
-                onPress={() => setValue("icon", icon)}
+                onPress={() => db.transact(db.tx.profiles[profile.id].update({ icon: icon }))}
               >
                 {userIcon(icon)}
               </Button>
             ))}
           </div>
-        </Form>
-      </ModalBody>
+          <Switch
+            name="isMultiple"
+            isSelected={profile.isMultiple}
+            onValueChange={v => db.transact(db.tx.profiles[profile.id].update({ isMultiple: v }))}
+          >
+            <Text>Mehrfach erstellen?</Text>
+          </Switch>
+        </ModalBody>
+      )}
     </ModalContent>
   );
 };
