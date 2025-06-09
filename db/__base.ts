@@ -8,6 +8,15 @@ export const _base = {
   deletedAt: i.date().optional(),
 };
 
+
+export const profiles = {
+  id: i.string().unique().indexed(),
+  name: i.string(),
+  icon: i.string(),
+  updatedAt: i.date(),
+  isMultiple: i.boolean(),
+};
+
 export const _scd0 = {
   ..._base,
   updatedAt: i.date(),

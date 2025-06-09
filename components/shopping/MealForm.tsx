@@ -151,7 +151,13 @@ const MealForm = ({ meal }: MealFormProps) => {
                 <Trash />
               </Button>
             )}
-            <Button fullWidth type="submit" color="primary" isDisabled={!isDirty} className="ml-2">
+            <Button
+              fullWidth
+              type="submit"
+              color="primary"
+              isDisabled={!isDirty}
+              className={meal ? "ml-2" : ""}
+            >
               {meal ? "Aktualisieren" : "Erstellen"}
             </Button>
           </div>

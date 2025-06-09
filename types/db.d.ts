@@ -17,11 +17,11 @@ export type IsScd2 =
     } & Record<string, unknown>)
   | undefined;
 
-export type EntryType = InstaQLEntity<typeof schema, "entries"> | undefined;
-export type MealType = InstaQLEntity<typeof schema, "meals"> | undefined;
-export type ProfileType = InstaQLEntity<typeof schema, "profiles"> | undefined;
+export type EntryType = InstaQLEntity<typeof schema, "entries">;
+export type MealType = InstaQLEntity<typeof schema, "meals">;
+export type ProfileType = InstaQLEntity<typeof schema, "profiles">;
 
-export type TagType = InstaQLEntity<typeof schema, "tags"> | undefined;
+export type TagType = InstaQLEntity<typeof schema, "tags">;
 
 export type Scd0<T extends IsScd0> = T;
 

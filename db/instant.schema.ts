@@ -1,18 +1,21 @@
 import { type DataAttrDef, i } from "@instantdb/react";
 import { entry, meal } from "./shopping";
-import { _scd0 } from "./__base";
+import { _scd0, profiles } from "./__base";
 
 const _schema = i.schema({
+  rooms: {
+    user: {
+      presence: i.entity({
+        ...profiles,
+      }),
+    },
+  },
   entities: {
     $users: i.entity({
       email: i.any().unique().indexed(),
     }),
     profiles: i.entity({
-      id: i.string().unique().indexed(),
-      name: i.string(),
-      icon: i.string(),
-      updatedAt: i.date(),
-      isMultiple: i.boolean(),
+      ...profiles,
     }),
     tags: i.entity({
       ..._scd0,

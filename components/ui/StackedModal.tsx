@@ -75,9 +75,7 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
       {children}
       {modals.map((modal, i) => {
         const visibleIndex = modals.length - 1 - i;
-        if (visibleIndex >= 3)
-          // 0 = topmost
-          return null;
+        if (visibleIndex >= 3) return null;
 
         const isTopMost = i === modals.length - 1;
         const motionProps = getMotionProps(visibleIndex, isTopMost);
@@ -92,7 +90,7 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
             backdrop={visibleIndex === modals.length - 1 ? "blur" : "transparent"}
             shadow="none"
             classNames={{
-              base: "h-64",
+              base: "h-full max-h-80",
               body: "p-4 pt-2",
             }}
           >

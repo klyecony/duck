@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { id } from "@instantdb/react";
-import type { EntryType, MealType, Scd2, TagType } from "@/types/db";
+import type { EntryType, MealType, TagType } from "@/types/db";
 import { Button, Form, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/Input";
@@ -13,7 +13,7 @@ import { useModalStack } from "../ui/StackedModal";
 import { Text } from "../ui/Text";
 
 interface EntryProps {
-  entry?: Scd2<EntryType> & {
+  entry?: EntryType & {
     meals: MealType[];
     tags: TagType[];
   };
@@ -85,11 +85,13 @@ const EntryForm = ({ entry }: EntryProps) => {
           updatedAt: Date.now(),
         })
         .unlink({
-          tags: entry.tags.map(tag => tag?.id).filter((id): id is string => typeof id === "string"),
+          meals: entry.meals.map(meal => meal?.id),
+          tags: entry.tags.map(tag => tag?.id),
         }),
     );
     db.transact(
       db.tx.entries[entry.id].link({
+        meals: values.meals,
         tags: values.tags,
       }),
     );
@@ -127,14 +129,20 @@ const EntryForm = ({ entry }: EntryProps) => {
       </ModalHeader>
       <ModalBody className="overflow-scroll">
         <Form onSubmit={submit}>
-          <Input size="lg" autoFocus={!entry} control={control} name="title" />
+          <Input
+            size="lg"
+            autoFocus={!entry}
+            control={control}
+            name="title"
+            placeholder="Eintrag"
+          />
           <Select
             size="lg"
             name="meals"
             control={control}
             aria-label="Gericht Zutaten"
             selectionMode="multiple"
-            placeholder="Hinzufügen"
+            placeholder="Gerichte"
             items={availableMeals.map(meal => ({
               key: meal?.id,
               children: meal?.title,
@@ -146,7 +154,7 @@ const EntryForm = ({ entry }: EntryProps) => {
             control={control}
             aria-label="Gericht Tags"
             selectionMode="multiple"
-            placeholder="Hinzufügen"
+            placeholder="Tags"
             items={availableTags.map(tag => ({
               key: tag?.id,
               children: tag?.title,
@@ -158,7 +166,13 @@ const EntryForm = ({ entry }: EntryProps) => {
                 <Trash />
               </Button>
             )}
-            <Button fullWidth type="submit" color="primary" isDisabled={!isDirty} className="ml-2">
+            <Button
+              fullWidth
+              type="submit"
+              color="primary"
+              isDisabled={!isDirty}
+              className={entry ? "ml-2" : ""}
+            >
               {entry ? "Aktualisieren" : "Erstellen"}
             </Button>
           </div>

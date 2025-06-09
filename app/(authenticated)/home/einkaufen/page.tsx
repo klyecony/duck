@@ -6,14 +6,18 @@ import MealForm from "@/components/shopping/MealForm";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
 import { db } from "@/db";
-import { useScd0, useScd2 } from "@/lib/interface/instant";
+import { useScd0 } from "@/lib/interface/instant";
+import type {} from "@/types/db";
 import { Accordion, AccordionItem, Checkbox, Chip, Divider } from "@heroui/react";
 import { tx } from "@instantdb/react";
 import { CaretDown } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
 
+
+
 const Page = () => {
   const { add } = useModalStack();
+  const formatter = useDateFormatter({ weekday: "long" });
 
   const { isLoading, data } = db.useQuery({
     entries: {
@@ -26,9 +30,7 @@ const Page = () => {
     },
   });
 
-  const formatter = useDateFormatter({ weekday: "long" });
-
-  const entries = useScd2(data?.entries);
+  const entries = useScd0(data?.entries);
   const meals = useScd0(data?.meals);
 
   if (!data) return <div>No data available</div>;
@@ -68,7 +70,7 @@ const Page = () => {
                   ))}
                 </div>
               </div>
-              <div className="grow" />
+              <div className="block grow" />
               <Checkbox
                 size="lg"
                 color="secondary"
