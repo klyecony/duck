@@ -5,10 +5,10 @@ import { useRef } from "react";
 import { BowlFood, ListChecks, Notches, Plus } from "@phosphor-icons/react";
 import { Button, Card, CardBody, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
-import MealForm from "../shopping/MealForm";
-import { EntryForm } from "../shopping/EntryForm";
-import { useModalStack } from "../ui/StackedModal";
-import { Text } from "../ui/Text";
+import MealForm from "@/components/shopping/MealForm";
+import { EntryForm } from "@/components/shopping/EntryForm";
+import { useModalStack } from "@/components/ui/StackedModal";
+import { Text } from "@/components/ui/Text";
 
 const Creator = () => {
   const { add } = useModalStack();

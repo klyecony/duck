@@ -2,10 +2,10 @@
 
 import { db } from "@/db";
 import { Button, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
-import { Input } from "../ui/Input";
-import { availableUserIcons, userIcon } from "../ui/config/icon";
-import { Text } from "../ui/Text";
-import { Switch } from "../ui/Switch";
+import { Input } from "@/components/ui/Input";
+import { availableUserIcons, userIcon } from "@/components/ui/config/icon";
+import { Text } from "@/components/ui/Text";
+import { Switch } from "@/components/ui/Switch";
 
 const ProfileForm = () => {
   const { user } = db.useAuth();

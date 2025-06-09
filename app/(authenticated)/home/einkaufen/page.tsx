@@ -13,8 +13,6 @@ import { tx } from "@instantdb/react";
 import { CaretDown } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
 
-
-
 const Page = () => {
   const { add } = useModalStack();
   const formatter = useDateFormatter({ weekday: "long" });
