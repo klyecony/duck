@@ -5,12 +5,12 @@ import { id } from "@instantdb/react";
 import type { EntryType, MealType, TagType } from "@/types/db";
 import { Button, Form, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/Input";
 import { Trash } from "@phosphor-icons/react";
-import { Select } from "@/components/ui/Select";
 import { useScd0 } from "@/lib/interface/instant";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
 
 interface EntryProps {
   entry?: EntryType & {

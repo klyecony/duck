@@ -4,11 +4,11 @@ import { db } from "@/db";
 import { id } from "@instantdb/react";
 import { Form, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/Input";
 import type { TagType } from "@/types/db";
 import { ColorInput } from "@/components/ui/ColorInput";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
+import { Input } from "@/components/ui/Input";
 
 type FormValues = {
   title: string;
