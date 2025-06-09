@@ -7,7 +7,6 @@ import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
 import { db } from "@/db";
 import { useScd0 } from "@/lib/interface/instant";
-import type {} from "@/types/db";
 import { Accordion, AccordionItem, Checkbox, Chip, Divider } from "@heroui/react";
 import { tx } from "@instantdb/react";
 import { CaretDown } from "@phosphor-icons/react";
