@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  output: "standalone",
   webpack(config) {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
