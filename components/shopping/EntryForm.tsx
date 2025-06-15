@@ -100,9 +100,8 @@ const EntryForm = ({ entry }: EntryProps) => {
   const handleDelete = () => {
     if (!entry) return;
     db.transact(
-      db.tx.meals[entry.id].update({
+      db.tx.entries[entry.id].update({
         deletedAt: new Date().toISOString(),
-        updatedAt: Date.now(),
       }),
     );
     close();
