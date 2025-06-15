@@ -52,8 +52,8 @@ const Navigation = () => {
         {Object.entries(peers)
           .map(([_, peer]) => peer)
           .filter(peer => peer.id !== user?.id)
-          .map(peer => (
-            <Button key={peer.id} isIconOnly variant="light" color="secondary">
+          .map((peer, index) => (
+            <Button key={peer.id + index} isIconOnly variant="light" color="secondary">
               {userIcon(peer.icon as keyof typeof USER_ICON_MAP)}
             </Button>
           ))}
