@@ -7,7 +7,7 @@ const ExtendedInput = extendVariants(BaseInput, {
   defaultVariants: {
     variant: "faded",
     color: "secondary",
-    size: "md",
+    size: "lg",
     labelPlacement: "outside",
     placeholder: "",
     radius: "sm",

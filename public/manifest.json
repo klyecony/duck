@@ -3,7 +3,7 @@
   "short_name": "mosaic",
   "description": "A modern, minimalistic, and fast web application for managing your home.",
   "theme_color": "#0014ff",
-  "background_color": "#ffffff",
+  "background_color": "#e7e2e0",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",

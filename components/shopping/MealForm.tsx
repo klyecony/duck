@@ -68,7 +68,7 @@ const MealForm = ({ meal }: MealFormProps) => {
           description: "",
           createdAt: Date.now(),
           updatedAt: Date.now(),
-          plannedAt: values.plannedAt.toDate(getLocalTimeZone()).toISOString(),
+          plannedAt: values.plannedAt?.toDate(getLocalTimeZone()).toISOString() || null,
         })
         .link({ createdBy: user?.id, tags: values.tags }),
     );
@@ -81,7 +81,7 @@ const MealForm = ({ meal }: MealFormProps) => {
         .update({
           title: values.title,
           updatedAt: Date.now(),
-          plannedAt: values.plannedAt.toDate(getLocalTimeZone()).toISOString(),
+          plannedAt: values.plannedAt?.toDate(getLocalTimeZone()).toISOString() || null,
         })
         .unlink({
           tags: meal.tags.map(tag => tag?.id).filter((id): id is string => typeof id === "string"),

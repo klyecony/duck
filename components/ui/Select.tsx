@@ -8,7 +8,7 @@ const ExtendedSelect = extendVariants(BaseSelect, {
   defaultVariants: {
     variant: "faded",
     color: "secondary",
-    size: "md",
+    size: "lg",
     labelPlacement: "outside",
     placeholder: "Auswählen",
     radius: "sm",

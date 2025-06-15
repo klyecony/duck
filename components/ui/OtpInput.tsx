@@ -7,7 +7,7 @@ const ExtendedOtpInput = extendVariants(BaseOtpInput, {
   defaultVariants: {
     variant: "bordered",
     color: "secondary",
-    size: "md",
+    size: "lg",
     labelPlacement: "outside",
     placeholder: "",
     radius: "lg",

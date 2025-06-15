@@ -11,11 +11,10 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   keywords: ["nextjs", "pwa", "typescript", "home management", "smart home"],
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0014ff" },
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#030302" },
+    { media: "(prefers-color-scheme: light)", color: "#e7e2e0" },
   ],
   authors: [{ name: "Cedrik Meis" }],
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   icons: [
     { rel: "apple-touch-icon", url: "/icons/180.png" },
     { rel: "icon", type: "image/png", sizes: "32x32", url: "/icons/32.png" },
