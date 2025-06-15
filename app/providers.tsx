@@ -14,13 +14,10 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
         }}
       >
         <ToastProvider
-          placement="top-center"
           toastProps={{
-            radius: "full",
-            color: "primary",
-            variant: "flat",
+            radius: "sm",
+            color: "secondary",
             timeout: 1000,
-            hideIcon: true,
           }}
         />
         <ModalStackProvider>{children}</ModalStackProvider>

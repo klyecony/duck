@@ -1,6 +1,6 @@
 "use client";
-import { Creator } from "@/components/lib/Creator";
-import Tag from "@/components/lib/Tag";
+import { Creator } from "@/components/Creator";
+import Tag from "@/components/Tag";
 import { EntryForm } from "@/components/shopping/EntryForm";
 import MealForm from "@/components/shopping/MealForm";
 import { useModalStack } from "@/components/ui/StackedModal";
@@ -16,7 +16,7 @@ const Page = () => {
   const { add } = useModalStack();
   const formatter = useDateFormatter({ weekday: "long" });
 
-  const { isLoading, data } = db.useQuery({
+  const { data } = db.useQuery({
     entries: {
       origin: {},
       tags: {},
@@ -30,13 +30,8 @@ const Page = () => {
   const entries = useScd0(data?.entries);
   const meals = useScd0(data?.meals);
 
-  if (!data) return <div>No data available</div>;
-
-  if (isLoading) return <div>Loading...</div>;
-
   return (
     <>
-      <Creator />
       <Accordion>
         <AccordionItem
           key="1"

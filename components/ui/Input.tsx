@@ -9,7 +9,7 @@ const ExtendedInput = extendVariants(BaseInput, {
     color: "secondary",
     size: "md",
     labelPlacement: "outside",
-    placeholder: "Auswählen",
+    placeholder: "",
     radius: "sm",
   },
 });
@@ -20,7 +20,7 @@ const ExtendedTextarea = extendVariants(BaseTextarea, {
     color: "secondary",
     size: "md",
     labelPlacement: "outside",
-    placeholder: "Auswählen",
+    placeholder: "",
     radius: "sm",
   },
 });

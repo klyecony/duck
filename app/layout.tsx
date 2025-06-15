@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import type * as React from "react";
+import { Navigation } from "@/components/Navigation";
 
 export const metadata: Metadata = {
   title: "Mosaic",
@@ -31,7 +32,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="flex h-dvh max-h-full w-dvw max-w-full flex-col overflow-x-hidden">
+            <Navigation />
+            <div className="relative w-full grow">{children}</div>
+          </div>
+        </Providers>
       </body>
     </html>
   );

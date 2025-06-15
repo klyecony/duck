@@ -1,14 +1,22 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { Modal } from "@heroui/react";
+import { Modal, type ModalProps } from "@heroui/react";
 import { id } from "@instantdb/react";
 
+type ModalOptions = Pick<ModalProps, "isDismissable" | "closeButton" | "hideCloseButton">;
+
 interface ModalStackContextType {
-  add: (props: ReactNode) => void;
+  add: (props: ReactNode, options?: ModalOptions) => void;
   remove: () => void;
   close: () => void;
 }
+
+type ModalItem = {
+  id: string;
+  children: ReactNode;
+  options?: ModalOptions;
+};
 
 const ModalStackContext = createContext<ModalStackContextType | null>(null);
 
@@ -19,18 +27,14 @@ export const useModalStack = () => {
 };
 
 export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
-  const [modals, setModals] = useState<ModalItem[]>([]);
+  const [modals, setModals] = useState<(ModalItem & ModalOptions)[]>([]);
 
-  type ModalItem = {
-    id: string;
-    children: ReactNode;
-  };
-
-  const add = (props: ReactNode) =>
+  const add = (props: ReactNode, options?: ModalOptions) =>
     setModals(prev =>
       prev.concat({
         id: id(),
         children: props,
+        options,
       }),
     );
 
@@ -82,6 +86,7 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
         return (
           <Modal
             key={modal.id}
+            {...modal.options}
             isOpen={true}
             onClose={remove}
             motionProps={motionProps}
@@ -90,7 +95,7 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
             shadow="none"
             classNames={{
               base: "h-full max-h-80",
-              body: "p-4 pt-2",
+              body: "pt-2",
             }}
           >
             {modal.children}

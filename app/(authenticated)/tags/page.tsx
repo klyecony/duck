@@ -1,7 +1,7 @@
 "use client";
 
-import Tag from "@/components/lib/Tag";
-import { TagForm } from "@/components/lib/TagForm";
+import Tag from "@/components/Tag";
+import { TagForm } from "@/components/shopping/TagForm";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { db } from "@/db";
 import { Button } from "@heroui/react";
@@ -23,7 +23,9 @@ const Page = () => {
           key={tag.id}
           tag={tag}
           isDisabled={!!tag.deletedAt}
-          onClose={() => db.transact(db.tx.tags[tag.id].update({ deletedAt: new Date().toISOString() }))}
+          onClose={() =>
+            db.transact(db.tx.tags[tag.id].update({ deletedAt: new Date().toISOString() }))
+          }
           onClick={() => add(<TagForm tag={tag} />)}
         />
       ))}

@@ -1,5 +1,9 @@
 "use client";
+
+import { Creator } from "@/components/Creator";
+import { absoluteCenter } from "@/components/ui/config/utils";
 import { db } from "@/db";
+import { Spinner } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, type PropsWithChildren } from "react";
 
@@ -8,14 +12,18 @@ export default function RootLayout({ children }: PropsWithChildren) {
   const { user, isLoading } = db.useAuth();
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      router.replace("/");
-    }
+    if (!isLoading && !user) router.replace("/");
   }, [isLoading, user, router]);
 
-  if (isLoading || !user) return null;
-
   return (
-    <div className="relative h-dvh max-h-full w-dvw max-w-full overflow-x-hidden">{children}</div>
+    <>
+      <Creator />
+      <div
+        className={`${absoluteCenter} transition-opacity ease-in ${isLoading || !user ? "opacity-100 duration-300" : "opacity-0 duration-75"}`}
+      >
+        <Spinner color="primary" variant="wave" />
+      </div>
+      {children}
+    </>
   );
 }

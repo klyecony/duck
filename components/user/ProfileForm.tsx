@@ -1,7 +1,7 @@
 "use client";
 
 import { db } from "@/db";
-import { Button, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
+import { Button, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { availableUserIcons, userIcon } from "@/components/ui/config/icon";
 import { Text } from "@/components/ui/Text";
 import { Switch } from "@/components/ui/Switch";
@@ -58,6 +58,11 @@ const ProfileForm = () => {
           </Switch>
         </ModalBody>
       )}
+      <ModalFooter>
+        <Button variant="solid" color="primary" onPress={() => db.auth.signOut()}>
+          Ausloggen
+        </Button>
+      </ModalFooter>
     </ModalContent>
   );
 };

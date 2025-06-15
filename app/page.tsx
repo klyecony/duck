@@ -1,151 +1,64 @@
 "use client";
 
-import {
-  Button,
-  Input,
-  Checkbox,
-  Link,
-  Form,
-  addToast,
-  InputOtp,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@heroui/react";
-import { Controller, type SubmitHandler, useForm } from "react-hook-form";
+import { addToast, Card, Spinner } from "@heroui/react";
 import { db } from "@/db";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/Loading";
+import { useModalStack } from "@/components/ui/StackedModal";
+import EmailForm from "@/components/auth/EmailForm";
+import { ShoppingBag } from "@phosphor-icons/react";
+import { absoluteCenter } from "@/components/ui/config/utils";
 
-type Inputs = {
-  name: string;
-  email: string;
-  code: string;
-  terms: boolean;
-};
+const NAVIGATION = [
+  {
+    title: "Einkaufen",
+    href: "/einkaufen",
+    icon: <ShoppingBag size={64} weight="thin" />,
+  },
+];
 
 export default function Component() {
   const router = useRouter();
+  const hasShownModal = useRef(false);
   const { isLoading, user, error } = db.useAuth();
-
-  const [step, setStep] = useState<"email" | "code">("email");
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      email: "cedrik.meis@proton.me",
-    },
-  });
+  const { add } = useModalStack();
 
   useEffect(() => {
-    if (isLoading) return;
-    if (user) {
-      router.push("/home");
-    }
+    if (isLoading || user) return;
+    // If the user is already authenticated, redirect to home
     if (error) {
       addToast({
-        title: "Uh oh!",
+        title: "Ein Fehler ist aufgetreten",
         description: error.message,
+        color: "danger",
       });
+    } else if (!hasShownModal.current) {
+      add(<EmailForm />, {
+        isDismissable: false,
+        hideCloseButton: true,
+      });
+      hasShownModal.current = true;
     }
-  }, [user, error, router, isLoading]);
-
-  const onSubmit: SubmitHandler<Inputs> = data => {
-    if (data.code) {
-      db.auth.signInWithMagicCode(data).catch(err => {
-        addToast({
-          title: "Uh oh!",
-          description: err.body?.message,
-        });
-      });
-    }
-    db.auth.sendMagicCode(data).catch(err => {
-      addToast({
-        title: "Uh oh!",
-        description: err.body?.message,
-      });
-    });
-    setStep("code");
-  };
-
-  if (isLoading)
-    return (
-      <div className="h-screen">
-        <Loading />
-      </div>
-    );
+  }, [user, error, add, router, isLoading]);
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      <div className="flex w-full max-w-sm flex-col gap-4 rounded-large px-8 pt-6 pb-10">
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            {...register("email")}
-            isRequired
-            label="Email"
-            labelPlacement="outside"
-            name="email"
-            placeholder="example@mail.com"
-            type="email"
-            variant="bordered"
-          />
-          <Checkbox {...register("terms")} isRequired className="py-4" size="sm">
-            I agree with the&nbsp;
-            <Link className="relative z-[1]" href="#" size="sm">
-              Terms
-            </Link>
-            &nbsp; and&nbsp;
-            <Link className="relative z-[1]" href="#" size="sm">
-              Privacy Policy
-            </Link>
-          </Checkbox>
-
-          <Button fullWidth color="primary" type="submit">
-            Sign Up
-          </Button>
-        </Form>
+    <div className="flex h-full w-full items-center justify-center">
+      <div
+        className={`${absoluteCenter} transition-opacity ease-in ${isLoading && !user ? "opacity-100 duration-300" : "opacity-0 duration-75"}`}
+      >
+        <Spinner color="primary" variant="wave" />
       </div>
-      <Modal isOpen={step === "code"} isDismissable={false} hideCloseButton placement="center">
-        <ModalContent>
-          <ModalHeader>Dein 6 stelliger Code</ModalHeader>
-          <ModalBody>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Controller
-                control={control}
-                name="code"
-                render={({ field }) => (
-                  <InputOtp
-                    {...field}
-                    errorMessage={errors.code?.message}
-                    isInvalid={!!errors.code}
-                    length={6}
-                  />
-                )}
-                rules={{
-                  required: "OTP is required",
-                  minLength: {
-                    value: 6,
-                    message: "Please enter a valid OTP",
-                  },
-                }}
-              />
-              <Button size="sm" type="submit" fullWidth>
-                Überprüfen
-              </Button>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            Schaue auch in deinem Spam-Ordner nach, falls du keine E-Mail erhalten hast.
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+
+      {NAVIGATION.map(item => (
+        <div
+          key={item.href}
+          className={`p-6 transition delay-150 ease-in ${isLoading && !user ? "scale-95 opacity-0 duration-300" : "scale-100 opacity-100 duration-100"}`}
+        >
+          <Card className="p-6" isPressable isHoverable onPress={() => router.push(item.href)}>
+            {item.icon}
+          </Card>
+        </div>
+      ))}
     </div>
   );
 }
