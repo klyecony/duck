@@ -2,12 +2,13 @@
 
 import { addToast, Card, Spinner } from "@heroui/react";
 import { db } from "@/db";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useModalStack } from "@/components/ui/StackedModal";
 import EmailForm from "@/components/auth/EmailForm";
 import { ShoppingBag } from "@phosphor-icons/react";
 import { absoluteCenter } from "@/components/ui/config/utils";
+import { NewUser } from "@/components/auth/NewUser";
 
 const NAVIGATION = [
   {
@@ -19,27 +20,58 @@ const NAVIGATION = [
 
 export default function Component() {
   const router = useRouter();
-  const hasShownModal = useRef(false);
+  const [hasShownModal, setHasShownModal] = useState(false);
+  const [hasNewUser, setHasNewUser] = useState(false);
+
   const { isLoading, user, error } = db.useAuth();
   const { add } = useModalStack();
 
+  
   useEffect(() => {
-    if (isLoading || user) return;
-    // If the user is already authenticated, redirect to home
-    if (error) {
-      addToast({
-        title: "Ein Fehler ist aufgetreten",
-        description: error.message,
-        color: "danger",
-      });
-    } else if (!hasShownModal.current) {
-      add(<EmailForm />, {
-        isDismissable: false,
-        hideCloseButton: true,
-      });
-      hasShownModal.current = true;
-    }
-  }, [user, error, add, router, isLoading]);
+    const handleLogin = async () => {
+      if (error) {
+        addToast({
+          title: "Ein Fehler ist aufgetreten",
+          description: error.message,
+          color: "danger",
+        });
+      } else if (!hasShownModal && !user && !isLoading) {
+        add(<EmailForm />, {
+          isDismissable: false,
+          hideCloseButton: true,
+        });
+        setHasShownModal(true);
+      } else if (!hasNewUser && user && !isLoading) {
+        const { data } = await db.queryOnce({
+          profiles: {
+            $: {
+              where: {
+                id: user.id || "",
+              },
+            },
+          },
+        });
+        if (data?.profiles?.length === 0) {
+          add(<NewUser />, {
+            isDismissable: false,
+            hideCloseButton: true,
+          });
+          setHasNewUser(true);
+        }
+      }
+    };
+    handleLogin();
+  }, [
+    user,
+    error,
+    router,
+    isLoading,
+    add,
+    hasShownModal,
+    hasNewUser,
+    setHasShownModal,
+    setHasNewUser,
+  ]);
 
   return (
     <div className="flex h-full w-full items-center justify-center">

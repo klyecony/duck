@@ -18,7 +18,7 @@ export const profiles = {
 
 export const _scd0 = {
   ..._base,
-  updatedAt: i.date(),
+  updatedAt: i.date().optional(),
   createdAt: i.date(),
 };
 

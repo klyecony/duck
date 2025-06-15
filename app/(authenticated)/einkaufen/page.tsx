@@ -1,5 +1,4 @@
 "use client";
-import { Creator } from "@/components/Creator";
 import Tag from "@/components/Tag";
 import { EntryForm } from "@/components/shopping/EntryForm";
 import MealForm from "@/components/shopping/MealForm";

@@ -14,6 +14,7 @@ import { Text } from "../ui/Text";
 import { db } from "@/db";
 import { OtpInput } from "../ui/OtpInput";
 import { useModalStack } from "../ui/StackedModal";
+import { useState } from "react";
 
 interface OtpFormProps {
   email: string;
@@ -21,6 +22,7 @@ interface OtpFormProps {
 
 const OtpForm = ({ email }: OtpFormProps) => {
   const { close } = useModalStack();
+  const [isLoading, setIsLoading] = useState(false);
   const schema = z
     .object({
       code: z.string().length(6, "Der OTP-Code muss genau 6 Zeichen lang sein"),
@@ -40,8 +42,8 @@ const OtpForm = ({ email }: OtpFormProps) => {
       code: "",
     },
   });
-
   const submit = handleSubmit(values => {
+    setIsLoading(true);
     db.auth
       .signInWithMagicCode({
         email,
@@ -53,8 +55,18 @@ const OtpForm = ({ email }: OtpFormProps) => {
           description: err.body?.message,
         });
       })
-      .finally(() => {
-        close();
+      .then(async response => {
+        if (!response) return;
+        const { data } = await db.queryOnce({
+          profiles: {
+            $: {
+              where: {
+                id: response.user?.id || "",
+              },
+            },
+          },
+        });
+        if (data?.profiles?.length > 0) close();
       });
   });
 
@@ -83,7 +95,13 @@ const OtpForm = ({ email }: OtpFormProps) => {
           />
         </ModalBody>
         <ModalFooter className="w-full">
-          <Button color="primary" type="submit" fullWidth isDisabled={!isDirty}>
+          <Button
+            color="primary"
+            type="submit"
+            fullWidth
+            isDisabled={!isDirty}
+            isLoading={isLoading}
+          >
             Anmelden
           </Button>
         </ModalFooter>

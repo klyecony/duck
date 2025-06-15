@@ -4,7 +4,7 @@ import type { InstaQLEntity } from "@instantdb/react";
 export type IsScd0 =
   | ({
       id: string;
-      updatedAt: string | number;
+      updatedAt?: string | number | undefined;
       deletedAt?: string | number;
     } & Record<string, unknown>)
   | undefined;

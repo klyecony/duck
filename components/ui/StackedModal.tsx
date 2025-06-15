@@ -78,7 +78,6 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
       {children}
       {modals.map((modal, i) => {
         const visibleIndex = modals.length - 1 - i;
-        if (visibleIndex >= 3) return null;
 
         const isTopMost = i === modals.length - 1;
         const motionProps = getMotionProps(visibleIndex, isTopMost);

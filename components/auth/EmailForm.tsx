@@ -49,6 +49,7 @@ const EmailForm = () => {
       });
     });
     add(<OtpForm email={values.email} />, {
+      isDismissable: false,
       closeButton: <ArrowUDownLeft size={32} />,
     });
   });
