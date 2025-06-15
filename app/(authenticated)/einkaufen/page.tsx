@@ -1,4 +1,5 @@
 "use client";
+
 import Tag from "@/components/Tag";
 import { EntryForm } from "@/components/shopping/EntryForm";
 import MealForm from "@/components/shopping/MealForm";

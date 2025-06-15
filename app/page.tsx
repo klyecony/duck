@@ -26,7 +26,6 @@ export default function Component() {
   const { isLoading, user, error } = db.useAuth();
   const { add } = useModalStack();
 
-  
   useEffect(() => {
     const handleLogin = async () => {
       if (error) {
@@ -76,7 +75,7 @@ export default function Component() {
   return (
     <div className="flex h-full w-full items-center justify-center">
       <div
-        className={`${absoluteCenter} transition-opacity ease-in ${isLoading && !user ? "opacity-100 duration-300" : "opacity-0 duration-75"}`}
+        className={`${absoluteCenter} transition-opacity ease-in ${isLoading && !user ? "opacity-100 duration-300" : "pointer-events-none opacity-0 duration-75"}`}
       >
         <Spinner color="primary" variant="wave" />
       </div>
