@@ -54,6 +54,7 @@ const OtpForm = ({ email }: OtpFormProps) => {
           title: "Ein Fehler ist aufgetreten",
           description: err.body?.message,
         });
+        setIsLoading(false);
       })
       .then(async response => {
         if (!response) return;

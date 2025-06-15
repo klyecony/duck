@@ -3,7 +3,7 @@
 import { db } from "@/db";
 import { id } from "@instantdb/react";
 import type { EntryType, MealType, TagType } from "@/types/db";
-import { Button, Form, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
+import { Button, Form, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { Trash } from "@phosphor-icons/react";
 import { useScd0 } from "@/lib/interface/instant";
@@ -122,12 +122,12 @@ const EntryForm = ({ entry }: EntryProps) => {
   return (
     <ModalContent>
       <ModalHeader>
-        <Text variant="large" weight="bold">
+        <Text variant="h2" weight="bold">
           {entry ? "Eintrag bearbeiten" : "Neuen Eintrag erstellen"}
         </Text>
       </ModalHeader>
-      <ModalBody className="overflow-scroll">
-        <Form onSubmit={submit}>
+      <Form onSubmit={submit} className="grow gap-0">
+        <ModalBody className="w-full">
           <Input
             size="lg"
             autoFocus={!entry}
@@ -159,24 +159,24 @@ const EntryForm = ({ entry }: EntryProps) => {
               children: tag?.title,
             }))}
           />
-          <div className="flex w-full">
-            {entry && (
-              <Button isIconOnly color="danger" onPress={handleDelete}>
-                <Trash />
-              </Button>
-            )}
-            <Button
-              fullWidth
-              type="submit"
-              color="primary"
-              isDisabled={!isDirty}
-              className={entry ? "ml-2" : ""}
-            >
-              {entry ? "Aktualisieren" : "Erstellen"}
+        </ModalBody>
+        <ModalFooter className="w-full">
+          {entry && (
+            <Button isIconOnly color="danger" onPress={handleDelete}>
+              <Trash />
             </Button>
-          </div>
-        </Form>
-      </ModalBody>
+          )}
+          <Button
+            fullWidth
+            type="submit"
+            color="primary"
+            isDisabled={!isDirty}
+            className={entry ? "ml-2" : ""}
+          >
+            {entry ? "Aktualisieren" : "Erstellen"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </ModalContent>
   );
 };

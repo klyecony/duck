@@ -6,6 +6,7 @@ import MealForm from "@/components/shopping/MealForm";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
 import { db } from "@/db";
+import { getDaysUntilNextPlanned } from "@/lib/interface/data";
 import { useScd0 } from "@/lib/interface/instant";
 import { Accordion, AccordionItem, Checkbox, Chip, Divider } from "@heroui/react";
 import { tx } from "@instantdb/react";
@@ -32,7 +33,7 @@ const Page = () => {
 
   return (
     <>
-      <Accordion>
+      <Accordion defaultExpandedKeys={["1"]}>
         <AccordionItem
           key="1"
           aria-label="gerichte öffnen"
@@ -87,6 +88,21 @@ const Page = () => {
                 {entry.title}
               </Text>
               <div className="flex gap-0.5">
+                <Chip
+                  radius="sm"
+                  color={
+                    ["Heute", "Morgen"].includes(getDaysUntilNextPlanned(entry.meals))
+                      ? "danger"
+                      : "secondary"
+                  }
+                  variant="flat"
+                  size="sm"
+                >
+                  {entry.meals.some(e => e.plannedAt !== undefined)
+                    ? getDaysUntilNextPlanned(entry.meals)
+                    : "Vorrat"}
+                </Chip>
+                {entry?.tags.length > 0 && "-"}
                 {entry?.tags.map(tag => (
                   <Tag size="sm" variant="light" key={tag?.id} tag={tag} />
                 ))}

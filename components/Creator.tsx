@@ -1,9 +1,17 @@
 "use client";
 
 import type React from "react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BowlFood, ListChecks, Notches, Plus } from "@phosphor-icons/react";
-import { Button, Card, CardBody, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from "@heroui/react";
 import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
 import MealForm from "@/components/shopping/MealForm";
 import { EntryForm } from "@/components/shopping/EntryForm";
@@ -15,6 +23,7 @@ const Creator = () => {
   const ref = useRef<HTMLDivElement>(null);
   const size = useWindowSize();
   const [position, setPosition] = useLocalStorage("creatorPosition", { x: 0, y: 0 });
+  const [quote, setQuote] = useState<Record<string, string>>({});
 
   const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
@@ -67,6 +76,25 @@ const Creator = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchQuote = async () => {
+      try {
+        const response = await fetch("/api/quote");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setQuote(data[0]); // ZenQuotes returns an array
+      } catch (err) {
+        console.error("Failed to fetch quote:", err);
+      }
+    };
+
+    fetchQuote();
+  }, []);
+
   return (
     <div
       ref={ref}
@@ -89,7 +117,7 @@ const Creator = () => {
           add(
             <ModalContent>
               <ModalHeader>
-                <Text variant="large" weight="bold">
+                <Text variant="h2" weight="bold">
                   Erstellen
                 </Text>
               </ModalHeader>
@@ -105,6 +133,11 @@ const Creator = () => {
                   </CardBody>
                 </Card>
               </ModalBody>
+              <ModalFooter>
+                <Text variant="small" className="font-serif">
+                  {`${quote?.q} - ${quote?.a}`}
+                </Text>
+              </ModalFooter>
             </ModalContent>,
           )
         }

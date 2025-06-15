@@ -3,16 +3,15 @@
 import { db } from "@/db";
 import { id } from "@instantdb/react";
 import type { MealType, TagType } from "@/types/db";
-import { Button, Form, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
+import { Button, Form, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { Trash } from "@phosphor-icons/react";
 import { useScd0 } from "@/lib/interface/instant";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
-import { DateInput } from "@/components/ui/DateInput";
-import { type CalendarDate, getLocalTimeZone, parseDate } from "@internationalized/date";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { getNext7DaysInGerman } from "@/lib/interface/data";
 
 interface MealFormProps {
   meal?: MealType & {
@@ -23,7 +22,7 @@ interface MealFormProps {
 type FieldValues = {
   title: string;
   tags: string[];
-  plannedAt: CalendarDate;
+  plannedAt: string;
 };
 
 const MealForm = ({ meal }: MealFormProps) => {
@@ -52,9 +51,7 @@ const MealForm = ({ meal }: MealFormProps) => {
     defaultValues: {
       title: meal?.title || "",
       tags: mealTags?.map(tag => tag?.id) || [],
-      plannedAt: meal?.plannedAt
-        ? parseDate(new Date(meal?.plannedAt).toLocaleDateString("en-CA"))
-        : undefined,
+      plannedAt: meal?.plannedAt ? new Date(meal?.plannedAt).toDateString() : undefined,
     },
     mode: "onChange",
   });
@@ -66,9 +63,8 @@ const MealForm = ({ meal }: MealFormProps) => {
         .update({
           title: values.title,
           description: "",
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-          plannedAt: values.plannedAt?.toDate(getLocalTimeZone()).toISOString() || null,
+          createdAt: new Date().toISOString(),
+          plannedAt: new Date(values.plannedAt).toISOString(),
         })
         .link({ createdBy: user?.id, tags: values.tags }),
     );
@@ -80,8 +76,8 @@ const MealForm = ({ meal }: MealFormProps) => {
       db.tx.meals[meal.id]
         .update({
           title: values.title,
-          updatedAt: Date.now(),
-          plannedAt: values.plannedAt?.toDate(getLocalTimeZone()).toISOString() || null,
+          updatedAt: new Date(values.plannedAt).toISOString(),
+          plannedAt: new Date(values.plannedAt).toISOString(),
         })
         .unlink({
           tags: meal.tags.map(tag => tag?.id).filter((id): id is string => typeof id === "string"),
@@ -119,14 +115,15 @@ const MealForm = ({ meal }: MealFormProps) => {
   return (
     <ModalContent>
       <ModalHeader>
-        <Text variant="large" weight="bold">
+        <Text variant="h2" weight="bold">
           {meal ? "Gericht bearbeiten" : "Neues Gericht erstellen"}
         </Text>
       </ModalHeader>
-      <ModalBody className="overflow-scroll">
-        <Form onSubmit={submit}>
+      <Form onSubmit={submit} className="grow gap-0">
+        <ModalBody className="w-full">
           <Input
             size="lg"
+            fullWidth
             autoFocus={!meal}
             name="title"
             aria-label="Gericht Titel"
@@ -144,25 +141,36 @@ const MealForm = ({ meal }: MealFormProps) => {
               children: tag?.title,
             }))}
           />
-          <DateInput size="lg" name="plannedAt" control={control} aria-label="Geplantes Datum" />
-          <div className="flex w-full">
-            {meal && (
-              <Button isIconOnly color="danger" onPress={handleDelete}>
-                <Trash />
-              </Button>
-            )}
-            <Button
-              fullWidth
-              type="submit"
-              color="primary"
-              isDisabled={!isDirty}
-              className={meal ? "ml-2" : ""}
-            >
-              {meal ? "Aktualisieren" : "Erstellen"}
+          <Select
+            size="lg"
+            name="plannedAt"
+            control={control}
+            aria-label="Geplantes Datum"
+            selectionMode="single"
+            placeholder="Geplantes Datum"
+            items={getNext7DaysInGerman().map(tag => ({
+              key: tag?.data.toDateString(),
+              children: tag?.label,
+            }))}
+          />
+        </ModalBody>
+        <ModalFooter className="w-full">
+          {meal && (
+            <Button isIconOnly color="danger" onPress={handleDelete}>
+              <Trash />
             </Button>
-          </div>
-        </Form>
-      </ModalBody>
+          )}
+          <Button
+            fullWidth
+            type="submit"
+            color="primary"
+            isDisabled={!isDirty}
+            className={meal ? "ml-2" : ""}
+          >
+            {meal ? "Aktualisieren" : "Erstellen"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </ModalContent>
   );
 };
