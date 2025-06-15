@@ -61,9 +61,9 @@ const EmailForm = () => {
           Willkommen
         </Text>
       </ModalHeader>
-      <Form onSubmit={submit} className="grow">
+      <Form onSubmit={submit} className="grow gap-0">
         <ModalBody>
-          <Text variant="small">
+          <Text variant="tiny">
             Gib deine <span className="font-semibold text-secondary">Email-Adresse</span> ein, um
             dich anzumelden. Du erhältst einen Link, um dich einzuloggen.
           </Text>

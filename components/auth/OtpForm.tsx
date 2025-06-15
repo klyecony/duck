@@ -74,12 +74,12 @@ const OtpForm = ({ email }: OtpFormProps) => {
     <ModalContent>
       <ModalHeader>
         <Text variant="h2" weight="bold">
-          Bestätige deine Email-Adresse
+          Email bestätigen
         </Text>
       </ModalHeader>
-      <Form onSubmit={submit} className="grow">
+      <Form onSubmit={submit} className="grow gap-0">
         <ModalBody>
-          <Text variant="small">
+          <Text variant="tiny">
             Wir haben dir einen 6-stelligen Code an{" "}
             <span className="font-semibold text-secondary">{email}</span>. Gib ihn bitte unten ein,
             um dich anzumelden.

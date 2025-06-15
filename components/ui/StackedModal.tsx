@@ -45,7 +45,7 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
   const getMotionProps = (visibleIndex: number, isTopMost: boolean) => {
     const scale = 1 - visibleIndex * 0.05;
     const opacity = 1 - visibleIndex * 0.2;
-    const y = visibleIndex * 16;
+    const y = visibleIndex * 6;
 
     return {
       initial: isTopMost ? { opacity: 0, scale: 0.9, y: 8 } : { opacity, scale, y },
