@@ -70,6 +70,7 @@ const EmailForm = () => {
           <Input
             name="email"
             color="primary"
+            autoFocus
             placeholder=" "
             autoComplete="email"
             description="Email eingeben"

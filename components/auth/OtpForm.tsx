@@ -89,6 +89,7 @@ const OtpForm = ({ email }: OtpFormProps) => {
             control={control}
             color="primary"
             fullWidth={false}
+            autoFocus
             autoComplete="code"
             label="Einladungscode"
             description="Code eingeben"

@@ -43,7 +43,7 @@ const ProfileForm = () => {
             profile && db.transact(db.tx.profiles[profile.id].update({ name: v }))
           }
         />
-        <div className="flex flex-wrap items-start justify-start gap-2 pt-2">
+        <div className="flex items-start justify-start gap-1 overflow-x-auto pt-2">
           {availableUserIcons.map(icon => (
             <Button
               isDisabled={!profile}
