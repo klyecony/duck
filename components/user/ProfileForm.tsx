@@ -7,9 +7,12 @@ import { Text } from "@/components/ui/Text";
 import { Switch } from "@/components/ui/Switch";
 import { Input } from "@/components/ui/Input";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import { MoonStars, SunDim } from "@phosphor-icons/react";
 
 const ProfileForm = () => {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const { user } = db.useAuth();
   const { data } = db.useQuery({
     profiles: {
@@ -67,12 +70,13 @@ const ProfileForm = () => {
           <Text>Mehrfach erstellen?</Text>
         </Switch>
       </ModalBody>
-      <ModalFooter>
+      <ModalFooter className="justify-between">
         <Button
+          size="sm"
           isLoading={!user}
           isDisabled={!profile}
           variant="solid"
-          color="primary"
+          color="danger"
           onPress={() => {
             db.auth.signOut();
             router.refresh();
@@ -80,6 +84,15 @@ const ProfileForm = () => {
         >
           Ausloggen
         </Button>
+        <Switch
+          name="isMultiple"
+          color="default"
+          isDisabled={!profile}
+          isSelected={theme === "dark"}
+          endContent={<MoonStars />}
+          startContent={<SunDim />}
+          onValueChange={v => setTheme(v ? "dark" : "light")}
+        />
       </ModalFooter>
     </ModalContent>
   );

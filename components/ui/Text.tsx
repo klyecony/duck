@@ -5,13 +5,13 @@ import { tv } from "tailwind-variants";
 const textStyle = tv({
   variants: {
     variant: {
-      h1: "text-3xl leading-tight tracking-tight text-gray-900 dark:text-white",
-      h2: "text-2xl leading-tight tracking-tight text-gray-900 dark:text-white",
-      h3: "text-xl leading-tight tracking-tight text-gray-900 dark:text-white",
-      tiny: "text-tiny leading-relaxed text-gray-900 dark:text-white",
-      small: "text-sm leading-relaxed text-gray-900 dark:text-white",
-      medium: "text-base leading-relaxed text-gray-900 dark:text-white",
-      large: "text-lg leading-relaxed text-gray-900 dark:text-white",
+      h1: "text-3xl leading-tight tracking-tight",
+      h2: "text-2xl leading-tight tracking-tight",
+      h3: "text-xl leading-tight tracking-tight",
+      tiny: "text-tiny leading-relaxed",
+      small: "text-sm leading-relaxed",
+      medium: "text-base leading-relaxed",
+      large: "text-lg leading-relaxed",
     },
     behave: {
       fill: "w-full text-left",

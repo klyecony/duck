@@ -29,13 +29,12 @@ const Navigation = () => {
 
   const { peers, publishPresence } = db.rooms.usePresence(room, { initialData: profile });
 
-  // Update your presence when your name changes
   useEffect(() => profile && publishPresence(profile), [profile]);
 
   return (
     <div
       className={cn(
-        "flex w-full items-center justify-between transition-opacity duration-300 ease-in",
+        "flex w-full items-center justify-between p-2 transition-opacity duration-300 ease-in",
         pathname !== "/" || user ? "opacity-100" : "pointer-events-none opacity-0",
       )}
     >
@@ -50,11 +49,14 @@ const Navigation = () => {
       </Button>
 
       <div className="flex gap-1 transition-opacity duration-300 ease-in">
-        {Object.entries(peers).map(([_, peer]) => (
-          <Button key={peer.id} isIconOnly variant="light" color="secondary">
-            {userIcon(peer.icon as keyof typeof USER_ICON_MAP)}
-          </Button>
-        ))}
+        {Object.entries(peers)
+          .map(([_, peer]) => peer)
+          .filter(peer => peer.id !== user?.id)
+          .map(peer => (
+            <Button key={peer.id} isIconOnly variant="light" color="secondary">
+              {userIcon(peer.icon as keyof typeof USER_ICON_MAP)}
+            </Button>
+          ))}
         <Button
           isIconOnly
           variant="light"
