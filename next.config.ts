@@ -22,10 +22,7 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
-  // Your existing Next.js config options
   reactStrictMode: true,
-  swcMinify: true,
-  // Add other config as needed
 };
 
 export default withPWA(nextConfig);

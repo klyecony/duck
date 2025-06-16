@@ -1,8 +1,8 @@
 {
-  "name": "Mosaic",
-  "short_name": "mosaic",
+  "name": "Duck",
+  "short_name": "duck",
   "description": "A modern, minimalistic, and fast web application for managing your home.",
-  "theme_color": "#0014ff",
+  "theme_color": "#e7e2e0",
   "background_color": "#e7e2e0",
   "display": "standalone",
   "scope": "/",

@@ -10,10 +10,6 @@ export const metadata: Metadata = {
   generator: "Next.js",
   manifest: "/manifest.json",
   keywords: ["nextjs", "pwa", "typescript", "home management", "smart home"],
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#030302" },
-    { media: "(prefers-color-scheme: light)", color: "#e7e2e0" },
-  ],
   authors: [{ name: "Cedrik Meis" }],
   icons: [
     { rel: "apple-touch-icon", url: "/icons/180.png" },
@@ -30,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className="bg-background text-foreground antialiased">
         <Providers>
           <div className="flex h-dvh max-h-full w-dvw max-w-full flex-col overflow-x-hidden">
             <Navigation />

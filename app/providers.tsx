@@ -11,7 +11,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <HeroUIProvider locale="de-DE">
       <OnClient>
-        <NextThemesProvider attribute="class" defaultTheme="dark">
+        <NextThemesProvider attribute="class" defaultTheme="light">
           <IconContext.Provider
             value={{
               size: 18,
