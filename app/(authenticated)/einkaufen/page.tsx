@@ -10,9 +10,7 @@ import { getDaysUntilNextPlanned } from "@/lib/interface/data";
 import { isNotDeleted, isNotDone } from "@/lib/interface/instant";
 import { Checkbox, Chip, Divider } from "@heroui/react";
 import { tx } from "@instantdb/react";
-import { Tabs } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
-import { useState } from "react";
 
 const Page = () => {
   const { add } = useModalStack();
@@ -53,8 +51,7 @@ const Page = () => {
     },
   });
 
-
-  const [activeTab, setActiveTab] = useState("entries");
+  // const [activeTab, setActiveTab] = useState("entries");
 
   error && console.log(error);
 

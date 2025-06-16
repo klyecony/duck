@@ -28,9 +28,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-background text-foreground antialiased">
         <Providers>
-          <div className="flex h-dvh max-h-full w-dvw max-w-full flex-col overflow-x-hidden">
+          <div className="relative flex h-dvh max-h-full w-dvw max-w-full flex-col overflow-x-hidden">
             <Navigation />
-            <div className="relative w-full grow p-1.5">{children}</div>
+            <div className=" w-full grow p-1.5">{children}</div>
           </div>
         </Providers>
       </body>

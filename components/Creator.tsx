@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import { BowlFood, CalendarDots, List, ListChecks, Notches, Plus } from "@phosphor-icons/react";
+import { CalendarDots, List, Notches, Plus } from "@phosphor-icons/react";
 import {
   Button,
   Card,
@@ -154,7 +154,7 @@ const Creator = () => {
                 alt="Duck Logo"
                 width={1024}
                 height={1024}
-                className="-z-10 -translate-x-44 absolute h-[512px] w-[512px] opacity-5"
+                className="-z-10 -translate-x-28 absolute h-72 w-72 translate-y-36 opacity-5"
               />
             </ModalContent>,
           )
