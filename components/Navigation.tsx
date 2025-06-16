@@ -3,7 +3,7 @@ import { ProfileForm } from "@/components/user/ProfileForm";
 import { type USER_ICON_MAP, userIcon } from "@/components/ui/config/icon";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { db } from "@/db";
-import { Button } from "@heroui/react";
+import { Button, Card } from "@heroui/react";
 import { Planet } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -34,39 +34,42 @@ const Navigation = () => {
   return (
     <div
       className={cn(
-        "flex w-full items-center justify-between p-2 transition-opacity duration-300 ease-in",
-        pathname !== "/" || user ? "opacity-100" : "pointer-events-none opacity-0",
+        "p-1.5 transition duration-300 ease-in-out",
+        pathname !== "/" || user
+          ? "-translate-y-0 opacity-100"
+          : "-translate-y-8 pointer-events-none opacity-0",
       )}
     >
-      <Button
-        isDisabled={pathname === "/" || isLoading}
-        isIconOnly
-        variant="light"
-        color="secondary"
-        onPress={() => router.push("/")}
-      >
-        <Planet />
-      </Button>
-
-      <div className="flex gap-1 transition-opacity duration-300 ease-in">
-        {Object.entries(peers)
-          .map(([_, peer]) => peer)
-          .filter(peer => peer.id !== user?.id)
-          .map((peer, index) => (
-            <Button key={peer.id + index} isIconOnly variant="light" color="secondary">
-              {userIcon(peer.icon as keyof typeof USER_ICON_MAP)}
-            </Button>
-          ))}
+      <Card shadow="sm" className="flex w-full flex-row items-center justify-between p-1">
         <Button
+          isDisabled={pathname === "/" || isLoading}
           isIconOnly
           variant="light"
-          color="primary"
-          isLoading={isLoading}
-          onPress={() => add(<ProfileForm />)}
+          color="secondary"
+          onPress={() => router.push("/")}
         >
-          {userIcon(profile?.icon as keyof typeof USER_ICON_MAP)}
+          <Planet />
         </Button>
-      </div>
+        <div className="flex gap-1 transition-opacity duration-300 ease-in">
+          {Object.entries(peers)
+            .map(([_, peer]) => peer)
+            .filter(peer => peer.id !== user?.id)
+            .map((peer, index) => (
+              <Button key={peer.id + index} isIconOnly variant="light" color="secondary">
+                {userIcon(peer.icon as keyof typeof USER_ICON_MAP)}
+              </Button>
+            ))}
+          <Button
+            isIconOnly
+            variant="light"
+            color="primary"
+            isLoading={isLoading}
+            onPress={() => add(<ProfileForm />)}
+          >
+            {userIcon(profile?.icon as keyof typeof USER_ICON_MAP)}
+          </Button>
+        </div>
+      </Card>
     </div>
   );
 };

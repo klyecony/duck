@@ -3,12 +3,12 @@ import { _scd0 } from "./__base";
 
 export const entry = {
   ..._scd0,
-  doneAt: i.date().optional(),
-  paidAt: i.date().optional(),
+  doneAt: i.date().optional().indexed(),
+  paidAt: i.date().optional().indexed(),
 };
 
 export const meal = {
   ..._scd0,
-  plannedAt: i.date().optional(),
-  doneAt: i.date().optional(),
+  plannedAt: i.date().optional().indexed(),
+  doneAt: i.date().optional().indexed(),
 };

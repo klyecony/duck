@@ -6,12 +6,12 @@ import type { MealType, TagType } from "@/types/db";
 import { Button, Form, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { Trash } from "@phosphor-icons/react";
-import { useScd0 } from "@/lib/interface/instant";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { getNext7DaysInGerman } from "@/lib/interface/data";
+import { isNotDeleted } from "@/lib/interface/instant";
 
 interface MealFormProps {
   meal?: MealType & {
@@ -30,7 +30,13 @@ const MealForm = ({ meal }: MealFormProps) => {
   const { close } = useModalStack();
 
   const { data } = db.useQuery({
-    tags: {},
+    tags: {
+      $: {
+        where: {
+          ...isNotDeleted,
+        },
+      },
+    },
     profiles: {
       $: {
         where: {
@@ -40,9 +46,6 @@ const MealForm = ({ meal }: MealFormProps) => {
     },
   });
 
-  const availableTags = useScd0(data?.tags);
-  const mealTags = useScd0(meal?.tags);
-
   const {
     control,
     handleSubmit,
@@ -50,7 +53,7 @@ const MealForm = ({ meal }: MealFormProps) => {
   } = useForm<FieldValues>({
     defaultValues: {
       title: meal?.title || "",
-      tags: mealTags?.map(tag => tag?.id) || [],
+      tags: meal?.tags?.map(tag => tag?.id) || [],
       plannedAt: meal?.plannedAt ? new Date(meal?.plannedAt).toDateString() : undefined,
     },
     mode: "onChange",
@@ -63,8 +66,8 @@ const MealForm = ({ meal }: MealFormProps) => {
         .update({
           title: values.title,
           description: "",
-          createdAt: new Date().toISOString(),
-          plannedAt: new Date(values.plannedAt).toISOString(),
+          createdAt: Date.now(),
+          plannedAt: values.plannedAt && new Date(values.plannedAt).getTime(),
         })
         .link({ createdBy: user?.id, tags: values.tags }),
     );
@@ -76,8 +79,8 @@ const MealForm = ({ meal }: MealFormProps) => {
       db.tx.meals[meal.id]
         .update({
           title: values.title,
-          updatedAt: new Date(values.plannedAt).toISOString(),
-          plannedAt: new Date(values.plannedAt).toISOString(),
+          updatedAt: Date.now(),
+          plannedAt: new Date(values.plannedAt).getTime(),
         })
         .unlink({
           tags: meal.tags.map(tag => tag?.id).filter((id): id is string => typeof id === "string"),
@@ -94,7 +97,7 @@ const MealForm = ({ meal }: MealFormProps) => {
     if (!meal) return;
     db.transact(
       db.tx.meals[meal.id].update({
-        deletedAt: new Date().toISOString(),
+        deletedAt: Date.now(),
       }),
     );
     close();
@@ -136,10 +139,12 @@ const MealForm = ({ meal }: MealFormProps) => {
             aria-label="Gericht Tags"
             selectionMode="multiple"
             placeholder="Hinzufügen"
-            items={availableTags.map(tag => ({
-              key: tag?.id,
-              children: tag?.title,
-            }))}
+            items={
+              data?.tags?.map(tag => ({
+                key: tag?.id,
+                children: tag?.title,
+              })) || []
+            }
           />
           <Select
             size="lg"
@@ -148,10 +153,12 @@ const MealForm = ({ meal }: MealFormProps) => {
             aria-label="Geplantes Datum"
             selectionMode="single"
             placeholder="Geplantes Datum"
-            items={getNext7DaysInGerman().map(tag => ({
-              key: tag?.data.toDateString(),
-              children: tag?.label,
-            }))}
+            items={
+              getNext7DaysInGerman().map(tag => ({
+                key: tag?.data.toDateString(),
+                children: tag?.label,
+              })) || []
+            }
           />
         </ModalBody>
         <ModalFooter className="w-full">

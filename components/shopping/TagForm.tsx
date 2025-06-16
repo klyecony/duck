@@ -35,7 +35,7 @@ const TagForm = ({ tag }: TagProps) => {
       db.tx.tags[id()].update({
         title: values.title,
         color: values.color,
-        createdAt: new Date().toISOString(),
+        createdAt: Date.now(),
       }),
     );
   };
@@ -46,12 +46,11 @@ const TagForm = ({ tag }: TagProps) => {
       db.tx.tags[tag.id].update({
         title: values.title,
         color: values.color,
-        updatedAt: new Date().toISOString(),
+        updatedAt: Date.now(),
       }),
     );
 
-  const handleDelete = () =>
-    tag && db.transact(db.tx.tags[tag.id].update({ deletedAt: new Date().toISOString() }));
+  const handleDelete = () => tag && db.transact(db.tx.tags[tag.id].update({ deletedAt: Date.now() }));
 
   const submit = handleSubmit(values => {
     if (values.title !== tag?.title) {

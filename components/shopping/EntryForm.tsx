@@ -6,11 +6,11 @@ import type { EntryType, MealType, TagType } from "@/types/db";
 import { Button, Form, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { Trash } from "@phosphor-icons/react";
-import { useScd0 } from "@/lib/interface/instant";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { isNotDeleted, isNotDone } from "@/lib/interface/instant";
 
 interface EntryProps {
   entry?: EntryType & {
@@ -30,8 +30,21 @@ const EntryForm = ({ entry }: EntryProps) => {
   const { close } = useModalStack();
 
   const { data } = db.useQuery({
-    meals: {},
-    tags: {},
+    meals: {
+      $: {
+        where: {
+          ...isNotDeleted,
+          ...isNotDone,
+        },
+      },
+    },
+    tags: {
+      $: {
+        where: {
+          ...isNotDeleted,
+        },
+      },
+    },
     profiles: {
       $: {
         where: {
@@ -41,12 +54,6 @@ const EntryForm = ({ entry }: EntryProps) => {
     },
   });
 
-  const availableMeals = useScd0(data?.meals);
-  const entryMeals = useScd0(entry?.meals);
-
-  const availableTags = useScd0(data?.tags);
-  const entryTags = useScd0(entry?.tags);
-
   const {
     control,
     handleSubmit,
@@ -54,8 +61,8 @@ const EntryForm = ({ entry }: EntryProps) => {
   } = useForm<FieldValues>({
     defaultValues: {
       title: entry?.title || "",
-      meals: entryMeals.map(meal => meal?.id) || [],
-      tags: entryTags?.map(tag => tag?.id) || [],
+      meals: entry?.meals.map(meal => meal?.id) || [],
+      tags: entry?.tags?.map(tag => tag?.id) || [],
     },
     mode: "onChange",
   });
@@ -101,7 +108,7 @@ const EntryForm = ({ entry }: EntryProps) => {
     if (!entry) return;
     db.transact(
       db.tx.entries[entry.id].update({
-        deletedAt: new Date().toISOString(),
+        deletedAt: Date.now(),
       }),
     );
     close();
@@ -142,10 +149,12 @@ const EntryForm = ({ entry }: EntryProps) => {
             aria-label="Gericht Zutaten"
             selectionMode="multiple"
             placeholder="Gerichte"
-            items={availableMeals.map(meal => ({
-              key: meal?.id,
-              children: meal?.title,
-            }))}
+            items={
+              data?.meals.map(meal => ({
+                key: meal?.id,
+                children: meal?.title,
+              })) || []
+            }
           />
           <Select
             size="lg"
@@ -154,10 +163,12 @@ const EntryForm = ({ entry }: EntryProps) => {
             aria-label="Gericht Tags"
             selectionMode="multiple"
             placeholder="Tags"
-            items={availableTags.map(tag => ({
-              key: tag?.id,
-              children: tag?.title,
-            }))}
+            items={
+              data?.tags.map(tag => ({
+                key: tag?.id,
+                children: tag?.title,
+              })) || []
+            }
           />
         </ModalBody>
         <ModalFooter className="w-full">

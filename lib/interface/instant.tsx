@@ -1,5 +1,13 @@
-import type { IsScd0, IsScd2, Scd0, Scd2 } from "@/types/db";
+import type { IsScd2, Scd2 } from "@/types/db";
 import { useMemo } from "react";
+
+const isNotDeleted = {
+  deletedAt: { $isNull: true },
+};
+
+const isNotDone = {
+  or: [{ doneAt: { $gt: Date.now() - 1000 * 60 * 60 * 24 } }, { doneAt: { $isNull: true } }],
+};
 
 const useScd2 = <T extends IsScd2>(list: Scd2<T>[] | undefined) => {
   return useMemo(() => {
@@ -21,11 +29,4 @@ const useScd2 = <T extends IsScd2>(list: Scd2<T>[] | undefined) => {
   }, [list]);
 };
 
-const useScd0 = <T extends IsScd0>(list: Scd0<T>[] | undefined) => {
-  return useMemo(() => {
-    if (!list || !Array.isArray(list)) return [];
-    return list.filter(i => i && !i.deletedAt);
-  }, [list]);
-};
-
-export { useScd2, useScd0 };
+export { useScd2, isNotDeleted, isNotDone };

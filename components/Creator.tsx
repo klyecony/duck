@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import { BowlFood, ListChecks, Notches, Plus } from "@phosphor-icons/react";
+import { BowlFood, CalendarDots, List, ListChecks, Notches, Plus } from "@phosphor-icons/react";
 import {
   Button,
   Card,
@@ -17,6 +17,7 @@ import MealForm from "@/components/shopping/MealForm";
 import { EntryForm } from "@/components/shopping/EntryForm";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
+import Image from "next/image";
 
 const Creator = () => {
   const { add } = useModalStack();
@@ -115,21 +116,31 @@ const Creator = () => {
         isIconOnly
         onPress={() =>
           add(
-            <ModalContent>
+            <ModalContent className="relative">
               <ModalHeader>
                 <Text variant="h2" weight="bold">
                   Erstellen
                 </Text>
               </ModalHeader>
               <ModalBody className="grid grid-cols-2 gap-2">
-                <Card className="p-2" isPressable isHoverable onPress={() => add(<MealForm />)}>
+                <Card
+                  className="aspect-square bg-transparent p-2"
+                  isPressable
+                  isHoverable
+                  onPress={() => add(<MealForm />)}
+                >
                   <CardBody className="flex items-center justify-center">
-                    <BowlFood size={64} weight="thin" />
+                    <CalendarDots size={44} weight="thin" />
                   </CardBody>
                 </Card>
-                <Card className="p-2" isPressable isHoverable onPress={() => add(<EntryForm />)}>
+                <Card
+                  className="aspect-square bg-transparent p-2"
+                  isPressable
+                  isHoverable
+                  onPress={() => add(<EntryForm />)}
+                >
                   <CardBody className="flex items-center justify-center">
-                    <ListChecks size={64} weight="thin" />
+                    <List size={44} weight="thin" />
                   </CardBody>
                 </Card>
               </ModalBody>
@@ -138,6 +149,13 @@ const Creator = () => {
                   {`${quote?.q} - ${quote?.a}`}
                 </Text>
               </ModalFooter>
+              <Image
+                src="/logo.svg"
+                alt="Duck Logo"
+                width={1024}
+                height={1024}
+                className="-z-10 -translate-x-44 absolute h-[512px] w-[512px] opacity-5"
+              />
             </ModalContent>,
           )
         }

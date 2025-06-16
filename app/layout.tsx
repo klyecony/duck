@@ -5,7 +5,7 @@ import type * as React from "react";
 import { Navigation } from "@/components/Navigation";
 
 export const metadata: Metadata = {
-  title: "Mosaic",
+  title: "Duck",
   description: "A modern, minimalistic, and fast web application for managing your home.",
   generator: "Next.js",
   manifest: "/manifest.json",
@@ -30,7 +30,7 @@ export default function RootLayout({
         <Providers>
           <div className="flex h-dvh max-h-full w-dvw max-w-full flex-col overflow-x-hidden">
             <Navigation />
-            <div className="relative w-full grow">{children}</div>
+            <div className="relative w-full grow p-1.5">{children}</div>
           </div>
         </Providers>
       </body>
