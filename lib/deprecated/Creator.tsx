@@ -24,7 +24,7 @@ const Creator = () => {
   const ref = useRef<HTMLDivElement>(null);
   const size = useWindowSize();
   const [position, setPosition] = useLocalStorage("creatorPosition", { x: 0, y: 0 });
-  const [quote, setQuote] = useState<Record<string, string>>({});
+  const [quote, _] = useState<Record<string, string>>({});
 
   const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
@@ -77,24 +77,6 @@ const Creator = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const response = await fetch("/api/quote");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setQuote(data[0]); // ZenQuotes returns an array
-      } catch (err) {
-        console.error("Failed to fetch quote:", err);
-      }
-    };
-
-    fetchQuote();
-  }, []);
 
   return (
     <div

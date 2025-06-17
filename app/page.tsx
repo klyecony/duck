@@ -86,7 +86,7 @@ export default function Component() {
   const profile = data?.profiles[0];
 
   return (
-    <div className="flex h-full w-full flex-col items-start justify-start px-2.5">
+    <div className="flex h-full w-full flex-col items-start justify-start py-1">
       <div
         className={`${absoluteCenter} transition-opacity ease-in ${isLoading && !user ? "opacity-100 duration-300" : "pointer-events-none opacity-0 duration-75"}`}
       >

@@ -155,7 +155,7 @@ const MealForm = ({ meal }: MealFormProps) => {
             placeholder="Geplantes Datum"
             items={
               getNext7DaysInGerman().map(tag => ({
-                key: tag?.data.toDateString(),
+                key: tag?.date.toDateString(),
                 children: tag?.label,
               })) || []
             }

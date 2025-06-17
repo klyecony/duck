@@ -1,9 +1,10 @@
 "use client";
+
 export function getNext7DaysInGerman(): {
   label: string;
-  data: Date;
+  date: Date;
 }[] {
-  const result: { label: string; data: Date }[] = [];
+  const result: { label: string; date: Date }[] = [];
 
   const formatter = new Intl.DateTimeFormat("de-DE", { weekday: "long" });
 
@@ -13,7 +14,7 @@ export function getNext7DaysInGerman(): {
 
     const label = i === 0 ? "Heute" : i === 1 ? "Morgen" : formatter.format(date);
 
-    result.push({ label, data: date });
+    result.push({ label, date });
   }
 
   return result;
