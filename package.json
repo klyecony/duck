@@ -13,6 +13,7 @@
     "@heroui/system": "2.4.12",
     "@heroui/theme": "2.4.12",
     "@hookform/resolvers": "^5.0.1",
+    "@instantdb/admin": "^0.19.20",
     "@instantdb/react": "0.19.14",
     "@internationalized/date": "^3.8.2",
     "@phosphor-icons/react": "2.1.7",

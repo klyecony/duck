@@ -30,7 +30,7 @@ export default function RootLayout({
         <Providers>
           <div className="relative flex h-dvh max-h-full w-dvw max-w-full overflow-x-hidden">
             <Navigation />
-            <div className="w-full grow py-1.5 pr-1.5">{children}</div>
+            <div className="w-full grow p-1.5">{children}</div>
           </div>
         </Providers>
       </body>

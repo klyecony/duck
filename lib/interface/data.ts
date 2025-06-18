@@ -29,7 +29,7 @@ export function getDaysUntilNextPlanned(items: Item[]): string {
     .map(item => (item.plannedAt ? new Date(item.plannedAt) : null))
     .filter((date): date is Date => !!date);
 
-  if (futureDates.length === 0) return "LOOOOOL";
+  if (futureDates.length === 0) return "Nicht geplant";
 
   const nextDate = futureDates.reduce((min, curr) => (curr < min ? curr : min));
 
