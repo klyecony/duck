@@ -1,15 +1,15 @@
-import { adb } from "../admin";
+import { dba } from "@/db/admin";
 
 const batchSize = 100; // doing 100 txs should be pretty safe
 
 const updateMeals = async () => {
-  const data = await adb.query({ meals: {} });
+  const data = await dba.query({ meals: {} });
 
   const batches: any = [];
 
   data.meals.forEach(meal => {
     let meals = [];
-    meals.push(adb.tx.meals[meal.id].update({ favorite: false }));
+    meals.push(dba.tx.meals[meal.id].update({ favorite: false }));
 
     if (meals.length >= batchSize) {
       batches.push(meals);
@@ -21,7 +21,7 @@ const updateMeals = async () => {
     }
   });
   for (const batch of batches) {
-    await adb.transact(batch);
+    await dba.transact(batch);
   }
 };
 

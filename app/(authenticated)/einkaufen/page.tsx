@@ -137,9 +137,9 @@ const Page = () => {
         selectedKey={selected}
         onSelectionChange={key => setSelected(String(key))}
         classNames={{
-          base: " pl-[54px]",
+          base: "pl-[54px]",
           tabWrapper: "h-full",
-          tabList: "flex h-12 w-full flex-auto items-start overflow-x-hidden shadow-small",
+          tabList: "flex h-12 w-full flex-auto items-start gap-1 overflow-x-hidden shadow-small",
           panel: "!aspect-auto !w-full flex max-w-full grow flex-col justify-between pt-1",
         }}
       >
@@ -147,7 +147,7 @@ const Page = () => {
           <Tab
             key={item.id}
             title={item.label}
-            className={cn(item.index < 2 && "aspect-square w-fit px-1", "z-50 h-full")}
+            className={cn(item.index < 2 && "aspect-square w-fit px-1", "h-full")}
           >
             <div className="mb-1.5 flex h-11 flex-col justify-center pb-1.5 pl-[54px]">
               <Text variant="h3" weight="bold">
@@ -158,7 +158,7 @@ const Page = () => {
               </Text>
             </div>
 
-            <div className="flex w-full flex-col items-start justify-start gap-2">
+            <div className="z-50 flex w-full grow flex-col items-start justify-start gap-2">
               {tabContent?.meals?.map(meal => (
                 <div
                   key={meal.id}
@@ -193,8 +193,6 @@ const Page = () => {
                   </div>
                 </div>
               ))}
-            </div>
-            <div className="flex w-full grow flex-col items-start justify-start gap-2">
               {tabContent?.entries?.map(entry => (
                 <div
                   key={entry.id}
