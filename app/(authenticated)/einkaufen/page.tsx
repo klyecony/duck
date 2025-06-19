@@ -158,7 +158,7 @@ const Page = () => {
               </Text>
             </div>
 
-            <div className="z-50 flex w-full grow flex-col items-start justify-start gap-2">
+            <div className="z-40 flex w-full grow flex-col items-start justify-start gap-2">
               {tabContent?.meals?.map(meal => (
                 <div
                   key={meal.id}
@@ -199,11 +199,12 @@ const Page = () => {
                   className={`flex w-full items-center justify-between gap-1 py-0.5 transition-opacity duration-300 ${
                     entry.doneAt ? "opacity-30" : "opacity-100"
                   }`}
+                  onClick={() => add(<EntryForm entry={entry} />)}
                 >
                   <Text weight="bold" behave="hug">
                     {entry.title}
                   </Text>
-                  <div className="flex gap-0.5" onClick={() => add(<EntryForm entry={entry} />)}>
+                  <div className="flex gap-0.5">
                     <Chip
                       radius="sm"
                       color={

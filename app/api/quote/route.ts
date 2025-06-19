@@ -6,11 +6,6 @@ export async function GET() {
         "User-Agent": "MyApp/1.0",
       },
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
     const data = await response.json();
 
     return Response.json(data, {

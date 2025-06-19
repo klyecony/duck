@@ -78,11 +78,6 @@ const Navigation = () => {
     const fetchQuote = async () => {
       try {
         const response = await fetch("/api/quote");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
         const data = await response.json();
         setQuote(data[0]); // ZenQuotes returns an array
       } catch (err) {
@@ -114,16 +109,14 @@ const Navigation = () => {
       <div
         className={cn(
           "absolute h-full p-1.5 transition duration-300 ease-in-out",
-          pathname !== "/" || user
-            ? "-translate-x-0 opacity-100"
-            : "-translate-x-8 pointer-events-none opacity-0",
+          pathname !== "/" || user ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       >
         <Card
           shadow="sm"
           className={cn(
-            "flex h-[calc(100%+50px)] w-full flex-col items-center justify-between gap-1 p-1 pt-[50px] transition duration-300",
-            pathname === "/" ? "-translate-y-[50px]" : "-translate-y-[calc(100%-48px)]",
+            "z-50 flex h-full w-full flex-col items-center justify-between gap-1 p-1 pt-[50px] transition duration-300",
+            pathname === "/" ? "" : "-translate-y-[calc(100%-48px)]",
           )}
         >
           {/* <div className="flex flex-col gap-1 transition-opacity duration-300 ease-in">
@@ -246,7 +239,7 @@ const Navigation = () => {
                     alt="Duck Logo"
                     width={1024}
                     height={1024}
-                    className="-z-10 -translate-x-28 absolute h-72 w-72 translate-y-36 opacity-5"
+                    className="-z-10 -translate-x-28 absolute h-72 w-72 translate-y-52 opacity-5"
                   />
                 </ModalContent>,
               )

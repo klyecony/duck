@@ -33,11 +33,6 @@ export default function Component() {
     const fetchQuote = async () => {
       try {
         const response = await fetch("/api/quote");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
         const data = await response.json();
         setQuote(data[0]); // ZenQuotes returns an array
       } catch (err) {
@@ -123,7 +118,10 @@ export default function Component() {
         >
           {profile?.name || "Unbekannt"}
         </Text>
-        <Text variant="small" className="text-primary/40">{`${quote?.q} - ${quote?.a}`}</Text>
+        <Text
+          variant="small"
+          className={`min-h-24 text-primary/40 transition-opacity duration-200 ease-in ${quote.a ? "opacity-100 " : "opacity-0 "}`}
+        >{`${quote?.q} - ${quote?.a}`}</Text>
       </div>
       <div />
     </div>

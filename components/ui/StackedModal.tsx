@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { Modal, type ModalProps } from "@heroui/react";
+import { Drawer, type ModalProps } from "@heroui/react";
 import { id } from "@instantdb/react";
 
 type ModalOptions = Pick<ModalProps, "isDismissable" | "closeButton" | "hideCloseButton">;
@@ -29,6 +29,8 @@ export const useModalStack = () => {
 export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
   const [modals, setModals] = useState<(ModalItem & ModalOptions)[]>([]);
 
+  const [closingIds, setClosingIds] = useState<string[]>([]);
+
   const add = (props: ReactNode, options?: ModalOptions) =>
     setModals(prev =>
       prev.concat({
@@ -38,35 +40,64 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
       }),
     );
 
-  const remove = () => setModals(modals.slice(0, -1));
+  const remove = () => {
+    if (modals.length === 0) return;
+    setClosingIds(prev => [...prev, modals[modals.length - 1].id]);
+    setTimeout(() => {
+      setModals(modals.slice(0, -1));
+      setClosingIds(prev => prev.slice(0, -1));
+    }, 100);
+  };
 
-  const close = () => setModals([]);
+  const close = () => {
+    if (modals.length === 0) return;
+    setClosingIds(modals.map(modal => modal.id));
+    setTimeout(() => {
+      setModals([]);
+      setClosingIds([]);
+    }, 100);
+  };
 
-  const getMotionProps = (visibleIndex: number, isTopMost: boolean) => {
-    const scale = 1 - visibleIndex * 0.05;
+  const getDrawerMotionProps = (visibleIndex: number, isTopMost: boolean) => {
     const opacity = 1 - visibleIndex * 0.2;
-    const y = 1 - visibleIndex * 6;
+    const yOffset = -visibleIndex * 6;
 
     return {
-      initial: isTopMost ? { opacity: 0, scale: 0.9, y: -8 } : { opacity, scale, y },
-      animate: {
-        opacity,
-        scale,
-        y,
-        transition: isTopMost
+      variants: {
+        enter: {
+          y: isTopMost ? 30 : yOffset + 30,
+          opacity,
+          transition: isTopMost
+            ? {
+                duration: 0.4,
+                ease: [0.22, 1, 0.36, 1],
+              }
+            : {
+                duration: 0.1,
+                ease: [0.4, 0, 1, 1],
+              },
+        },
+        exit: {
+          y: "100%",
+          opacity: isTopMost ? 0 : opacity,
+          transition: {
+            duration: 0.25,
+            ease: [0.4, 0, 0.2, 1],
+          },
+        },
+        initial: isTopMost
           ? {
-              duration: 0.4,
-              delay: 0.07,
-              ease: [0.22, 1, 0.36, 1],
+              y: "100%",
+              opacity: 0,
+              scale: 0.9,
             }
           : {
-              duration: 0.2,
-              ease: [0.4, 0, 1, 1],
+              y: yOffset,
+              opacity,
             },
       },
     };
   };
-
   return (
     <ModalStackContext.Provider
       value={{
@@ -76,31 +107,41 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
+
       {modals.map((modal, i) => {
         const visibleIndex = modals.length - 1 - i;
 
         const isTopMost = i === modals.length - 1;
-        const motionProps = getMotionProps(visibleIndex, isTopMost);
+        const motionProps = getDrawerMotionProps(visibleIndex, isTopMost);
 
         return (
-          <Modal
+          <Drawer
             key={modal.id}
             {...modal.options}
-            isOpen={true}
+            isOpen={!closingIds.includes(modal.id)}
             onClose={remove}
             motionProps={motionProps}
             placement="bottom"
             backdrop={visibleIndex === modals.length - 1 ? "blur" : "transparent"}
             shadow="none"
             classNames={{
-              base: "h-full max-h-80",
+              base: "h-full max-h-[430px] overflow-hidden pb-[30px]",
               body: "pt-2",
+              footer: "pb-8"
             }}
           >
             {modal.children}
-          </Modal>
+          </Drawer>
         );
       })}
+      {/* <div
+        className={cn(
+          "fixed bottom-0 left-0 z-[1000] h-1.5 w-full bg-background transition-all ",
+          modals.length > 1
+            ? "translate-y-0 opacity-100 delay-[70ms] duration-200 ease-[cubic-bezier(0.4,0,1,1)]"
+            : "translate-y-1.5 opacity-0 duration-[500ms]",
+        )}
+      /> */}
     </ModalStackContext.Provider>
   );
 };

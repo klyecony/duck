@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import type * as React from "react";
 import { Navigation } from "@/components/Navigation";
+import { Text } from "@/components/ui/Text";
 
 export const metadata: Metadata = {
   title: "Duck",
@@ -26,13 +27,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-background text-foreground antialiased">
+      <body className="flex h-dvh flex-col bg-background text-foreground antialiased">
         <Providers>
-          <div className="relative flex h-dvh max-h-full w-dvw max-w-full overflow-x-hidden">
+          <div className="relative flex h-[calc(100dvh-32px)] max-h-full w-dvw max-w-full overflow-x-hidden">
             <Navigation />
             <div className="w-full grow p-1.5">{children}</div>
           </div>
         </Providers>
+        {/* <div className="flex grow items-center justify-between px-6">
+          <Text variant="tiny" behave="hug" className="text-default-foreground/70">
+            © {new Date().getFullYear()}
+          </Text>
+          <Text variant="tiny" behave="hug" className="text-default-foreground/70">
+            Coffe
+          </Text>
+        </div> */}
       </body>
     </html>
   );
