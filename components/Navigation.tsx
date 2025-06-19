@@ -102,8 +102,8 @@ const Navigation = () => {
         width={1024}
         height={1024}
         className={cn(
-          "-translate-y-[160px] pointer-events-none absolute top-0 left-0 h-72 w-72 translate-x-[210px] opacity-20 transition delay-1000 duration-300 ease-in-out",
-          user ? "rotate-[144deg]" : "-translate-y-[200px] rotate-[70deg] ",
+          "-translate-y-[110px] -rotate-[36deg] pointer-events-none absolute top-0 right-0 h-72 w-72 scale-x-[-1] opacity-20 transition delay-1000 duration-300 ease-in-out",
+          user ? "translate-x-[180px] " : "translate-x-[400px]",
         )}
       />
       <div
@@ -115,8 +115,29 @@ const Navigation = () => {
         <Card
           shadow="sm"
           className={cn(
+            "absolute top-1.5 left-1.5 w-[200%] flex-row justify-end gap-1 p-1",
+            pathname === "/"
+              ? "-translate-x-[calc(100%+45px)]"
+              : "-translate-x-[calc(100%-48px)] delay-75",
+          )}
+        >
+          <Divider orientation="vertical" className="h-10" />
+          <Button
+            isDisabled={isLoading}
+            isIconOnly
+            radius="md"
+            variant="flat"
+            color="secondary"
+            onPress={() => router.push("/")}
+          >
+            <Planet />
+          </Button>
+        </Card>
+        <Card
+          shadow="sm"
+          className={cn(
             "z-50 flex h-full w-full flex-col items-center justify-between gap-1 p-1 pt-[50px] transition duration-300",
-            pathname === "/" ? "" : "-translate-y-[calc(100%-48px)]",
+            pathname === "/" ? "" : "-translate-x-[calc(60px)]",
           )}
         >
           {/* <div className="flex flex-col gap-1 transition-opacity duration-300 ease-in">
@@ -137,7 +158,7 @@ const Navigation = () => {
                 isIconOnly
                 radius="md"
                 variant="light"
-                color="primary"
+                color="secondary"
                 isLoading={isLoading}
                 onPress={() => add(<ProfileForm />)}
               >
@@ -151,7 +172,7 @@ const Navigation = () => {
                   key={key}
                   radius="md"
                   variant={element.isDisabled ? "light" : "flat"}
-                  color="secondary"
+                  color="primary"
                   isIconOnly
                   isDisabled={element.isDisabled}
                   onPress={() => router.push(element.href)}
@@ -168,23 +189,18 @@ const Navigation = () => {
               pathname === "/" ? "opacity-0" : "opacity-100",
             )}
           />
-
           <Button
             isDisabled={isLoading}
             isIconOnly
             radius="md"
-            variant={pathname === "/" ? "light" : "flat"}
-            color={pathname === "/" ? "danger" : "secondary"}
+            variant="light"
+            color="danger"
             onPress={() => {
-              if (pathname === "/") {
-                // db.auth.signOut();
-                router.refresh();
-              } else {
-                router.push("/");
-              }
+              // db.auth.signOut();
+              router.refresh();
             }}
           >
-            {pathname === "/" ? <SignOut /> : <Planet />}
+            <SignOut />
           </Button>
         </Card>
         <Card

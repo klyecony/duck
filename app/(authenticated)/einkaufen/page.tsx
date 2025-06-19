@@ -117,7 +117,7 @@ const Page = () => {
       );
       tabContent.description =
         tabContent.entries.filter(e => !e.doneAt).length > 0
-          ? `Es fehlen noch ${tabContent.entries.filter(e => !e.doneAt).length} sachen für ${weekdays.find(w => w.date.toDateString() === selected)?.label}.`
+          ? "Los Einkaufen!"
           : "Perfekt alles da, was du brauchst.";
     }
 
@@ -158,7 +158,7 @@ const Page = () => {
               </Text>
             </div>
 
-            <div className="z-40 flex w-full grow flex-col items-start justify-start gap-2">
+            <div className="z-40 flex max-h-[calc(100dvh-158px)] w-full flex-1 flex-col items-start justify-start gap-2 overflow-y-auto overflow-x-hidden">
               {tabContent?.meals?.map(meal => (
                 <div
                   key={meal.id}

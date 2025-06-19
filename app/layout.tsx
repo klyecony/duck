@@ -3,7 +3,6 @@ import "./globals.css";
 import { Providers } from "./providers";
 import type * as React from "react";
 import { Navigation } from "@/components/Navigation";
-import { Text } from "@/components/ui/Text";
 
 export const metadata: Metadata = {
   title: "Duck",
@@ -31,7 +30,7 @@ export default function RootLayout({
         <Providers>
           <div className="relative flex h-[calc(100dvh-32px)] max-h-full w-dvw max-w-full overflow-x-hidden">
             <Navigation />
-            <div className="w-full grow p-1.5">{children}</div>
+            <div className="relative flex w-full grow flex-col overflow-hidden p-1.5">{children}</div>
           </div>
         </Providers>
         {/* <div className="flex grow items-center justify-between px-6">

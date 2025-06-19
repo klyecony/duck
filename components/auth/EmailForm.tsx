@@ -73,6 +73,7 @@ const EmailForm = () => {
             autoFocus
             placeholder=" "
             autoComplete="email"
+            type="email"
             description="Email eingeben"
             control={control}
           />

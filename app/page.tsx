@@ -100,7 +100,7 @@ export default function Component() {
       </div>
       <div className="flex h-1/2 w-full flex-col items-start justify-center pb-2">
         <Text variant="h3">
-          {"Wilkommen".split("").map((char, i) => (
+          {"Willkommen".split("").map((char, i) => (
             <span
               key={i}
               style={{ transitionDelay: `${i * 75}ms` }}
@@ -114,13 +114,13 @@ export default function Component() {
           behave="hug"
           variant="h2"
           weight="bold"
-          className={` text-secondary transition delay-500 duration-500 ease-in ${profile ? "opacity-100 " : "opacity-0 "}`}
+          className={`text-primary transition delay-500 duration-500 ease-in ${profile ? "opacity-100 " : "opacity-0 "}`}
         >
           {profile?.name || "Unbekannt"}
         </Text>
         <Text
           variant="small"
-          className={`min-h-24 text-primary/40 transition-opacity duration-200 ease-in ${quote.a ? "opacity-100 " : "opacity-0 "}`}
+          className={`min-h-24 text-secondary/40 transition-opacity duration-200 ease-in ${quote.a ? "opacity-100 " : "opacity-0 "}`}
         >{`${quote?.q} - ${quote?.a}`}</Text>
       </div>
       <div />
