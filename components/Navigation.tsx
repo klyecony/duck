@@ -115,7 +115,7 @@ const Navigation = () => {
         <Card
           shadow="sm"
           className={cn(
-            "absolute top-1.5 left-1.5 w-[200%] flex-row justify-end gap-1 p-1",
+            "absolute top-1.5 left-1.5 z-50 w-[200%] flex-row justify-end gap-1 p-1",
             pathname === "/"
               ? "-translate-x-[calc(100%+45px)]"
               : "-translate-x-[calc(100%-48px)] delay-75",
@@ -206,7 +206,7 @@ const Navigation = () => {
         <Card
           shadow="sm"
           className={cn(
-            "absolute bottom-1.5 left-1.5 w-[200%] flex-row justify-end gap-1 p-1",
+            "absolute bottom-1.5 left-1.5 z-50 w-[200%] flex-row justify-end gap-1 p-1",
             pathname === "/" ? "-translate-x-[calc(100%+45px)]" : "-translate-x-[calc(100%-48px)]",
           )}
         >
