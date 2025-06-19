@@ -66,6 +66,7 @@ const MealForm = ({ meal }: MealFormProps) => {
         .update({
           title: values.title,
           description: "",
+          favorite: false,
           createdAt: Date.now(),
           plannedAt: values.plannedAt && new Date(values.plannedAt).getTime(),
         })

@@ -41,7 +41,10 @@ const Page = () => {
       $: {
         where: {
           ...isNotDeleted,
-          ...isNotDone,
+          or: [
+            { plannedAt: { $gt: Date.now() - 1000 * 60 * 60 * 24 } },
+            { plannedAt: { $isNull: true } },
+          ],
         },
       },
       tags: {
