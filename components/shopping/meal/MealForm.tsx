@@ -67,7 +67,7 @@ const MealForm = ({ meal }: MealFormProps) => {
           createdAt: Date.now(),
           plannedAt: values.plannedAt && new Date(values.plannedAt).getTime(),
         })
-        .link({ createdBy: user?.id, tags: values.tags }),
+        .link({ createdBy: user?.id }),
     );
   };
 

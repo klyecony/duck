@@ -49,9 +49,9 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const close = () => {
-    setClosingIds(modals.map(modal => modal.id));
+    setClosingIds([...modals.map(modal => modal.id)]);
     setTimeout(() => {
-      setModals(modals.filter(modal => !closingIds.includes(modal.id)));
+      setModals([]);
       setClosingIds([]);
     }, 100);
   };
