@@ -30,7 +30,9 @@ export default function RootLayout({
         <Providers>
           <div className="relative flex h-[calc(100dvh-32px)] max-h-full w-dvw max-w-full overflow-x-hidden">
             <Navigation />
-            <div className="relative flex w-full grow flex-col overflow-hidden p-1.5">{children}</div>
+            <div className="relative flex w-full grow flex-col overflow-hidden p-1.5">
+              {children}
+            </div>
           </div>
         </Providers>
         {/* <div className="flex grow items-center justify-between px-6">

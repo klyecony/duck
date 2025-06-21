@@ -17,8 +17,8 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/react";
-import MealForm from "@/components/shopping/MealForm";
-import { EntryForm } from "@/components/shopping/EntryForm";
+import MealForm from "@/components/shopping/meal/MealForm";
+import { EntryForm } from "@/components/shopping/entry/EntryForm";
 import { Text } from "@/components/ui/Text";
 import Image from "next/image";
 import { ProfileForm } from "@/components/user/ProfileForm";

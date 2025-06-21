@@ -1,7 +1,7 @@
 "use client";
 
-import Tag from "@/components/Tag";
-import { TagForm } from "@/components/shopping/TagForm";
+import Tag from "@/components/tags/Tag";
+import { TagForm } from "@/components/tags/TagForm";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { db } from "@/db";
 import { Button } from "@heroui/react";

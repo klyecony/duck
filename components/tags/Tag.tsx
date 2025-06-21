@@ -1,4 +1,4 @@
-import { getContrastColor } from "@/lib/interface/color";
+import { getContrastColor } from "@/lib/color";
 import type { TagType } from "@/types/db";
 import { Chip, type ChipProps } from "@heroui/react";
 import { forwardRef } from "react";

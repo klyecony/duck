@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { id } from "@instantdb/react";
-import type { EntryType, MealType, TagType } from "@/types/db";
+import type { MealType } from "@/types/db";
 import { Button, Form, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { Trash } from "@phosphor-icons/react";
@@ -10,34 +10,23 @@ import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
-import { isNotDeleted, isNotDone } from "@/lib/interface/instant";
+import { getNext7DaysInGerman, isNotDeleted } from "@/lib/shopping";
 
-interface EntryProps {
-  entry?: EntryType & {
-    meals: MealType[];
-    tags: TagType[];
-  };
+interface MealFormProps {
+  meal?: MealType;
 }
 
 type FieldValues = {
   title: string;
-  meals: string[];
   tags: string[];
+  plannedAt: string;
 };
 
-const EntryForm = ({ entry }: EntryProps) => {
+const MealForm = ({ meal }: MealFormProps) => {
   const { user } = db.useAuth();
   const { close } = useModalStack();
 
   const { data } = db.useQuery({
-    meals: {
-      $: {
-        where: {
-          ...isNotDeleted,
-          ...isNotDone,
-        },
-      },
-    },
     tags: {
       $: {
         where: {
@@ -60,54 +49,51 @@ const EntryForm = ({ entry }: EntryProps) => {
     formState: { isDirty },
   } = useForm<FieldValues>({
     defaultValues: {
-      title: entry?.title || "",
-      meals: entry?.meals.map(meal => meal?.id) || [],
-      tags: entry?.tags?.map(tag => tag?.id) || [],
+      title: meal?.title || "",
+      // tags: meal?.tags?.map(tag => tag?.id) || [],
+      plannedAt: meal?.plannedAt ? new Date(meal?.plannedAt).toDateString() : undefined,
     },
     mode: "onChange",
   });
 
   const handleCreate = (values: FieldValues) => {
+    const newId = id();
     db.transact(
-      db.tx.entries[id()]
+      db.tx.meals[newId]
         .update({
           title: values.title,
           description: "",
+          favorite: false,
           createdAt: Date.now(),
+          plannedAt: values.plannedAt && new Date(values.plannedAt).getTime(),
         })
-        .link({
-          createdBy: user?.id,
-          meals: values.meals,
-          tags: values.tags,
-        }),
+        .link({ createdBy: user?.id, tags: values.tags }),
     );
   };
 
   const handleUpdate = (values: FieldValues) => {
-    if (!entry) return;
+    if (!meal) return;
     db.transact(
-      db.tx.entries[entry.id]
-        .update({
-          title: values.title,
-          updatedAt: Date.now(),
-        })
-        .unlink({
-          meals: entry.meals.map(meal => meal?.id),
-          tags: entry.tags.map(tag => tag?.id),
-        }),
-    );
-    db.transact(
-      db.tx.entries[entry.id].link({
-        meals: values.meals,
-        tags: values.tags,
+      db.tx.meals[meal.id].update({
+        title: values.title,
+        updatedAt: Date.now(),
+        plannedAt: new Date(values.plannedAt).getTime(),
       }),
+      // .unlink({
+      //   tags: meal.tags.map(tag => tag?.id).filter((id): id is string => typeof id === "string"),
+      // }),
     );
+    // db.transact(
+    //   db.tx.meals[meal.id].link({
+    //     tags: values.tags,
+    //   }),
+    // );
   };
 
   const handleDelete = () => {
-    if (!entry) return;
+    if (!meal) return;
     db.transact(
-      db.tx.entries[entry.id].update({
+      db.tx.meals[meal.id].update({
         deletedAt: Date.now(),
       }),
     );
@@ -116,7 +102,7 @@ const EntryForm = ({ entry }: EntryProps) => {
 
   const submit = handleSubmit(values => {
     if (isDirty) {
-      if (entry) {
+      if (meal) {
         handleUpdate(values);
         close();
       } else {
@@ -130,49 +116,50 @@ const EntryForm = ({ entry }: EntryProps) => {
     <ModalContent>
       <ModalHeader>
         <Text variant="h2" weight="bold">
-          {entry ? "Eintrag bearbeiten" : "Neuen Eintrag erstellen"}
+          {meal ? "Gericht bearbeiten" : "Neues Gericht erstellen"}
         </Text>
       </ModalHeader>
       <Form onSubmit={submit} className="grow gap-0">
         <ModalBody className="w-full">
           <Input
             size="lg"
-            autoFocus={!entry}
-            control={control}
+            fullWidth
+            autoFocus={!meal}
             name="title"
-            placeholder="Eintrag"
-          />
-          <Select
-            size="lg"
-            name="meals"
+            aria-label="Gericht Titel"
             control={control}
-            aria-label="Gericht Zutaten"
-            selectionMode="multiple"
-            placeholder="Gerichte"
-            items={
-              data?.meals.map(meal => ({
-                key: meal?.id,
-                children: meal?.title,
-              })) || []
-            }
           />
-          <Select
+          {/* <Select
             size="lg"
             name="tags"
             control={control}
             aria-label="Gericht Tags"
             selectionMode="multiple"
-            placeholder="Tags"
+            placeholder="Hinzufügen"
             items={
-              data?.tags.map(tag => ({
+              data?.tags?.map(tag => ({
                 key: tag?.id,
                 children: tag?.title,
+              })) || []
+            }
+          /> */}
+          <Select
+            size="lg"
+            name="plannedAt"
+            control={control}
+            aria-label="Geplantes Datum"
+            selectionMode="single"
+            placeholder="Geplantes Datum"
+            items={
+              getNext7DaysInGerman().map(tag => ({
+                key: tag?.date.toDateString(),
+                children: tag?.label,
               })) || []
             }
           />
         </ModalBody>
         <ModalFooter className="w-full">
-          {entry && (
+          {meal && (
             <Button isIconOnly color="danger" onPress={handleDelete}>
               <Trash />
             </Button>
@@ -182,9 +169,9 @@ const EntryForm = ({ entry }: EntryProps) => {
             type="submit"
             color="primary"
             isDisabled={!isDirty}
-            className={entry ? "ml-2" : ""}
+            className={meal ? "ml-2" : ""}
           >
-            {entry ? "Aktualisieren" : "Erstellen"}
+            {meal ? "Aktualisieren" : "Erstellen"}
           </Button>
         </ModalFooter>
       </Form>
@@ -192,4 +179,4 @@ const EntryForm = ({ entry }: EntryProps) => {
   );
 };
 
-export { EntryForm };
+export default MealForm;

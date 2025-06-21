@@ -28,7 +28,6 @@ export const useModalStack = () => {
 
 export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
   const [modals, setModals] = useState<(ModalItem & ModalOptions)[]>([]);
-
   const [closingIds, setClosingIds] = useState<string[]>([]);
 
   const add = (props: ReactNode, options?: ModalOptions) =>
@@ -50,10 +49,9 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const close = () => {
-    if (modals.length === 0) return;
     setClosingIds(modals.map(modal => modal.id));
     setTimeout(() => {
-      setModals([]);
+      setModals(modals.filter(modal => !closingIds.includes(modal.id)));
       setClosingIds([]);
     }, 100);
   };
@@ -126,8 +124,9 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
             shadow="none"
             classNames={{
               base: "h-full max-h-[430px] overflow-hidden pb-[30px]",
-              body: "pt-2",
-              footer: "pb-8"
+              header: "p-2.5",
+              body: "px-1 pt-0",
+              footer: "pb-8",
             }}
           >
             {modal.children}

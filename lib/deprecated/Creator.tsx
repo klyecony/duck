@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { CalendarDots, List, Notches, Plus } from "@phosphor-icons/react";
 import {
   Button,
@@ -13,8 +13,8 @@ import {
   ModalHeader,
 } from "@heroui/react";
 import { useLocalStorage, useWindowSize } from "@uidotdev/usehooks";
-import MealForm from "@/components/shopping/MealForm";
-import { EntryForm } from "@/components/shopping/EntryForm";
+import MealForm from "@/components/shopping/meal/MealForm";
+import { EntryForm } from "@/components/shopping/entry/EntryForm";
 import { useModalStack } from "@/components/ui/StackedModal";
 import { Text } from "@/components/ui/Text";
 import Image from "next/image";
@@ -76,7 +76,6 @@ const Creator = () => {
       startDrag(e.touches[0].clientX, e.touches[0].clientY, "touchend", "touchmove");
     }
   };
-
 
   return (
     <div
