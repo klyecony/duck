@@ -63,7 +63,8 @@ const Page = () => {
   );
 
   return (
-    <>
+    <div className="flex w-full grow flex-col p-1.5">
+      <TabHeader title={title} description={description} />
       <Tabs
         size="sm"
         placement="bottom"
@@ -87,7 +88,6 @@ const Page = () => {
             title={item.label}
             className={cn(item.index < 2 && "aspect-square w-fit px-1", "h-full")}
           >
-            <TabHeader title={title} description={description} />
             <TabContent>
               {meals.map(meal => (
                 <MealListItem key={meal.id} meal={meal} />
@@ -99,7 +99,7 @@ const Page = () => {
           </Tab>
         )}
       </Tabs>
-    </>
+    </div>
   );
 };
 

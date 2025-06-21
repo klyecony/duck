@@ -4,16 +4,16 @@ import { Text } from "@/components/ui/Text";
 interface TabHeaderProps {
   title: string;
   description: string;
-  className?: string;
 }
 
-export const TabHeader = ({ title, description, className = "" }: TabHeaderProps) => {
+export const TabHeader = ({ title, description }: TabHeaderProps) => {
   return (
-    <div className={`mb-1.5 flex h-11 flex-col justify-center pb-1.5 pl-[54px] ${className}`}>
+    
+    <div className="mb-1.5 flex h-fit flex-col justify-center pl-[54px]">
       <Text variant="h3" weight="bold" behave="truncate">
         {title}
       </Text>
-      <Text variant="small" className="text-default-foreground/70 leading-4" behave="truncate">
+      <Text variant="small" className="pb-1.5 text-default-foreground/70 leading-3" behave="truncate">
         {description}
       </Text>
     </div>

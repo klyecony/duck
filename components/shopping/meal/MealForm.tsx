@@ -119,7 +119,7 @@ const MealForm = ({ meal }: MealFormProps) => {
         </Text>
       </ModalHeader>
       <Form onSubmit={submit} className="grow gap-0">
-        <ModalBody className="w-full">
+        <ModalBody className="w-full p-4">
           <Input
             size="lg"
             fullWidth

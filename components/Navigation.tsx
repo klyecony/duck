@@ -4,9 +4,9 @@ import {
   BowlFood,
   CalendarDots,
   CraneTower,
+  Database,
   List,
   MagicWand,
-  PencilRuler,
   SignOut,
 } from "@phosphor-icons/react";
 import {
@@ -38,10 +38,9 @@ const NAVIGATION_ELEMENTS = [
     icon: <BowlFood />,
   },
   {
-    title: "Einkaufen",
-    href: "/einkaufen",
-    icon: <PencilRuler />,
-    isDisabled: true,
+    title: "Rezepte",
+    href: "/rezepte",
+    icon: <Database />,
   },
   {
     title: "Einkaufen",
@@ -171,7 +170,7 @@ const Navigation = () => {
                 <Button
                   key={key}
                   radius="md"
-                  variant={element.isDisabled ? "light" : "flat"}
+                  variant="light"
                   color="primary"
                   isIconOnly
                   isDisabled={element.isDisabled}
@@ -223,7 +222,7 @@ const Navigation = () => {
                       Erstellen
                     </Text>
                   </ModalHeader>
-                  <ModalBody className="grid grid-cols-2 gap-2">
+                  <ModalBody className="grid grid-cols-2 gap-2 p-4">
                     <Card
                       className="aspect-square bg-transparent p-2"
                       isPressable

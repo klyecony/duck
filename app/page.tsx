@@ -98,7 +98,7 @@ export default function Component() {
       >
         <Spinner color="primary" variant="wave" />
       </div>
-      <div className="flex h-1/2 w-full flex-col items-start justify-center pb-2">
+      <div className="flex h-1/2 w-full flex-col items-start justify-center px-2 pb-2">
         <Text variant="h3">
           {"Willkommen".split("").map((char, i) => (
             <span
