@@ -1,0 +1,227 @@
+[
+  {
+    "name": "Thai Mango Salat",
+    "description": "Ein frischer und würziger Thai-Mango-Salat mit knackigem Gemüse und aromatischem Dressing",
+    "instructions": "Mango schälen und in kleine Würfel schneiden.\nPaprika waschen und ebenfalls in kleine Würfel schneiden.\nKarotte schälen und fein raspeln.\nKoriander, Erdnüsse und Cashewkerne hacken.\n\nDie Schale einer Limette abreiben und beide Limetten auspressen. Die Chilischote entfernen und fein hacken.\nChili mit dem Limettensaft, dem Mango, Sojasoße und Zucker verrühren bis sich der Zucker aufgelöst hat.\nErdnussbutter und Öl gut miteinander verrühren und mit der restlichen Soße aufkochen.\n\nAlles miteinander vermischen.",
+    "prepTime": 20,
+    "cookTime": 5,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Mango", "amount": 2, "unit": "Stück", "category": "Obst" },
+      { "name": "Karotte", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Rote Paprika", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Koriander", "amount": 1, "unit": "Bund", "category": "Kräuter" },
+      { "name": "Erdnüsse", "amount": 250, "unit": "g", "category": "Nüsse" },
+      { "name": "Cashewkerne", "amount": 250, "unit": "g", "category": "Nüsse" },
+      { "name": "Limetten", "amount": 2, "unit": "Stück", "category": "Obst" },
+      { "name": "Rote Chilischote", "amount": 1, "unit": "Stück", "category": "Gewürze" },
+      { "name": "Sojasoße", "amount": 1, "unit": "EL", "category": "Saucen" },
+      { "name": "Brauner Zucker", "amount": 1, "unit": "EL", "category": "Süßungsmittel" },
+      { "name": "Erdnussbutter", "amount": 1, "unit": "EL", "category": "Nuss-Produkte" },
+      { "name": "Öl", "amount": 2, "unit": "EL", "category": "Fette" }
+    ]
+  },
+  {
+    "name": "Südafrikanischer Eintopf",
+    "description": "Ein würziger südafrikanischer Eintopf mit Süßkartoffeln, Erdnussbutter und aromatischen Gewürzen",
+    "instructions": "Knoblauch und Zwiebel abziehen, hacken bzw. fein würfeln.\nLauch putzen, waschen, längs halbieren und in feine Streifen schneiden. Süßkartoffel schälen, waschen, fein würfeln.\nKarotten schälen, längs halbieren und in Scheiben schneiden.\n\nIn einem großen Topf Öl erhitzen, Knoblauch- und Zwiebelwürfel darin 2 Minuten andünsten. Curry und Paprikapulver dazugeben, andünsten. Tomatenmark, Honig und Zitronensaft hinzufügen. Lauch, Süßkartoffel, Karotten und Brühe einrühren.\nSuppe aufkochen und 5 Minuten köcheln lassen.\nErdnussbutter und Sahne einrühren.\nErdnüsse hacken, in die Suppe einrühren. Mit Salz und Pfeffer abschmecken.",
+    "prepTime": 20,
+    "cookTime": 30,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Knoblauchzehe", "amount": 1, "unit": "Stück", "category": "Gewürze" },
+      { "name": "Zwiebel", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Süßkartoffel", "amount": 300, "unit": "g", "category": "Gemüse" },
+      { "name": "Karotten", "amount": 2, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Stange Lauch", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Erdnussbutter", "amount": 100, "unit": "g", "category": "Nuss-Produkte" },
+      { "name": "Schlagsahne", "amount": 150, "unit": "g", "category": "Milchprodukte" },
+      { "name": "Currypulver", "amount": 2, "unit": "TL", "category": "Gewürze" },
+      { "name": "Paprikapulver", "amount": 1, "unit": "TL", "category": "Gewürze" },
+      { "name": "Tomatenmark", "amount": 2, "unit": "TL", "category": "Saucen" },
+      { "name": "Honig", "amount": 1, "unit": "EL", "category": "Süßungsmittel" },
+      { "name": "Zitronensaft", "amount": 2, "unit": "EL", "category": "Obst" },
+      { "name": "Gemüsebrühe", "amount": 1, "unit": "l", "category": "Brühen" },
+      { "name": "Erdnüsse geröstet und gesalzen", "amount": 100, "unit": "g", "category": "Nüsse" }
+    ]
+  },
+  {
+    "name": "Kartoffel-Gemüse-Gulasch",
+    "description": "Ein herzhaftes vegetarisches Gulasch mit Kartoffeln, Paprika und würzigen Gewürzen",
+    "instructions": "Kartoffeln schälen, würfeln und getrennt verwenden.\nEine Zwiebel klein würfeln, die andere in viele Ringe schneiden. Knoblauch pressen. Papriuake schälen und in dünne Scheiben schneiden. Paprika waschen und in ca. 2 cm große Stücke schneiden.\n\nZwiebeln und Knoblauch in Olivenöl andünsten.\nFestkochende Kartoffeln dazugeben, ca. 2 Minuten mitdünsten.\nPapriuake und mehligkochende Kartoffeln dazugeben und ca. 1 Minute mitdünsten. Gewürze und Tomatenmark kurz mitrösten. Gemüsebrühe und Sojasoße angießen.\nAlles zugedeckt 10 Minuten köcheln lassen. Dann Paprika und Apfelessig zugeben und nochmal bei ca. 15 Minuten köcheln lassen bis die Kartoffeln gar sind.\nMit Salz und Pfeffer abschmecken.",
+    "prepTime": 25,
+    "cookTime": 25,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Zwiebeln", "amount": 2, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Knoblauchzehen", "amount": 2, "unit": "Stück", "category": "Gewürze" },
+      { "name": "Rote Paprika", "amount": 500, "unit": "g", "category": "Gemüse" },
+      { "name": "Papriuake", "amount": 450, "unit": "g", "category": "Gemüse" },
+      { "name": "Festkochende Kartoffeln", "amount": 500, "unit": "g", "category": "Gemüse" },
+      { "name": "Mehligkochende Kartoffeln", "amount": 600, "unit": "g", "category": "Gemüse" },
+      { "name": "Gemüsebrühe", "amount": 1, "unit": "Liter", "category": "Brühen" },
+      { "name": "Paprikapulver edelsüß", "amount": 2, "unit": "TL", "category": "Gewürze" },
+      { "name": "Senfkörner", "amount": 2, "unit": "TL", "category": "Gewürze" },
+      { "name": "Gemahlener Kreuzkümmel", "amount": 0.5, "unit": "TL", "category": "Gewürze" },
+      { "name": "Piment d'Espelette", "amount": 2, "unit": "TL", "category": "Gewürze" },
+      { "name": "Tomatenmark", "amount": 2, "unit": "EL", "category": "Saucen" },
+      { "name": "Sojasoße", "amount": 2, "unit": "EL", "category": "Saucen" },
+      { "name": "Apfelessig", "amount": 2, "unit": "EL", "category": "Essig" }
+    ]
+  },
+  {
+    "name": "Kartoffel-Paprika Tortilla",
+    "description": "Eine spanische Tortilla mit Kartoffeln, Paprika und Babyspinat - perfekt als Hauptgericht oder Tapas",
+    "instructions": "Kartoffeln waschen und 20 Minuten kochen, dann abgießen und auskühlen lassen.\nPaprika in ca. 1cm große Würfel schneiden.\nZwiebel und Knoblauch abziehen und fein würfeln.\nKartoffeln schälen und in Scheiben schneiden.\n\nEtwas Olivenöl in einer Pfanne erhitzen, Paprikawürfel, Zwiebel und Knoblauch darin kurz anschwitzen. Mit Salz und Pfeffer würzen und herausnehmen. Noch etwas Olivenöl in die heiße Pfanne geben und die Kartoffelwürfel kräftig anbraten. Mit Salz und Pfeffer würzen, die Paprika-Zwiebelmischung unterziehen und den gewaschenen Babyspinat dazugeben und kurz mitdünsten. Alles gleichmäßig in der Pfanne verteilen.\n\nEier und Milch verquirlen, salzen und pfeffern.\nDie Eiermischung über die Kartoffel-Paprikamischung gießen.\nBei 140°C im Ofen etwa 35 Minuten backen, eventuell nach der Hälfte der Zeit mit Backpapier abdecken.\nAlternativ: Deckel auf die Pfanne geben und bei mittlerer Hitze garen bis die Eimasse gestockt ist.\nTortilla auf eine Platte gleiten lassen und in Tortenstücke schneiden.",
+    "prepTime": 30,
+    "cookTime": 35,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Festkochende Kartoffeln", "amount": 700, "unit": "g", "category": "Gemüse" },
+      { "name": "Paprika", "amount": 2, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Zwiebel", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Knoblauchzehe", "amount": 1, "unit": "Stück", "category": "Gewürze" },
+      { "name": "Babyspinat", "amount": 1, "unit": "Handvoll", "category": "Gemüse" },
+      { "name": "Eier", "amount": 5, "unit": "Stück", "category": "Eier" },
+      { "name": "Milch", "amount": 100, "unit": "ml", "category": "Milchprodukte" }
+    ]
+  },
+  {
+    "name": "Indisches Rotes Linsen Dal",
+    "description": "Ein würziges und cremiges indisches Linsengericht mit Kokosmilch und aromatischen Gewürzen",
+    "instructions": "Zwiebeln klein schneiden, Knoblauch pressen, Ingwer reiben.\nEtwas Olivenöl (oder Kokosöl) in einem Topf erhitzen, Zwiebel, Knoblauch und Ingwer darin anschwitzen.\nGewürze dazugeben und kurz mitschwitzen. Linsen waschen und in den Topf geben. Gemüsebrühe dazugießen und alles aufkochen. Zugedeckt 8-10 Minuten köcheln lassen bis der Großteil der Flüssigkeit verkocht ist. Kokosmilch und passierte Tomaten hinzufügen und weitere 5-10 Minuten köcheln lassen bis die Linsen gar sind.\nMit Salz, Pfeffer und Limettensaft abschmecken.",
+    "prepTime": 15,
+    "cookTime": 25,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Zwiebeln", "amount": 2, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Knoblauchzehen", "amount": 3, "unit": "Stück", "category": "Gewürze" },
+      { "name": "Ingwer", "amount": 2, "unit": "TL", "category": "Gewürze" },
+      { "name": "Rote Linsen", "amount": 300, "unit": "g", "category": "Hülsenfrüchte" },
+      { "name": "Gemüsebrühe", "amount": 730, "unit": "ml", "category": "Brühen" },
+      { "name": "Kokosmilch", "amount": 250, "unit": "ml", "category": "Milchprodukte" },
+      { "name": "Passierte Tomaten", "amount": 250, "unit": "ml", "category": "Gemüse" },
+      { "name": "Limette", "amount": 1, "unit": "Stück", "category": "Obst" },
+      { "name": "Kurkuma", "amount": 1, "unit": "TL", "category": "Gewürze" },
+      { "name": "Koriander gemahlen", "amount": 1, "unit": "TL", "category": "Gewürze" },
+      { "name": "Kreuzkümmel", "amount": 1, "unit": "TL", "category": "Gewürze" },
+      { "name": "Paprikapulver", "amount": 1, "unit": "TL", "category": "Gewürze" },
+      { "name": "Garam Masala oder Currypulver", "amount": 1, "unit": "TL", "category": "Gewürze" }
+    ]
+  },
+  {
+    "name": "Kichererbsen-Tortilla",
+    "description": "Eine würzige vegetarische Tortilla mit Kichererbsen, Paprika und frischen Kräutern",
+    "instructions": "Knoblauch und Zwiebel abziehen, hacken bzw. fein würfeln.\nMit etwas Olivenöl andünsten. Kichererbsen und Tomatenmark dazugeben und kurz mitbraten. Gewürze untermischen und Mischung in eine Schüssel umfüllen. Mit einer Gabel die Kichererbsen zerdrücken. Mayo, Joghurt und Agavendicksaft unterrühren. Petersilie hacken, Zitronenschale abreiben und Saft auspressen. Zusammen mit Salz und Pfeffer zur Kichererbsenmischung dazugeben.\nFüllung auf eine Hälfte der Wraps verteilen, zuklappen und von jeder Seite kurz anbraten.",
+    "prepTime": 15,
+    "cookTime": 10,
+    "servings": 2,
+    "ingredients": [
+      { "name": "Kleine Zwiebel", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Knoblauchzehe", "amount": 1, "unit": "Stück", "category": "Gewürze" },
+      { "name": "Kichererbsen aus der Dose", "amount": 220, "unit": "g", "category": "Hülsenfrüchte" },
+      { "name": "Wraps", "amount": 2, "unit": "Stück", "category": "Getreide" },
+      { "name": "Tomatenmark", "amount": 1, "unit": "EL", "category": "Saucen" },
+      { "name": "Mayo", "amount": 2, "unit": "EL", "category": "Saucen" },
+      { "name": "Joghurt", "amount": 1, "unit": "EL", "category": "Milchprodukte" },
+      { "name": "Paprikapulver", "amount": 1, "unit": "TL", "category": "Gewürze" },
+      { "name": "Kreuzkümmel gemahlen", "amount": 1, "unit": "TL", "category": "Gewürze" },
+      { "name": "Rote Chili", "amount": 1, "unit": "Prise", "category": "Gewürze" },
+      { "name": "Agavendicksaft", "amount": 1, "unit": "TL", "category": "Süßungsmittel" },
+      { "name": "Petersilie", "amount": 1, "unit": "Handvoll", "category": "Kräuter" },
+      { "name": "Zitrone", "amount": 0.5, "unit": "Stück", "category": "Obst" }
+    ]
+  },
+  {
+    "name": "Curryreis mit Tofu",
+    "description": "Ein aromatisches asiatisches Gericht mit würzigem Curryreis, gebratenem Tofu und frischem Gemüse",
+    "instructions": "Den Tofu in Stücke brechen, Speisestärke mit Curry mischen und die Tofustücke in der Mischung wälzen. Etwas Öl in einer Wokpfanne erhitzen, Tofu darin rundherum goldbraun anbraten und dann herausnehmen.\nPaprika in Stücke schneiden, kurz im Bratfett anbraten und ebenso wieder herausnehmen.\nZwiebel, Knoblauch und Ingwer schälen und fein würfeln. Glutei ins Bratfett geben und erhitzen, Schalotten, Knoblauch und Ingwer darin andünsten. Currypulver kurz mitschwitzen. Reis zugeben und alles mit Brühe ablöschen, würzen, aufkochen und bei schwacher Hitze unter gelegentlichem Rühren ca. 15 Minuten quellen lassen.\nTofuwürfel und Paprika unter den Reis mischen und alles weitere ca. 5 Minuten garen.\nSchale der Limette abreiben, Saft auspressen und beides mit dem Joghurt verrühren. Limettenjoghurt unter den Reis rühren, nicht mehr kochen lassen. Reis mit Salz, Pfeffer und evtl. noch etwas Curry abschmecken.\nCurryreis mit Limettenspalten und Koriander anrichten.",
+    "prepTime": 20,
+    "cookTime": 25,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Schalotte", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Knoblauchzehe", "amount": 1, "unit": "Stück", "category": "Gewürze" },
+      { "name": "Frischer Ingwer", "amount": 1, "unit": "Stück", "category": "Gewürze" },
+      { "name": "Paprika", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Basmatireis", "amount": 300, "unit": "g", "category": "Getreide" },
+      { "name": "Gemüsebrühe", "amount": 700, "unit": "ml", "category": "Brühen" },
+      { "name": "Scharfes Currypulver", "amount": 1, "unit": "EL", "category": "Gewürze" },
+      { "name": "Limette", "amount": 1, "unit": "Stück", "category": "Obst" },
+      { "name": "Naturjoghurt", "amount": 100, "unit": "g", "category": "Milchprodukte" },
+      { "name": "Frischer Koriander", "amount": 1, "unit": "Bund", "category": "Kräuter" },
+      { "name": "Naturtofu", "amount": 200, "unit": "g", "category": "Tofu" },
+      { "name": "Speisestärke", "amount": 2, "unit": "EL", "category": "Backzutaten" },
+      { "name": "Currypulver", "amount": 1, "unit": "TL", "category": "Gewürze" }
+    ]
+  },
+  {
+    "name": "Paprika-Rhabarber-Suppe",
+    "description": "Eine ungewöhnliche und erfrischende Suppe mit gerösteter Paprika und säuerlichem Rhabarber",
+    "instructions": "Paprika vierteln, entkernen und mit der Hautseite nach oben auf ein Backblech legen. Unter dem Backofengrill rösten bis die Haut schwarz ist. Aus dem Ofen nehmen, mit einem feuchten Tuch abgedeckt auskühlen lassen und Haut abziehen.\nPaprika in Stücke schneiden. Rhabarber schälen und ebenfalls in Stücke schneiden. Ingwer und Zwiebeln schälen und klein schneiden.\nÖl in einem Topf erhitzen. Ingwer und Zwiebeln andünsten, Rhabarber und Paprika dazugeben, kurz verrühren. Mit der Gemüsebrühe ablöschen. Im offenen Topf etwa 20 Minuten köcheln lassen. Dann alles fein pürieren.\nFür die Suppeneinlage den Rucola waschen.\nEssig mit Öl, Salz und Pfeffer mischen und über den Rucola gießen.\nRucola und Kapuzinerkresseblüten auf der Suppe im Teller anrichten.",
+    "prepTime": 25,
+    "cookTime": 30,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Gelbe Paprika", "amount": 1, "unit": "kg", "category": "Gemüse" },
+      { "name": "Rhabarber", "amount": 200, "unit": "g", "category": "Gemüse" },
+      { "name": "Ingwer", "amount": 30, "unit": "g", "category": "Gewürze" },
+      { "name": "Große Zwiebel", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Gemüsebrühe", "amount": 800, "unit": "ml", "category": "Brühen" },
+      { "name": "Rucola", "amount": 1, "unit": "Bund", "category": "Salat" },
+      { "name": "Olivenöl", "amount": 6, "unit": "EL", "category": "Fette" },
+      { "name": "Himbeeressig", "amount": 3, "unit": "EL", "category": "Essig" },
+      { "name": "Kapuzinerkresseblüten", "amount": 6, "unit": "Stück", "category": "Kräuter" }
+    ]
+  },
+  {
+    "name": "Semmelknödl",
+    "description": "Klassische bayerische Semmelknödel mit Petersilie - perfekt als Beilage oder Hauptgericht",
+    "instructions": "Semmeln in einer Schüssel mit Salz, Pfeffer und Muskatnuss vermischen. Die Milch erwärmen und darübergießen. Mit einem großen Teller beschweren und 30 Minuten ziehen lassen. Inzwischen die Zwiebel fein würfeln. Die Zwiebelwürfel in einer Pfanne glasig dünsten, etwas abkühlen lassen und mit den Eiern unter den Teig mischen. Die Butter schmelzen und zusammen mit der Petersilie unter den Teig kneten.\nMit angefeuchteten Händen ca. 10 Knödel aus dem Teig formen. Einen großen Topf mit Wasser aufkochen, salzen und in dem leise simmernden Wasser die Knödel etwa 20 Minuten ziehen (nicht mehr kochen) lassen.",
+    "prepTime": 45,
+    "cookTime": 20,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Alte Semmeln in dünne Scheiben geschnitten", "amount": 10, "unit": "Stück", "category": "Getreide" },
+      { "name": "Milch", "amount": 375, "unit": "ml", "category": "Milchprodukte" },
+      { "name": "Zwiebel", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Eier", "amount": 4, "unit": "Stück", "category": "Eier" },
+      { "name": "Butter", "amount": 25, "unit": "g", "category": "Fette" },
+      { "name": "Gehackte Petersilie", "amount": 1, "unit": "Handvoll", "category": "Kräuter" }
+    ]
+  },
+  {
+    "name": "Spätzle Grundrezept",
+    "description": "Klassische schwabische Spätzle - die perfekte Beilage zu vielen Gerichten",
+    "instructions": "Das Mehl in eine Schüssel sieben, in die Mitte eine Mulde eindrücken. Salz, Pfeffer und Muskatnuss hinzufügen. Eier und Wasser dazugeben und verrühren. Darauf achten, dass keine Klumpen entstehen. Den Teig so lange schlagen bis er Blasen wirft.\nDen Teig entweder über ein Brett oder über ein Spätzlebrett schaben und in kochendem Salzwasser ziehen lassen, bis die Spätzle an der Wasseroberfläche schwimmen. Die fertigen Spätzle mit einem Schaumlöffel aus dem Wasser heben.",
+    "prepTime": 20,
+    "cookTime": 10,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Spätzlemehl", "amount": 400, "unit": "g", "category": "Getreide" },
+      { "name": "Eier", "amount": 4, "unit": "Stück", "category": "Eier" },
+      { "name": "Wasser", "amount": 200, "unit": "ml", "category": "Wasser" },
+      { "name": "Salz", "amount": 1, "unit": "Prise", "category": "Gewürze" },
+      { "name": "Pfeffer", "amount": 1, "unit": "Prise", "category": "Gewürze" },
+      { "name": "Muskatnuss", "amount": 1, "unit": "Prise", "category": "Gewürze" }
+    ]
+  },
+  {
+    "name": "Puten-Kartoffel-Tajine",
+    "description": "Eine würzige nordafrikanische Tajine mit Putenfleisch, Kartoffeln und aromatischen Gewürzen",
+    "instructions": "Das Putenfleisch oder den Ersatz in Streifen schneiden. Die Zwiebeln schälen und würfeln. Die Kartoffeln schälen, waschen und in Scheiben schneiden. Beide Paprikas in grobe Stücke schneiden.\nDie Zwiebeln in dem Olivenöl bei mittlerer Hitze glasig dünsten. Dann die Kartoffeln hinzufügen. Paprikastreifen und Putenfleisch vermischen und mit Harissa und Ras el Hanout würzen.\nAuf den Kartoffeln verteilen und 150ml Wasser angießen. Fleisch und Gemüse bei schwacher Hitze unter geschlossenem Deckel 30 Minuten schmoren lassen.\nMit Salz und Pfeffer abschmecken.\nDazu passt Fladenbrot.",
+    "prepTime": 25,
+    "cookTime": 30,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Putensteaks oder vegetarischer Ersatz", "amount": 2, "unit": "Stück", "category": "Fleisch" },
+      { "name": "Zwiebeln", "amount": 2, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Kartoffeln", "amount": 7, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Rote Paprika", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Gelbe Paprika", "amount": 1, "unit": "Stück", "category": "Gemüse" },
+      { "name": "Olivenöl", "amount": 4, "unit": "EL", "category": "Fette" },
+      { "name": "Harissa", "amount": 1, "unit": "TL", "category": "Gewürze" },
+      { "name": "Ras el Hanout", "amount": 1, "unit": "TL", "category": "Gewürze" }
+    ]
+  }
+]

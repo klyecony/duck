@@ -1,21 +1,18 @@
 import { type DataAttrDef, i } from "@instantdb/react";
-import { entry, meal } from "./shopping";
-import { _scd0, profiles } from "./__base";
+import { entry, meal, recipe, ingredient, recipeIngredient } from "./shopping";
+import { _scd0 } from "./__base";
 
 const _schema = i.schema({
-  rooms: {
-    user: {
-      presence: i.entity({
-        ...profiles,
-      }),
-    },
-  },
   entities: {
     $users: i.entity({
       email: i.any().unique().indexed(),
     }),
     profiles: i.entity({
-      ...profiles,
+      id: i.string().unique().indexed(),
+      name: i.string(),
+      icon: i.string(),
+      updatedAt: i.date().optional(),
+      isMultiple: i.boolean(),
     }),
     tags: i.entity({
       ..._scd0,
@@ -23,6 +20,9 @@ const _schema = i.schema({
     }),
     entries: i.entity({ ...entry }),
     meals: i.entity({ ...meal }),
+    recipes: i.entity({ ...recipe }),
+    ingredients: i.entity({ ...ingredient }),
+    recipeIngredients: i.entity({ ...recipeIngredient }),
   },
   links: {
     // User
@@ -35,11 +35,14 @@ const _schema = i.schema({
       forward: { on: "meals", has: "one", label: "createdBy" },
       reverse: { on: "$users", has: "many", label: "meals" },
     },
-    // SCD
-    // entryScd: {
-    //   forward: { on: "entries", has: "many", label: "scd" },
-    //   reverse: { on: "entries", has: "one", label: "origin" },
-    // },
+    recipeCreator: {
+      forward: { on: "recipes", has: "one", label: "createdBy" },
+      reverse: { on: "$users", has: "many", label: "recipes" },
+    },
+    ingredientCreator: {
+      forward: { on: "ingredients", has: "one", label: "createdBy" },
+      reverse: { on: "$users", has: "many", label: "ingredients" },
+    },
     // Logic
     mealEntries: {
       forward: { on: "meals", has: "many", label: "entries" },
@@ -52,6 +55,23 @@ const _schema = i.schema({
     mealTags: {
       forward: { on: "meals", has: "many", label: "tags" },
       reverse: { on: "tags", has: "many", label: "meals" },
+    },
+    // Recipe relations
+    mealRecipe: {
+      forward: { on: "meals", has: "one", label: "recipe" },
+      reverse: { on: "recipes", has: "many", label: "meals" },
+    },
+    recipeToRecipeIngredients: {
+      forward: { on: "recipes", has: "many", label: "recipeIngredients" },
+      reverse: { on: "recipeIngredients", has: "one", label: "recipe" },
+    },
+    ingredientToRecipeIngredients: {
+      forward: { on: "ingredients", has: "many", label: "recipeIngredients" },
+      reverse: { on: "recipeIngredients", has: "one", label: "ingredient" },
+    },
+    entryIngredient: {
+      forward: { on: "entries", has: "one", label: "ingredient" },
+      reverse: { on: "ingredients", has: "many", label: "entries" },
     },
   },
 });

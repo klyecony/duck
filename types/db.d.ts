@@ -20,6 +20,11 @@ export type IsScd2 =
 export type EntryType = InstaQLEntity<typeof schema, "entries">;
 export type MealType = InstaQLEntity<typeof schema, "meals">;
 export type ProfileType = InstaQLEntity<typeof schema, "profiles">;
+export type IngredientType = InstaQLEntity<typeof schema, "ingredients">;
+export type RecipeType = InstaQLEntity<typeof schema, "recipes">;
+export type RecipeIngredientType = InstaQLEntity<typeof schema, "recipeIngredients">;
+
+export type UserType = InstaQLEntity<typeof schema, "users">;
 
 export type TagType = InstaQLEntity<typeof schema, "tags">;
 

@@ -72,7 +72,6 @@ const EntryForm = ({ entry }: EntryProps) => {
       db.tx.entries[id()]
         .update({
           title: values.title,
-          description: "",
           createdAt: Date.now(),
         })
         .link({

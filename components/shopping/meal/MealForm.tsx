@@ -62,7 +62,6 @@ const MealForm = ({ meal }: MealFormProps) => {
       db.tx.meals[newId]
         .update({
           title: values.title,
-          description: "",
           favorite: false,
           createdAt: Date.now(),
           plannedAt: values.plannedAt && new Date(values.plannedAt).getTime(),

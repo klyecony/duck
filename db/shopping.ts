@@ -13,3 +13,25 @@ export const meal = {
   doneAt: i.date().optional().indexed(),
   favorite: i.boolean().indexed(),
 };
+
+export const recipe = {
+  ..._scd0,
+  instructions: i.string().optional(),
+  prepTime: i.number().optional(),
+  cookTime: i.number().optional(),
+  servings: i.number().optional(),
+};
+
+export const ingredient = {
+  ..._scd0,
+  category: i.string().optional().indexed(),
+};
+
+export const recipeIngredient = {
+  id: i.string().unique().indexed(),
+  deletedAt: i.date().optional(),
+  updatedAt: i.date().optional(),
+  createdAt: i.date(),
+  amount: i.number(),
+  unit: i.string(),
+};
