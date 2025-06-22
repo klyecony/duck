@@ -101,7 +101,7 @@ const Navigation = () => {
         width={1024}
         height={1024}
         className={cn(
-          "-translate-y-[110px] -rotate-[36deg] pointer-events-none absolute top-0 right-0 h-72 w-72 scale-x-[-1] opacity-20 transition delay-1000 duration-300 ease-in-out",
+          "-translate-y-[110px] -rotate-[36deg] pointer-events-none absolute top-0 right-0 h-72 w-72 scale-x-[-1] overflow-hidden opacity-20 transition delay-1000 duration-300 ease-in-out",
           user ? "translate-x-[180px] " : "translate-x-[400px]",
         )}
       />
@@ -195,7 +195,7 @@ const Navigation = () => {
             variant="light"
             color="danger"
             onPress={() => {
-              // db.auth.signOut();
+              db.auth.signOut();
               router.refresh();
             }}
           >

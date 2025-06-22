@@ -11,7 +11,6 @@ export const meal = {
   ..._scd0,
   plannedAt: i.date().optional().indexed(),
   doneAt: i.date().optional().indexed(),
-  favorite: i.boolean().indexed(),
 };
 
 export const recipe = {

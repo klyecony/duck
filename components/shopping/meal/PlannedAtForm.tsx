@@ -8,8 +8,8 @@ import {
   ListboxItem,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalHeader,
+  ScrollShadow,
 } from "@heroui/react";
 import { tx } from "@instantdb/react";
 import { BowlFood, Circle } from "@phosphor-icons/react";
@@ -22,7 +22,7 @@ interface PlannedAtFormProps {
 }
 
 export const PlannedAtForm = ({ meal }: PlannedAtFormProps) => {
-  const { close } = useModalStack();
+  const { remove } = useModalStack();
   const { data } = db.useQuery({
     meals: {
       $: {
@@ -54,7 +54,7 @@ export const PlannedAtForm = ({ meal }: PlannedAtFormProps) => {
         tx.meals[meal.id].update({
           plannedAt: new Date(selectedDate).getTime(),
         }),
-      ).then(close);
+      ).then(remove);
     }
   };
 
@@ -71,28 +71,29 @@ export const PlannedAtForm = ({ meal }: PlannedAtFormProps) => {
           Datum ändern
         </Text>
       </ModalHeader>
-      <ModalBody className="overflow-scroll px-2">
-        <Listbox
-          aria-label="Datum auswählen"
-          emptyContent="Keine Termine verfügbar..."
-          selectionMode="single"
-          items={weekdayItems}
-          selectedKeys={selectedKeys}
-          onSelectionChange={handleSelectionChange}
-        >
-          {item => (
-            <ListboxItem
-              variant="flat"
-              key={item.key}
-              startContent={isDateOccupied(item.key) ? <BowlFood /> : <Circle />}
-              textValue={item.label}
-            >
-              <Text behave="truncate">{item.label}</Text>
-            </ListboxItem>
-          )}
-        </Listbox>
+      <ModalBody className="px-4 pb-4">
+        <ScrollShadow>
+          <Listbox
+            aria-label="Datum auswählen"
+            emptyContent="Keine Termine verfügbar..."
+            selectionMode="single"
+            items={weekdayItems}
+            selectedKeys={selectedKeys}
+            onSelectionChange={handleSelectionChange}
+          >
+            {item => (
+              <ListboxItem
+                variant="flat"
+                key={item.key}
+                startContent={isDateOccupied(item.key) ? <BowlFood /> : <Circle />}
+                textValue={item.label}
+              >
+                <Text behave="truncate">{item.label}</Text>
+              </ListboxItem>
+            )}
+          </Listbox>
+        </ScrollShadow>
       </ModalBody>
-      <ModalFooter />
     </ModalContent>
   );
 };

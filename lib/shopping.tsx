@@ -149,7 +149,7 @@ export const getTabContentForSelection = (
         ? `Geplant ist ${mealForDay?.title || "Nichts"}`
         : mealsForDay.length > 1
           ? `Wtf ${mealsForDay.length}x Kochen?`
-          : `Geplant ist ${mealForDay.title}`;
+          : `${mealForDay.title}`;
 
     tabContent.entries = getEntriesForDay(data.entries, selected);
 

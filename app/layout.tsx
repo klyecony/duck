@@ -25,22 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="flex h-dvh flex-col bg-background text-foreground antialiased">
+    <html lang="de" className="h-full overflow-hidden bg-background text-foreground antialiased">
+      <body className="relative h-[calc(100dvh-32px)] w-dvw overflow-hidden">
         <Providers>
-          <div className="relative flex h-[calc(100dvh-32px)] max-h-full w-dvw max-w-full overflow-x-hidden">
-            <Navigation />
-            {children}
-          </div>
+          <Navigation />
+          {children}
         </Providers>
-        {/* <div className="flex grow items-center justify-between px-6">
-          <Text variant="tiny" behave="hug" className="text-default-foreground/70">
-            © {new Date().getFullYear()}
-          </Text>
-          <Text variant="tiny" behave="hug" className="text-default-foreground/70">
-            Coffe
-          </Text>
-        </div> */}
       </body>
     </html>
   );

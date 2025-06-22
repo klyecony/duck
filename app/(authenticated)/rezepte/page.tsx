@@ -93,7 +93,7 @@ const Page = () => {
 
       return (
         <Listbox
-          aria-label="Listbox menu with sections"
+          aria-label="Rezepte"
           variant="flat"
           classNames={{
             list: "gap-0",
@@ -173,7 +173,7 @@ const Page = () => {
         selectedKey={selectedTab}
         onSelectionChange={key => setSelectedTab(String(key))}
         classNames={{
-          base: "px-[60px] ",
+          base: "px-[60px]",
           tabWrapper: "h-full",
           tabList: "flex h-12 w-full flex-auto items-start gap-1 overflow-x-hidden shadow-small",
           panel: "!aspect-auto !w-full flex max-w-full grow flex-col justify-between pt-1",

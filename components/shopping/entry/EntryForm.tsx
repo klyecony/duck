@@ -133,7 +133,7 @@ const EntryForm = ({ entry }: EntryProps) => {
         </Text>
       </ModalHeader>
       <Form onSubmit={submit} className="grow gap-0">
-        <ModalBody className="w-full">
+        <ModalBody className="w-full py-4">
           <Input
             size="lg"
             autoFocus={!entry}

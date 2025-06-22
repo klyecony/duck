@@ -40,20 +40,27 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
     );
 
   const remove = () => {
-    if (modals.length === 0) return;
-    setClosingIds(prev => [...prev, modals[modals.length - 1].id]);
+    setModals(prev => {
+      setClosingIds(_ => {
+        const last = prev[prev.length - 1];
+        return last ? [last.id] : [];
+      });
+      return prev;
+    });
     setTimeout(() => {
-      setModals(modals.slice(0, -1));
-      setClosingIds(prev => prev.slice(0, -1));
-    }, 100);
+      setModals(prev => prev.slice(0, -1));
+    }, 200);
   };
 
   const close = () => {
-    setClosingIds([...modals.map(modal => modal.id)]);
+    setModals(prev => {
+      setClosingIds(_ => prev.map(modal => modal.id));
+      return prev;
+    });
     setTimeout(() => {
       setModals([]);
       setClosingIds([]);
-    }, 100);
+    }, 200);
   };
 
   const getDrawerMotionProps = (visibleIndex: number, isTopMost: boolean) => {
@@ -108,7 +115,6 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
 
       {modals.map((modal, i) => {
         const visibleIndex = modals.length - 1 - i;
-
         const isTopMost = i === modals.length - 1;
         const motionProps = getDrawerMotionProps(visibleIndex, isTopMost);
 
@@ -116,16 +122,21 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
           <Drawer
             key={modal.id}
             {...modal.options}
+            hideCloseButton
             isOpen={!closingIds.includes(modal.id)}
             onClose={remove}
             motionProps={motionProps}
             placement="bottom"
-            backdrop={visibleIndex === modals.length - 1 ? "blur" : "transparent"}
             shadow="none"
+            radius="lg"
             classNames={{
-              base: "h-full max-h-[430px] overflow-hidden pb-[30px]",
+              backdrop:
+                visibleIndex === modals.length - 1
+                  ? "bg-gradient-to-t from-secondary/10 to-background backdrop-opacity-20"
+                  : "bg-transparent",
+              base: "h-full max-h-[430px] pb-[30px]",
               header: "p-2.5",
-              body: "px-1 pt-0",
+              body: "px-4 py-0",
               footer: "pb-8",
             }}
           >
@@ -133,14 +144,6 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
           </Drawer>
         );
       })}
-      {/* <div
-        className={cn(
-          "fixed bottom-0 left-0 z-[1000] h-1.5 w-full bg-background transition-all ",
-          modals.length > 1
-            ? "translate-y-0 opacity-100 delay-[70ms] duration-200 ease-[cubic-bezier(0.4,0,1,1)]"
-            : "translate-y-1.5 opacity-0 duration-[500ms]",
-        )}
-      /> */}
     </ModalStackContext.Provider>
   );
 };

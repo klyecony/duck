@@ -9,7 +9,7 @@ import { OnClient } from "@/components/ui/OnClient";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <HeroUIProvider locale="de-DE">
+    <HeroUIProvider locale="de-DE" className="h-full">
       <OnClient>
         <NextThemesProvider attribute="class" defaultTheme="light">
           <IconContext.Provider

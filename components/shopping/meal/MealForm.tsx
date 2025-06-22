@@ -62,7 +62,6 @@ const MealForm = ({ meal }: MealFormProps) => {
       db.tx.meals[newId]
         .update({
           title: values.title,
-          favorite: false,
           createdAt: Date.now(),
           plannedAt: values.plannedAt && new Date(values.plannedAt).getTime(),
         })
@@ -119,7 +118,7 @@ const MealForm = ({ meal }: MealFormProps) => {
         </Text>
       </ModalHeader>
       <Form onSubmit={submit} className="grow gap-0">
-        <ModalBody className="w-full p-4">
+        <ModalBody className="w-full py-4">
           <Input
             size="lg"
             fullWidth
