@@ -1,5 +1,5 @@
 "use client";
-import { EntryListItem } from "@/components/shopping/entry/EntryListItem";
+import { EntryForm } from "@/components/shopping/entry/EntryForm";
 import { FromRecipeForm } from "@/components/shopping/meal/FromRecipeForm";
 import Meal from "@/components/shopping/meal/Meal";
 import { TabContent } from "@/components/shopping/utils/TabContent";
@@ -8,13 +8,14 @@ import { Text } from "@/components/ui/Text";
 import { db } from "@/db";
 import {
   generateTabItems,
+  getDaysUntilNextPlanned,
   getNext7DaysInGerman,
   getTabContentForSelection,
   isNotDeleted,
   isNotDone,
   isNotPlanned,
 } from "@/lib/shopping";
-import { Chip, cn, Listbox, ListboxItem, ListboxSection, Tab, Tabs } from "@heroui/react";
+import { Checkbox, Chip, cn, Listbox, ListboxItem, ListboxSection, Tab, Tabs } from "@heroui/react";
 import { id, tx } from "@instantdb/react";
 import { Pencil, Plus } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
@@ -79,6 +80,16 @@ const Page = () => {
       items: filteredMeals.length > 0 ? filteredMeals : [undefined],
     };
   });
+
+  const getUrgencyInfo = (entry: any) => {
+    const daysUntil = getDaysUntilNextPlanned(entry.meals);
+    const isUrgent = ["Heute", "Morgen"].includes(daysUntil);
+
+    return {
+      label: daysUntil,
+      color: isUrgent ? "danger" : "secondary",
+    };
+  };
 
   return (
     <div className="flex h-full w-full grow flex-col py-1.5">
@@ -204,9 +215,46 @@ const Page = () => {
                 </Listbox>
               )}
 
-              {entries.map(entry => (
-                <EntryListItem key={entry.id} entry={entry} />
-              ))}
+              <Listbox>
+                {entries.map(entry => (
+                  <ListboxItem
+                    key={entry.id}
+                    className={`flex w-full cursor-pointer items-center justify-between gap-1 py-0.5 transition-opacity duration-300 ${
+                      entry?.doneAt ? "opacity-30" : "opacity-100"
+                    }`}
+                    onClick={() => add(<EntryForm entry={entry} />)}
+                  >
+                    <Text weight="bold" behave="hug">
+                      {entry.title}
+                    </Text>
+                    <div className="flex gap-0.5">
+                      <Chip
+                        radius="sm"
+                        color={getUrgencyInfo(entry).color as "danger" | "secondary"}
+                        variant="light"
+                        size="sm"
+                      >
+                        {getUrgencyInfo(entry).label}
+                      </Chip>
+                      <Checkbox
+                        classNames={{
+                          wrapper: "m-0",
+                        }}
+                        radius="sm"
+                        color="secondary"
+                        isSelected={!!entry.doneAt}
+                        onValueChange={v =>
+                          db.transact(
+                            tx.entries[entry.id].update({
+                              doneAt: v ? Date.now() : null,
+                            }),
+                          )
+                        }
+                      />
+                    </div>
+                  </ListboxItem>
+                ))}
+              </Listbox>
             </TabContent>
           </Tab>
         )}

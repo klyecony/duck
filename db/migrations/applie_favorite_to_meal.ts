@@ -2,22 +2,22 @@ import { dba } from "@/db/admin";
 
 const batchSize = 100; // doing 100 txs should be pretty safe
 
-const updateMeals = async () => {
-  const data = await dba.query({ meals: {} });
+const updaterecipe = async () => {
+  const data = await dba.query({ recipe: {} });
 
   const batches: any = [];
 
-  data.meals.forEach(meal => {
-    let meals = [];
-    meals.push(dba.tx.meals[meal.id].update({ favorite: false }));
+  data.recipe.forEach(meal => {
+    let recipe = [];
+    recipe.push(dba.tx.recipe[meal.id].update({ favorite: false }));
 
-    if (meals.length >= batchSize) {
-      batches.push(meals);
-      meals = [];
+    if (recipe.length >= batchSize) {
+      batches.push(recipe);
+      recipe = [];
     }
 
-    if (meals.length > 0) {
-      batches.push(meals);
+    if (recipe.length > 0) {
+      batches.push(recipe);
     }
   });
   for (const batch of batches) {
@@ -25,4 +25,4 @@ const updateMeals = async () => {
   }
 };
 
-updateMeals();
+updaterecipe();

@@ -73,6 +73,10 @@ const _schema = i.schema({
       forward: { on: "entries", has: "one", label: "ingredient" },
       reverse: { on: "ingredients", has: "many", label: "entries" },
     },
+    recipeFavorites: {
+      forward: { on: "recipes", has: "many", label: "profileFavorites" },
+      reverse: { on: "profiles", has: "many", label: "favoriteRecipes" },
+    },
   },
 });
 
