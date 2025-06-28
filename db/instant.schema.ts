@@ -16,6 +16,7 @@ const _schema = i.schema({
     }),
     tags: i.entity({
       ..._scd0,
+      title: i.string().indexed(),
       color: i.string(),
     }),
     entries: i.entity({ ...entry }),

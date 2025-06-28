@@ -2,24 +2,12 @@
 import {
   Blueprint,
   BowlFood,
-  CalendarDots,
   CraneTower,
   Database,
-  List,
   MagicWand,
   SignOut,
 } from "@phosphor-icons/react";
-import {
-  CardBody,
-  Divider,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from "@heroui/react";
-import MealForm from "@/components/shopping/meal/MealForm";
-import { EntryForm } from "@/components/shopping/entry/EntryForm";
-import { Text } from "@/components/ui/Text";
+import { Divider } from "@heroui/react";
 import Image from "next/image";
 import { ProfileForm } from "@/components/user/ProfileForm";
 import { type USER_ICON_MAP, userIcon } from "@/components/ui/config/icon";
@@ -28,8 +16,9 @@ import { db } from "@/db";
 import { Button, Card } from "@heroui/react";
 import { Planet } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {} from "react";
 import { cn } from "@heroui/theme";
+import Cta from "./shopping/Cta";
 
 const NAVIGATION_ELEMENTS = [
   {
@@ -63,7 +52,6 @@ const Navigation = () => {
   const pathname = usePathname();
   const { add } = useModalStack();
   const { user } = db.useAuth();
-  const [quote, setQuote] = useState<Record<string, string>>({});
 
   const { data, isLoading } = db.useQuery({
     profiles: {
@@ -72,20 +60,6 @@ const Navigation = () => {
       },
     },
   });
-
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const response = await fetch("/api/quote");
-        const data = await response.json();
-        setQuote(data[0]); // ZenQuotes returns an array
-      } catch (err) {
-        console.error("Failed to fetch quote:", err);
-      }
-    };
-
-    fetchQuote();
-  }, []);
 
   const profile = data?.profiles[0];
 
@@ -210,56 +184,7 @@ const Navigation = () => {
           )}
         >
           <Divider orientation="vertical" className="h-10" />
-          <Button
-            color="primary"
-            radius="md"
-            isIconOnly
-            onPress={() =>
-              add(
-                <ModalContent className="relative">
-                  <ModalHeader>
-                    <Text variant="h2" weight="bold">
-                      Erstellen
-                    </Text>
-                  </ModalHeader>
-                  <ModalBody className="grid grid-cols-2 gap-2 p-4">
-                    <Card
-                      className="aspect-square bg-transparent p-2"
-                      isPressable
-                      isHoverable
-                      onPress={() => add(<MealForm />)}
-                    >
-                      <CardBody className="flex items-center justify-center">
-                        <CalendarDots size={44} weight="thin" />
-                      </CardBody>
-                    </Card>
-                    <Card
-                      className="aspect-square bg-transparent p-2"
-                      isPressable
-                      isHoverable
-                      onPress={() => add(<EntryForm />)}
-                    >
-                      <CardBody className="flex items-center justify-center">
-                        <List size={44} weight="thin" />
-                      </CardBody>
-                    </Card>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Text variant="small" className="font-serif">
-                      {`${quote?.q} - ${quote?.a}`}
-                    </Text>
-                  </ModalFooter>
-                  <Image
-                    src="/logo.svg"
-                    alt="Duck Logo"
-                    width={1024}
-                    height={1024}
-                    className="-z-10 -translate-x-28 absolute h-72 w-72 translate-y-52 opacity-5"
-                  />
-                </ModalContent>,
-              )
-            }
-          >
+          <Button color="primary" radius="md" isIconOnly onPress={() => add(<Cta />)}>
             <MagicWand />
           </Button>
         </Card>

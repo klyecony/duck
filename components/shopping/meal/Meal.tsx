@@ -4,7 +4,7 @@ import { Text } from "@/components/ui/Text";
 import { db } from "@/db";
 import { isNotDeleted } from "@/lib/shopping";
 import { Button, DrawerBody, DrawerContent, DrawerHeader, ScrollShadow } from "@heroui/react";
-import { Pencil, Star, Swap, Trash } from "@phosphor-icons/react";
+import { Pencil, Star, Trash } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
 import { PlannedAtForm } from "./PlannedAtForm";
 import { FromRecipeForm } from "./FromRecipeForm";
@@ -29,15 +29,16 @@ const Meal = ({
       favoriteRecipes: {},
     },
     meals: {
+      recipe: {
+        recipeIngredients: {
+          ingredient: {},
+        },
+      },
+      entries: {},
       $: {
         where: {
           ...isNotDeleted,
           id: mealId,
-        },
-      },
-      recipe: {
-        recipeIngredients: {
-          ingredient: {},
         },
       },
     },
@@ -71,9 +72,8 @@ const Meal = ({
           <Button
             variant="light"
             size="sm"
-            endContent={<Pencil />}
             color="secondary"
-            onPress={() => meal && add(<PlannedAtForm meal={meal} />)}
+            onPress={() => meal && add(<PlannedAtForm meal={meal} then={remove} />)}
           >
             {meal?.plannedAt ? formatter.format(new Date(meal.plannedAt)) : "Nicht geplant"}
           </Button>
@@ -140,7 +140,7 @@ const Meal = ({
               )
             }
           >
-            <Swap />
+            <Pencil />
           </Button>
         </div>
       </DrawerHeader>
@@ -150,7 +150,7 @@ const Meal = ({
             {meal?.title}
           </Text>
           {/*// @ts-ignore*/}
-          {recipe && <Recipe {...recipe} />}
+          {recipe && <Recipe {...recipe} meal={meal} />}
         </ScrollShadow>
       </DrawerBody>
     </DrawerContent>

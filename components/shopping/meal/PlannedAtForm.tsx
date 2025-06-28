@@ -13,16 +13,15 @@ import {
 } from "@heroui/react";
 import { tx } from "@instantdb/react";
 import { BowlFood, Circle } from "@phosphor-icons/react";
-import { useMemo } from "react";
-import { useModalStack } from "../../ui/StackedModal";
+import { type Key, useMemo } from "react";
 import type { MealType } from "@/types/db";
 
 interface PlannedAtFormProps {
-  meal: MealType;
+  meal: { id: string } & Partial<MealType>;
+  then?: () => void;
 }
 
-export const PlannedAtForm = ({ meal }: PlannedAtFormProps) => {
-  const { remove } = useModalStack();
+export const PlannedAtForm = ({ meal, then }: PlannedAtFormProps) => {
   const { data } = db.useQuery({
     meals: {
       $: {
@@ -34,28 +33,26 @@ export const PlannedAtForm = ({ meal }: PlannedAtFormProps) => {
   });
 
   const weekdayItems = useMemo(
-    () =>
-      getNext7DaysInGerman().map(({ date, label }) => ({
+    () => [
+      {
+        key: "not planned",
+        label: "Nicht Geplant",
+      },
+      ...getNext7DaysInGerman().map(({ date, label }) => ({
         key: date.toDateString(),
         label: label,
       })),
-    [],
+    ],
+    [data],
   );
 
-  const selectedKeys = useMemo(() => {
-    if (!meal.plannedAt) return new Set([]);
-    return new Set([new Date(meal.plannedAt).toDateString()]);
-  }, [meal.plannedAt]);
-
-  const handleSelectionChange = (selection: any) => {
-    const selectedDate = [...selection][0];
-    if (selectedDate) {
-      db.transact(
-        tx.meals[meal.id].update({
-          plannedAt: new Date(selectedDate).getTime(),
-        }),
-      ).then(remove);
-    }
+  const handleSelectionChange = (data: Key) => {
+    db.transact(
+      tx.meals[meal.id].update({
+        ...meal,
+        plannedAt: data === "not planned" ? null : new Date(data as string).getTime(),
+      }),
+    ).then(then);
   };
 
   const isDateOccupied = (dateKey: string) => {
@@ -76,10 +73,9 @@ export const PlannedAtForm = ({ meal }: PlannedAtFormProps) => {
           <Listbox
             aria-label="Datum auswählen"
             emptyContent="Keine Termine verfügbar..."
-            selectionMode="single"
+            selectionMode="none"
             items={weekdayItems}
-            selectedKeys={selectedKeys}
-            onSelectionChange={handleSelectionChange}
+            onAction={handleSelectionChange}
           >
             {item => (
               <ListboxItem

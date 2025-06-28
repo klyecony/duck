@@ -10,7 +10,6 @@ export const profiles = {
 
 export const _scd0 = {
   id: i.string().unique().indexed(),
-  title: i.string().indexed(),
   deletedAt: i.date().optional(),
   updatedAt: i.date().optional(),
   createdAt: i.date(),
@@ -18,7 +17,6 @@ export const _scd0 = {
 
 export const _scd2 = {
   id: i.string().unique().indexed(),
-  title: i.string().indexed(),
   deletedAt: i.date().optional(),
   createdAt: i.date(),
 };

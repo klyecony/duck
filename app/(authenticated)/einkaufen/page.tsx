@@ -1,5 +1,4 @@
 "use client";
-import { EntryForm } from "@/components/shopping/entry/EntryForm";
 import { FromRecipeForm } from "@/components/shopping/meal/FromRecipeForm";
 import Meal from "@/components/shopping/meal/Meal";
 import { TabContent } from "@/components/shopping/utils/TabContent";
@@ -17,7 +16,7 @@ import {
 } from "@/lib/shopping";
 import { Checkbox, Chip, cn, Listbox, ListboxItem, ListboxSection, Tab, Tabs } from "@heroui/react";
 import { id, tx } from "@instantdb/react";
-import { Pencil, Plus } from "@phosphor-icons/react";
+import { MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
 import { useState } from "react";
 
@@ -29,34 +28,21 @@ const Page = () => {
 
   const { data, isLoading } = db.useQuery({
     entries: {
-      tags: {
-        $: {
-          where: {
-            ...isNotDeleted,
-          },
-        },
-      },
-      meals: {
-        $: {
-          where: {
-            ...isNotDeleted,
-            ...isNotDone,
-          },
+      tags: {},
+      meals: {},
+      $: {
+        where: {
+          ...isNotDeleted,
+          ...isNotDone,
         },
       },
     },
     meals: {
+      tags: {},
       $: {
         where: {
           ...isNotDeleted,
           ...isNotPlanned,
-        },
-      },
-      tags: {
-        $: {
-          where: {
-            ...isNotDeleted,
-          },
         },
       },
     },
@@ -70,16 +56,26 @@ const Page = () => {
     weekdays,
   );
 
-  const mealSections = weekdays.map(day => {
-    const dateKey = day.date.toDateString();
-    const filteredMeals = meals.filter(meal =>
-      meal.plannedAt ? new Date(meal.plannedAt).toDateString() === dateKey : false,
-    );
-    return {
-      id: dateKey,
-      items: filteredMeals.length > 0 ? filteredMeals : [undefined],
-    };
-  });
+  const mealSections = [
+    ...(meals.filter(meal => !meal.plannedAt).length > 0
+      ? [
+          {
+            id: "Nicht Geplant",
+            items: meals.filter(meal => !meal.plannedAt),
+          },
+        ]
+      : []),
+    ...weekdays.map(day => {
+      const dateKey = day.date.toDateString();
+      const filteredMeals = meals.filter(meal =>
+        meal.plannedAt ? new Date(meal.plannedAt).toDateString() === dateKey : false,
+      );
+      return {
+        id: formatter.format(new Date(dateKey)),
+        items: filteredMeals.length > 0 ? filteredMeals : [undefined],
+      };
+    }),
+  ];
 
   const getUrgencyInfo = (entry: any) => {
     const daysUntil = getDaysUntilNextPlanned(entry.meals);
@@ -90,6 +86,25 @@ const Page = () => {
       color: isUrgent ? "danger" : "secondary",
     };
   };
+
+  const entrySections = [
+    ...entries.reduce(
+      (acc, entry) => {
+        const newSection = getUrgencyInfo(entry).label;
+        const existingSection = acc.find(section => section.id === newSection);
+        if (existingSection) {
+          existingSection.items.push(entry);
+        } else {
+          acc.push({
+            id: newSection,
+            items: [entry],
+          });
+        }
+        return acc;
+      },
+      [] as { id: string; items: any[] }[],
+    ),
+  ];
 
   return (
     <div className="flex h-full w-full grow flex-col py-1.5">
@@ -132,14 +147,14 @@ const Page = () => {
               {meals.length > 0 && (
                 <Listbox
                   aria-label="Gerichte"
-                  variant="flat"
+                  variant="light"
                   classNames={{
                     base: "px-0",
                   }}
                 >
-                  {mealSections.map(section => (
+                  {mealSections.map((section, index) => (
                     <ListboxSection
-                      key={section.id}
+                      key={section.id + index}
                       classNames={{
                         base: cn([
                           "px-2.5 py-1.5 shadow-small",
@@ -169,7 +184,7 @@ const Page = () => {
                       title={
                         (
                           <Chip color="secondary" radius="sm" variant="flat" size="sm">
-                            {formatter.format(new Date(section.id))}
+                            {section.id}
                           </Chip>
                         ) as any
                       }
@@ -178,7 +193,6 @@ const Page = () => {
                         <ListboxItem
                           key={meal?.id || `${section.id}create`}
                           color="secondary"
-                          title={meal?.title || "Neues Gericht erstellen"}
                           onPress={() =>
                             add(
                               meal ? (
@@ -203,58 +217,99 @@ const Page = () => {
                           }
                           endContent={
                             meal ? (
-                              <Pencil className="cursor-pointer text-secondary" />
+                              <MagnifyingGlass className="cursor-pointer text-secondary" />
                             ) : (
                               <Plus className="cursor-pointer text-primary" />
                             )
                           }
-                        />
+                        >
+                          <Text weight="bold">{meal?.title || "-"}</Text>
+                        </ListboxItem>
                       ))}
                     </ListboxSection>
                   ))}
                 </Listbox>
               )}
 
-              <Listbox>
-                {entries.map(entry => (
-                  <ListboxItem
-                    key={entry.id}
-                    className={`flex w-full cursor-pointer items-center justify-between gap-1 py-0.5 transition-opacity duration-300 ${
-                      entry?.doneAt ? "opacity-30" : "opacity-100"
-                    }`}
-                    onClick={() => add(<EntryForm entry={entry} />)}
-                  >
-                    <Text weight="bold" behave="hug">
-                      {entry.title}
-                    </Text>
-                    <div className="flex gap-0.5">
-                      <Chip
-                        radius="sm"
-                        color={getUrgencyInfo(entry).color as "danger" | "secondary"}
-                        variant="light"
-                        size="sm"
-                      >
-                        {getUrgencyInfo(entry).label}
-                      </Chip>
-                      <Checkbox
-                        classNames={{
-                          wrapper: "m-0",
-                        }}
-                        radius="sm"
-                        color="secondary"
-                        isSelected={!!entry.doneAt}
-                        onValueChange={v =>
-                          db.transact(
-                            tx.entries[entry.id].update({
-                              doneAt: v ? Date.now() : null,
-                            }),
-                          )
-                        }
-                      />
-                    </div>
-                  </ListboxItem>
-                ))}
-              </Listbox>
+              {entries.length > 0 && (
+                <Listbox
+                  aria-label="Einträge"
+                  variant="light"
+                  classNames={{
+                    base: "px-0",
+                  }}
+                >
+                  {entrySections.map((section, index) => (
+                    <ListboxSection
+                      key={section.id + index}
+                      classNames={{
+                        base: cn([
+                          "px-2.5 py-1.5 shadow-small",
+                          "first:relative",
+                          "first:before:content-['']",
+                          "first:before:absolute",
+                          "first:before:-top-1",
+                          "first:before:left-0",
+                          "first:before:right-0",
+                          "first:before:h-2",
+                          "first:before:z-10",
+                          "first:before:bg-background",
+                          "first:before:pointer-events-none",
+                          "last:relative",
+                          "last:after:content-['']",
+                          "last:after:absolute",
+                          "last:after:-bottom-3",
+                          "last:after:left-0",
+                          "last:after:right-0",
+                          "last:after:h-3",
+                          "last:after:z-10",
+                          "last:after:bg-background",
+                          "last:after:pointer-events-none",
+                        ]),
+                        heading: "p-0",
+                      }}
+                      title={
+                        entrySections.length > 1 &&
+                        ((
+                          <Chip color="secondary" radius="sm" variant="flat" size="sm">
+                            {section.id}
+                          </Chip>
+                        ) as any)
+                      }
+                    >
+                      {section.items.map(entry => (
+                        <ListboxItem
+                          aria-label="Einkaufseintrag"
+                          key={entry.id}
+                          endContent={
+                            <Checkbox
+                              classNames={{
+                                wrapper: "m-0",
+                              }}
+                              radius="sm"
+                              color="secondary"
+                              isSelected={!!entry.doneAt}
+                              onValueChange={v =>
+                                db.transact(
+                                  tx.entries[entry.id].update({
+                                    doneAt: v ? Date.now() : null,
+                                  }),
+                                )
+                              }
+                            />
+                          }
+                          className={`w-full cursor-pointer gap-1 py-0.5 transition-opacity duration-300 ${
+                            entry?.doneAt ? "opacity-30" : "opacity-100"
+                          }`}
+                          // onClick={() => add(<EntryForm entry={entry} />)}
+                        >
+                          <Text weight="bold">{entry.title}</Text>
+                        </ListboxItem>
+                      ))}
+                    </ListboxSection>
+                  ))}
+                </Listbox>
+              )}
             </TabContent>
           </Tab>
         )}

@@ -3,18 +3,21 @@ import { _scd0 } from "./__base";
 
 export const entry = {
   ..._scd0,
+  title: i.string().indexed(),
   doneAt: i.date().optional().indexed(),
   paidAt: i.date().optional().indexed(),
 };
 
 export const meal = {
   ..._scd0,
+  title: i.string().indexed().optional(),
   plannedAt: i.date().optional().indexed(),
   doneAt: i.date().optional().indexed(),
 };
 
 export const recipe = {
   ..._scd0,
+  title: i.string().indexed(),
   instructions: i.string().optional(),
   prepTime: i.number().optional(),
   cookTime: i.number().optional(),
@@ -23,6 +26,7 @@ export const recipe = {
 
 export const ingredient = {
   ..._scd0,
+  title: i.string().indexed(),
   category: i.string().optional().indexed(),
 };
 

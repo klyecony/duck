@@ -161,47 +161,6 @@ export const getTabContentForSelection = (
   return tabContent;
 };
 
-// Utility to check if a date has meals planned
-export const hasPlannedMeals = (meals: MealType[], dateString: string): boolean => {
-  return getMealsForDay(meals, dateString).length > 0;
-};
-
-// Get the count of incomplete entries for a day
-export const getIncompleteEntriesCount = (
-  entries: EntryTypeWithMeals[],
-  dateString: string,
-): number => {
-  const entriesForDay = getEntriesForDay(entries, dateString);
-  return entriesForDay.filter(entry => !entry.doneAt).length;
-};
-
-// Get all unique dates that have meals planned
-export const getPlannedDates = (meals: MealType[]): string[] => {
-  return Array.from(
-    new Set(
-      meals
-        .filter((meal): meal is MealType & { plannedAt: string | Date } => !!meal.plannedAt)
-        .map(meal => new Date(meal.plannedAt).toDateString()),
-    ),
-  );
-};
-
-// Check if a meal is planned for today
-export const isMealPlannedForToday = (meal: MealType): boolean => {
-  if (!meal.plannedAt) return false;
-  const today = new Date().toDateString();
-  return new Date(meal.plannedAt).toDateString() === today;
-};
-
-// Get meals by planning status
-export const getMealsByPlanningStatus = (meals: MealType[]) => {
-  return {
-    planned: meals.filter(meal => meal.plannedAt),
-    unplanned: meals.filter(meal => !meal.plannedAt),
-    favorites: meals.filter(meal => meal.favorite),
-  };
-};
-
 const isNotDeleted = {
   deletedAt: { $isNull: true },
 };
