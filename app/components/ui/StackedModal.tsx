@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { Drawer, type ModalProps } from "@heroui/react";
 import { id } from "@instantdb/react";
+import { easeInOut, easeIn } from "framer-motion";
 
 type ModalOptions = Pick<ModalProps, "isDismissable" | "closeButton" | "hideCloseButton">;
 
@@ -61,6 +62,8 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
     }, 200);
   };
 
+  // Import easing functions from framer-motion
+
   const getDrawerMotionProps = (visibleIndex: number, isTopMost: boolean) => {
     const opacity = 1 - visibleIndex * 0.2;
     const yOffset = -visibleIndex * 6;
@@ -73,11 +76,11 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
           transition: isTopMost
             ? {
                 duration: 0.4,
-                ease: [0.22, 1, 0.36, 1],
+                ease: easeInOut,
               }
             : {
                 duration: 0.1,
-                ease: [0.4, 0, 1, 1],
+                ease: easeInOut,
               },
         },
         exit: {
@@ -85,7 +88,7 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
           opacity: isTopMost ? 0 : opacity,
           transition: {
             duration: 0.25,
-            ease: [0.4, 0, 0.2, 1],
+            ease: easeIn,
           },
         },
         initial: isTopMost
@@ -101,6 +104,7 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
       },
     };
   };
+
   return (
     <ModalStackContext.Provider
       value={{

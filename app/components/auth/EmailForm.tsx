@@ -16,7 +16,8 @@ import { Text } from "../ui/Text";
 import { Checkbox } from "../ui/Checkbox";
 import { useModalStack } from "../ui/StackedModal";
 import { OtpForm } from "./OtpForm";
-import { ArrowUDownLeft } from "@phosphor-icons/react";
+import { ArrowUDownLeftIcon } from "@phosphor-icons/react";
+import { db } from "@/db";
 
 const EmailForm = () => {
   const { add } = useModalStack();
@@ -49,7 +50,7 @@ const EmailForm = () => {
     });
     add(<OtpForm email={values.email} />, {
       isDismissable: false,
-      closeButton: <ArrowUDownLeft size={32} />,
+      closeButton: <ArrowUDownLeftIcon size={32} />,
     });
   });
 

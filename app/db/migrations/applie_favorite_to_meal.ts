@@ -7,7 +7,7 @@ const updaterecipe = async () => {
 
   const batches: any = [];
 
-  data.recipe.forEach(meal => {
+  data.recipe.forEach((meal: any) => {
     let recipe = [];
     recipe.push(dba.tx.recipe[meal.id].update({ favorite: false }));
 

@@ -45,8 +45,4 @@ const createReciepeIngredientAndConnect = (
   );
 };
 
-export {
-    createIngredient,
-    createRecipe,
-    createReciepeIngredientAndConnect,
-}
+export { createIngredient, createRecipe, createReciepeIngredientAndConnect };

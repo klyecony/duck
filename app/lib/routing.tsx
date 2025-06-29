@@ -4,27 +4,27 @@ import { createContext } from "react";
 export type PageType = "/" | "/einkaufen" | "/rezepte";
 
 export const NavigationContext = createContext<{
-	currentPage: PageType;
-	setCurrentPage: (page: PageType) => void;
+  currentPage: PageType;
+  setCurrentPage: (page: PageType) => void;
 }>({
-	currentPage: "/",
-	setCurrentPage: () => void 0,
+  currentPage: "/",
+  setCurrentPage: () => void 0,
 });
 
 export const useNavigation = () => {
-	const context = useContext(NavigationContext);
-	if (!context) {
-		throw new Error("useNavigation must be used within a NavigationProvider");
-	}
-	return context;
+  const context = useContext(NavigationContext);
+  if (!context) {
+    throw new Error("useNavigation must be used within a NavigationProvider");
+  }
+  return context;
 };
 
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
-	const [currentPage, setCurrentPage] = useState<PageType>("/");
+  const [currentPage, setCurrentPage] = useState<PageType>("/");
 
-	return (
-		<NavigationContext.Provider value={{ currentPage, setCurrentPage }}>
-			{children}
-		</NavigationContext.Provider>
-	);
+  return (
+    <NavigationContext.Provider value={{ currentPage, setCurrentPage }}>
+      {children}
+    </NavigationContext.Provider>
+  );
 };
