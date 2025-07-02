@@ -14,16 +14,7 @@ import {
   isNotDone,
   isNotPlanned,
 } from "@/lib/shopping";
-import {
-  Checkbox,
-  Chip,
-  cn,
-  Listbox,
-  ListboxItem,
-  ListboxSection,
-  Tab,
-  Tabs,
-} from "@heroui/react";
+import { Checkbox, Chip, cn, Listbox, ListboxItem, ListboxSection, Tab, Tabs } from "@heroui/react";
 import { id, tx } from "@instantdb/react";
 import { MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
@@ -318,15 +309,18 @@ const Einkaufen = () => {
                   ))}
                 </Listbox>
               )}
-               {entries.length === 0 && meals.length === 0 && (
-                <>
-
-                <Image src="/logo.svg" alt="Hero image" />
-                wef
-                </>
-            )}
+              {entries.length === 0 && meals.length === 0 && (
+                <div className="flex h-full w-full items-center justify-center">
+                  <Image
+                    src="/logo.svg"
+                    alt="Company logo"
+                    priority
+                    width={100}
+                    className="opacity-55"
+                  />
+                </div>
+              )}
             </TabContent>
-           
           </Tab>
         )}
       </Tabs>
