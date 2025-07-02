@@ -81,7 +81,7 @@ const Image = forwardRef<HTMLImageElement, ImageProps>(
     });
 
     const imgRef = useRef<HTMLImageElement>(null);
-    const observerRef = useRef<IntersectionObserver>();
+    const observerRef = useRef<IntersectionObserver>(null);
 
     useEffect(() => {
       if (priority || !lazy) {
