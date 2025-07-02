@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import { Drawer, type ModalProps } from "@heroui/react";
 import { id } from "@instantdb/react";
-import { easeInOut, easeIn } from "framer-motion";
+import {} from "framer-motion";
 
 type ModalOptions = Pick<ModalProps, "isDismissable" | "closeButton" | "hideCloseButton">;
 
@@ -62,48 +62,46 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
     }, 200);
   };
 
-  // Import easing functions from framer-motion
+  const getDrawerMotionProps = useMemo(() => {
+    return (visibleIndex: number, isTopMost: boolean) => {
+      const opacity = Math.max(0.4, 1 - visibleIndex * 0.15);
+      const yOffset = -visibleIndex * 8;
 
-  const getDrawerMotionProps = (visibleIndex: number, isTopMost: boolean) => {
-    const opacity = 1 - visibleIndex * 0.2;
-    const yOffset = -visibleIndex * 6;
-
-    return {
-      variants: {
-        enter: {
-          y: isTopMost ? 30 : yOffset + 30,
-          opacity,
-          transition: isTopMost
+      return {
+        variants: {
+          enter: {
+            transform: isTopMost
+              ? "translateY(20px) translateZ(0)"
+              : `translateY(${yOffset + 20}px) translateZ(0)`,
+            opacity,
+            scale: 1,
+            transition: {
+              duration: 0.4,
+              ease: [0.25, 0.1, 0.25, 1],
+            },
+          },
+          exit: {
+            transform: "translateY(100%) translateZ(0)",
+            opacity: 0,
+            scale: 0.95,
+            transition: {
+              duration: 0.35,
+              ease: [0.4, 0, 1, 1],
+            },
+          },
+          initial: isTopMost
             ? {
-                duration: 0.4,
-                ease: easeInOut,
+                transform: "translateY(100%) translateZ(0) scale(0.95)",
+                opacity: 0,
               }
             : {
-                duration: 0.1,
-                ease: easeInOut,
+                transform: `translateY(${yOffset}px) translateZ(0)`,
+                opacity,
               },
         },
-        exit: {
-          y: "100%",
-          opacity: isTopMost ? 0 : opacity,
-          transition: {
-            duration: 0.25,
-            ease: easeIn,
-          },
-        },
-        initial: isTopMost
-          ? {
-              y: "100%",
-              opacity: 0,
-              scale: 0.9,
-            }
-          : {
-              y: yOffset,
-              opacity,
-            },
-      },
+      };
     };
-  };
+  }, []);
 
   return (
     <ModalStackContext.Provider
@@ -127,7 +125,7 @@ export const ModalStackProvider = ({ children }: { children: ReactNode }) => {
             hideCloseButton
             isOpen={!closingIds.includes(modal.id)}
             onClose={remove}
-            motionProps={motionProps}
+            motionProps={motionProps as any}
             placement="bottom"
             shadow="none"
             radius="lg"

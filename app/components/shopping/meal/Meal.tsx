@@ -4,7 +4,7 @@ import { Text } from "@/components/ui/Text";
 import { db } from "@/db";
 import { isNotDeleted } from "@/lib/shopping";
 import { Button, DrawerBody, DrawerContent, DrawerHeader, ScrollShadow } from "@heroui/react";
-import { Pencil, Star, Trash } from "@phosphor-icons/react";
+import { PencilIcon, StarIcon, TrashIcon } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
 import { PlannedAtForm } from "./PlannedAtForm";
 import { FromRecipeForm } from "./FromRecipeForm";
@@ -65,7 +65,7 @@ const Meal = ({
               );
           }}
         >
-          <Trash />
+          <TrashIcon />
         </Button>
 
         <div className="flex items-center gap-2">
@@ -73,7 +73,7 @@ const Meal = ({
             variant="light"
             size="sm"
             color="secondary"
-            onPress={() => meal && add(<PlannedAtForm meal={meal} then={remove} />)}
+            onPress={() => meal && add(<PlannedAtForm meal={{ id: meal.id }} then={remove} />)}
           >
             {meal?.plannedAt ? formatter.format(new Date(meal.plannedAt)) : "Nicht geplant"}
           </Button>
@@ -104,7 +104,7 @@ const Meal = ({
                 }
               }}
             >
-              <Star
+              <StarIcon
                 weight={
                   data?.profiles[0]?.favoriteRecipes?.some((fav: any) => fav.id === recipe?.id)
                     ? "fill"
@@ -140,7 +140,7 @@ const Meal = ({
               )
             }
           >
-            <Pencil />
+            <PencilIcon />
           </Button>
         </div>
       </DrawerHeader>

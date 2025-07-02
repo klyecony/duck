@@ -1,19 +1,10 @@
-import { useNavigation } from "@/lib/routing";
-import Home from "@/pages/Home";
-import Einkaufen from "@/pages/Einkaufen";
-import Rezepte from "@/pages/Rezepte";
-import "@/globals.css";
+import { TreeEvergreenIcon } from "@phosphor-icons/react";
+import { useRouter } from "@/components/Router";
+import { ROUTES } from "@/config/routing";
 
-function App() {
-  const { currentPage } = useNavigation();
-  switch (currentPage) {
-    case "/einkaufen":
-      return <Einkaufen />;
-    case "/rezepte":
-      return <Rezepte />;
-    default:
-      return <Home />;
-  }
-}
+const App = () => {
+  const { route } = useRouter();
+  return ROUTES[route] || <TreeEvergreenIcon />;
+};
 
 export default App;

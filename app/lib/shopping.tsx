@@ -1,6 +1,6 @@
 import type { MealType } from "@/types/db";
 import type { EntryTypeWithMeals } from "@/types/shopping";
-import { Calendar, List } from "@phosphor-icons/react";
+import { CalendarIcon, ListIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 
 export function getNext7DaysInGerman(): {
@@ -62,12 +62,12 @@ export const generateTabItems = (weekdays: ReturnType<typeof getNext7DaysInGerma
   return [
     {
       id: "meals",
-      label: <Calendar />, // You can replace with your Calendar icon
+      label: <CalendarIcon />, // You can replace with your Calendar icon
       index: 0,
     },
     {
       id: "entries",
-      label: <List />, // You can replace with your List icon
+      label: <ListIcon />, // You can replace with your List icon
       index: 1,
     },
     ...weekdays

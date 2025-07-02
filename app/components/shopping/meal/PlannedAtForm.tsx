@@ -10,7 +10,7 @@ import {
   ScrollShadow,
 } from "@heroui/react";
 import { tx } from "@instantdb/react";
-import { BowlFood, Circle } from "@phosphor-icons/react";
+import { BowlFoodIcon, CircleIcon } from "@phosphor-icons/react";
 import { type Key, useMemo } from "react";
 import type { MealType } from "@/types/db";
 
@@ -79,7 +79,7 @@ export const PlannedAtForm = ({ meal, then }: PlannedAtFormProps) => {
               <ListboxItem
                 variant="flat"
                 key={item.key}
-                startContent={isDateOccupied(item.key) ? <BowlFood /> : <Circle />}
+                startContent={isDateOccupied(item.key) ? <BowlFoodIcon /> : <CircleIcon />}
                 textValue={item.label}
               >
                 <Text behave="truncate">{item.label}</Text>

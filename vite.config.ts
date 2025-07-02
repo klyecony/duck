@@ -1,13 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
-import {} from "node:url";
 import path from "node:path";
 
 export default defineConfig({
-  server: {
-    port: 3000
-  },
+  server: { port: 3000 },
   plugins: [
     react(),
     VitePWA({
@@ -34,18 +31,45 @@ export default defineConfig({
         ],
       },
       manifest: {
-        name: "Duck - Home Management",
-        short_name: "Duck",
+        name: "Duck",
+        short_name: "duck",
         description: "A modern, minimalistic, and fast web application for managing your home.",
-        theme_color: "#ffffff",
-        background_color: "#ffffff",
+        theme_color: "#e7e2e0",
+        background_color: "#e7e2e0",
         display: "standalone",
+        scope: "/",
         start_url: "/",
         icons: [
-          { src: "/icons/32.png", sizes: "32x32", type: "image/png" },
-          { src: "/icons/180.png", sizes: "180x180", type: "image/png" },
-          { src: "/icons/196.png", sizes: "196x196", type: "image/png" },
-          { src: "/icons/512.png", sizes: "512x512", type: "image/png" },
+          {
+            src: "icons/72.png",
+            sizes: "72x72",
+            type: "image/png",
+          },
+          {
+            src: "icons/128.png",
+            sizes: "128x128",
+            type: "image/png",
+          },
+          {
+            src: "icons/144.png",
+            sizes: "144x144",
+            type: "image/png",
+          },
+          {
+            src: "icons/152.png",
+            sizes: "152x152",
+            type: "image/png",
+          },
+          {
+            src: "icons/256.png",
+            sizes: "256x256",
+            type: "image/png",
+          },
+          {
+            src: "icons/512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
         ],
       },
     }),
