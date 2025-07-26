@@ -14,9 +14,20 @@ import {
   isNotDone,
   isNotPlanned,
 } from "@/lib/shopping";
-import { Checkbox, Chip, cn, Listbox, ListboxItem, ListboxSection, Tab, Tabs } from "@heroui/react";
+import { motion } from "framer-motion";
+import {
+  Button,
+  Checkbox,
+  Chip,
+  cn,
+  Listbox,
+  ListboxItem,
+  ListboxSection,
+  Tab,
+  Tabs,
+} from "@heroui/react";
 import { id, tx } from "@instantdb/react";
-import { MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react";
+import { BroomIcon, MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react";
 import { useDateFormatter } from "@react-aria/i18n";
 import { useState } from "react";
 
@@ -107,7 +118,7 @@ const Einkaufen = () => {
   ];
 
   return (
-    <div className="flex h-full w-full grow flex-col py-1.5">
+    <div className="relative flex h-full w-full grow flex-col py-1.5">
       <div className="mb-1.5 flex h-fit flex-col justify-center pl-[60px]">
         <Text variant="h3" weight="bold" behave="truncate">
           {title}
@@ -120,6 +131,35 @@ const Einkaufen = () => {
           {description}
         </Text>
       </div>
+      <div className="absolute bottom-[60px] left-[108px] z-50">
+        <motion.div
+          animate={
+            entries.filter(entry => !!entry.doneAt).length > 0
+              ? { opacity: 0.7, y: 0 }
+              : { opacity: 0, y: 20 }
+          }
+          transition={{
+            duration: 0.4,
+            ease: [0.4, 0, 0.2, 1],
+          }}
+        >
+          <Button
+            isIconOnly
+            variant="light"
+            color="secondary"
+            onPress={() =>
+              db.transact([
+                ...entries
+                  .filter(entry => !!entry.doneAt)
+                  .map(entry => tx.entries[entry.id].update({ deletedAt: Date.now() })),
+              ])
+            }
+          >
+            <BroomIcon />
+          </Button>
+        </motion.div>
+      </div>
+
       <Tabs
         size="sm"
         placement="bottom"

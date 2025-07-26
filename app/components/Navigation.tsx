@@ -7,10 +7,10 @@ import { db } from "@/db";
 import { Button, Card } from "@heroui/react";
 import { PlanetIcon } from "@phosphor-icons/react";
 import { cn } from "@heroui/theme";
-import Cta from "@/components/shopping/Cta";
 import { useRouter } from "@/components/Router";
 import { BlueprintIcon, BowlFoodIcon, CraneTowerIcon, DatabaseIcon } from "@phosphor-icons/react";
 import type { Route } from "@/config/routing";
+import Cta from "./shopping/cta/Cta";
 
 const Navigation = () => {
   const { route, setRoute } = useRouter();
@@ -68,13 +68,11 @@ const Navigation = () => {
           shadow="sm"
           className={cn(
             "absolute top-1.5 left-1.5 z-50 w-[200%] flex-row justify-end gap-1 p-1",
-            route === "/"
-              ? "-translate-x-[calc(100%+45px)]"
-              : "-translate-x-[calc(100%-48px)] delay-75",
+            route === "/" ? "-translate-x-[calc(100%+45px)]" : "-translate-x-[calc(100%-48px)]",
           )}
         >
           <Divider orientation="vertical" className="h-10" />
-          <Button 
+          <Button
             isDisabled={isLoading}
             isIconOnly
             radius="md"
@@ -144,7 +142,9 @@ const Navigation = () => {
           shadow="sm"
           className={cn(
             "absolute bottom-1.5 left-1.5 z-50 w-[200%] flex-row justify-end gap-1 p-1",
-            route === "/" ? "-translate-x-[calc(100%+45px)]" : "-translate-x-[calc(100%-48px)]",
+            route === "/"
+              ? "-translate-x-[calc(100%+45px)]"
+              : "-translate-x-[calc(100%-48px)] delay-75",
           )}
         >
           <Divider orientation="vertical" className="h-10" />

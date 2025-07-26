@@ -13,9 +13,10 @@ import { type Key, useCallback, useMemo, useState } from "react";
 import { useFilter } from "@react-aria/i18n";
 import { Input } from "@/components/ui/Input";
 import { id, tx } from "@instantdb/react";
-import { useModalStack } from "../ui/StackedModal";
-import { PlannedAtForm } from "./meal/PlannedAtForm";
-import { MealConnectionForm } from "./entry/MealConnectionForm";
+import { useModalStack } from "../../ui/StackedModal";
+import { PlannedAtForm } from "../meal/PlannedAtForm";
+import { MealConnectionForm } from "../entry/MealConnectionForm";
+import Creator from "./Creator";
 
 export const Cta = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -85,25 +86,25 @@ export const Cta = () => {
           isDisabled={isLoading}
         />
       </DrawerHeader>
-      <DrawerBody className="px-4 pb-4">
+      <DrawerBody className="relative px-4 pb-4">
         <ScrollShadow>
           <Listbox
-            classNames={{ emptyContent: "flex flex-col gap-2" }}
+            classNames={{ emptyContent: "flex max-h-[275px] flex-col gap-2" }}
             isVirtualized
-            virtualization={{ maxListboxHeight: 316, itemHeight: 38 }}
+            virtualization={{ maxListboxHeight: 275, itemHeight: 38 }}
             onAction={action}
             aria-label="Rezept auswählen"
             selectionMode="none"
             items={matchedComposers || []}
             emptyContent={
-              <>
+              <div className="h-fit">
                 <Text behave="center">Leider finde ich nichts</Text>
                 <Text behave="center" className="text-center text-gray-500 text-sm">
                   Versuche es mit einem anderen Suchbegriff.
                   <br />
                   Oder erstelle hier bald neue Rezepte.
                 </Text>
-              </>
+              </div>
             }
           >
             {item => (
@@ -113,6 +114,41 @@ export const Cta = () => {
             )}
           </Listbox>
         </ScrollShadow>
+        <Creator
+          title={searchValue}
+          motionProps={{
+            animate: searchValue ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }, // Hide when not empty
+            transition: {
+              duration: 0.4,
+              ease: [0.4, 0, 0.2, 1], // Fast start, smooth end
+            },
+          }}
+          classNames={{
+            base: `-mx-4 absolute bottom-7 flex w-full items-center justify-center ${
+              searchValue ? "" : "pointer-events-none"
+            }`,
+          }}
+        />
+      </DrawerBody>
+      {/* <Image
+        src="/logo.svg"
+        alt="Duck Logo"
+              (isEmpty ? "justify-center" : "justify-between"),
+            cards: {
+              base: "grow items-center justify-center",
+            },
+          }}
+        />
+      </DrawerBody>
+      {/* <Image
+        src="/logo.svg"
+        alt="Duck Logo"
+              (isEmpty ? "justify-center" : "justify-between"),
+            cards: {
+              base: "grow items-center justify-center",
+            },
+          }}
+        />
       </DrawerBody>
       {/* <Image
         src="/logo.svg"

@@ -17,9 +17,10 @@ import type { MealType } from "@/types/db";
 interface PlannedAtFormProps {
   meal: { id: string } & Partial<MealType>;
   then?: () => void;
+  before?: () => void;
 }
 
-export const PlannedAtForm = ({ meal, then }: PlannedAtFormProps) => {
+export const PlannedAtForm = ({ meal, then, before }: PlannedAtFormProps) => {
   const { data } = db.useQuery({
     meals: {
       $: {
@@ -45,6 +46,7 @@ export const PlannedAtForm = ({ meal, then }: PlannedAtFormProps) => {
   );
 
   const handleSelectionChange = (data: Key) => {
+    if (before) before();
     db.transact(
       tx.meals[meal.id].update({
         ...meal,

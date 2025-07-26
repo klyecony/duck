@@ -1,10 +1,8 @@
 import { Text } from "@/components/ui/Text";
 import { db } from "@/db";
-import { isNotDeleted } from "@/lib/shopping";
+import { isNotDeleted, isNotPlanned } from "@/lib/shopping";
 import type { EntryType } from "@/types/db";
 import {
-  Button,
-  DrawerFooter,
   Listbox,
   ListboxItem,
   ModalBody,
@@ -27,6 +25,7 @@ export const MealConnectionForm = ({ entry, then }: MealConnectionFormProps) => 
       entries: {},
       $: {
         where: {
+          ...isNotPlanned,
           ...isNotDeleted,
         },
       },
@@ -86,15 +85,6 @@ export const MealConnectionForm = ({ entry, then }: MealConnectionFormProps) => 
           </Listbox>
         </ScrollShadow>
       </ModalBody>
-      <DrawerFooter>
-        <Button
-          variant="flat"
-          color="primary"
-          onPress={() => db.transact(tx.entries[entry.id].update({ ...entry })).then(then)}
-        >
-          Überspringen
-        </Button>
-      </DrawerFooter>
     </ModalContent>
   );
 };
